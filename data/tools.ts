@@ -1,12 +1,4 @@
-export type ToolStatus = "live" | "soon";
-
-export interface Tool {
-  index: string;
-  name: string;
-  description: string;
-  status: ToolStatus;
-  href?: string;
-}
+import type { Tool } from "@/types/tool";
 
 export const tools: Tool[] = [
   {

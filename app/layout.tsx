@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -24,17 +23,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="flex min-h-dvh flex-col">
-        <header className="px-6 pt-12 text-center sm:pt-16">
-          <Link
-            href="/"
-            className="text-2xl font-semibold tracking-tight text-foreground sm:text-3xl"
-          >
-            pplab
-          </Link>
-        </header>
-        {children}
-      </body>
+      <body className="min-h-full">{children}</body>
     </html>
   );
 }

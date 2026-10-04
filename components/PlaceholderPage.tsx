@@ -8,7 +8,7 @@ interface PlaceholderPageProps {
 
 export function PlaceholderPage({ eyebrow, title, description }: PlaceholderPageProps) {
   return (
-    <main className="flex w-full flex-1 flex-col items-center justify-center gap-4 px-6 py-16 text-center">
+    <main className="flex min-h-dvh w-full flex-col items-center justify-center gap-4 px-6 py-16 text-center">
       <span className="text-sm text-muted">{eyebrow}</span>
       <h1 className="text-3xl font-semibold tracking-tight">{title}</h1>
       <p className="max-w-sm text-sm text-muted">{description}</p>

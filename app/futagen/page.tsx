@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { PlaceholderPage } from "../_components/PlaceholderPage";
+import { PlaceholderPage } from "@/components/PlaceholderPage";
 
 export const metadata: Metadata = {
   title: "FutaGen · pplab",
