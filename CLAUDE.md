@@ -1,3 +1,9 @@
+## PPlab
+
+This is Prakash's personal Next.js playground — a space for experimentation and building small, cool things. No fixed product direction; features here come and go as experiments. Expect the main page and structure to be cleared/reset between experiments.
+
+Current experiment: interactive cellular-automata background. Design doc: `docs/life-background.md`.
+
 <!-- BEGIN:nextjs-agent-rules -->
 
 ## This is NOT the Next.js you know
