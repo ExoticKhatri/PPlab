@@ -250,6 +250,11 @@ export default function NetworkMindmap() {
     let cameraAnimating = false;
     const cameraTargetPos = camera.position.clone();
     const controlsTargetPos = controls.target.clone();
+    // Snapshot of the free-orbit view (position/rotation/zoom) taken right
+    // before focusing a node, so deselecting restores exactly how the user
+    // left it instead of snapping back to a hardcoded default framing.
+    let savedCameraPos: THREE.Vector3 | null = null;
+    let savedTargetPos: THREE.Vector3 | null = null;
 
     function setPointerNDC(event: PointerEvent) {
       const rect = renderer.domElement.getBoundingClientRect();
@@ -269,6 +274,11 @@ export default function NetworkMindmap() {
     }
 
     function applyFocus(id: string | null) {
+      const wasUnfocused = focusedId === null;
+      if (id !== null && wasUnfocused) {
+        savedCameraPos = camera.position.clone();
+        savedTargetPos = controls.target.clone();
+      }
       focusedId = id;
       setSelected(id);
 
@@ -286,8 +296,15 @@ export default function NetworkMindmap() {
       lineTargetOpacity = id === null ? 0.55 : 0.18;
 
       if (id === null) {
-        cameraTargetPos.set(0, 2.5, DEFAULT_CAMERA_DISTANCE);
-        controlsTargetPos.set(0, 0.3, 0);
+        if (savedCameraPos && savedTargetPos) {
+          cameraTargetPos.copy(savedCameraPos);
+          controlsTargetPos.copy(savedTargetPos);
+        } else {
+          cameraTargetPos.set(0, 2.5, DEFAULT_CAMERA_DISTANCE);
+          controlsTargetPos.set(0, 0.3, 0);
+        }
+        savedCameraPos = null;
+        savedTargetPos = null;
       } else {
         const node = nodes.find((n) => n.id === id);
         if (node) {
