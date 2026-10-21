@@ -76,7 +76,7 @@ export default function BrainstormBoard() {
 
       {isOpen && (
         <div
-          className="pointer-events-auto fixed inset-x-0 bottom-0 z-10 max-h-[75vh] overflow-y-auto rounded-t-2xl border-t border-white/10 bg-black/60 p-4 pt-5 backdrop-blur-md sm:inset-x-auto sm:top-20 sm:right-6 sm:bottom-auto sm:w-96 sm:rounded-2xl sm:border"
+          className="pointer-events-auto fixed inset-x-0 bottom-20 z-10 max-h-[65vh] overflow-y-auto rounded-2xl border-t border-white/10 bg-black/60 p-4 pt-5 backdrop-blur-md sm:inset-x-auto sm:top-20 sm:right-6 sm:bottom-auto sm:w-96 sm:rounded-2xl sm:border"
         >
           {PATH.map((stage, index) => (
             <StageRow

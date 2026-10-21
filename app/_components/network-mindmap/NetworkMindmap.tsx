@@ -481,7 +481,7 @@ export default function NetworkMindmap() {
       <div ref={containerRef} className="absolute inset-0" />
 
       {selectedIndustry && (
-        <div className="pointer-events-none absolute bottom-0 left-0 p-6 sm:p-8">
+        <div className="pointer-events-none absolute bottom-0 left-0 p-6 pb-24 sm:p-8 sm:pb-24">
           <div
             className="rounded-xl border border-white/10 bg-black/40 px-4 py-3 backdrop-blur"
             style={{ boxShadow: `0 0 24px ${selectedIndustry.color}33` }}
