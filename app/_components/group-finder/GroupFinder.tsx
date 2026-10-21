@@ -52,32 +52,62 @@ function ReachDots({ score }: { score: number }) {
 function GroupRow({ group, region }: { group: Group; region: Region }) {
   const market = group[region];
   const share = shareNeeded(market, region);
+  const need = customersNeeded(market, region).toLocaleString(region === "india" ? "en-IN" : "en-US");
+  const name = (
+    <>
+      {group.name}
+      {market.sourced && <span className="ml-1.5 text-[10px] text-emerald-300/70">●</span>}
+    </>
+  );
+  const shareBar = (
+    <div className="h-1 w-14 overflow-hidden rounded-full bg-white/10">
+      <div
+        className={`h-full rounded-full ${shareTone(share)}`}
+        style={{ width: `${Math.min(100, Math.max(4, share * 400))}%` }}
+      />
+    </div>
+  );
 
   return (
-    <li
-      title={market.sourced ? group.source : "Estimate"}
-      className={`grid grid-cols-[auto_1fr_1fr_1fr] items-center gap-x-4 gap-y-2 border-b border-white/5 px-1 py-3.5 ${COLUMNS}`}
-    >
-      <p className="col-span-4 truncate text-sm text-white/90 sm:col-span-1">
-        {group.name}
-        {market.sourced && <span className="ml-1.5 text-[10px] text-emerald-300/70">●</span>}
-      </p>
-      <div className="sm:flex sm:justify-end">
-        <ReachDots score={market.reach} />
-      </div>
-      <p className="text-sm text-sky-200 tabular-nums sm:text-right">{formatCount(market.count, region)}</p>
-      <p className="text-sm text-violet-200 tabular-nums sm:text-right">{formatMoney(market.payPerMonth, region)}</p>
-      <p className="text-sm text-amber-200 tabular-nums sm:text-right">
-        {customersNeeded(market, region).toLocaleString(region === "india" ? "en-IN" : "en-US")}
-      </p>
-      <div className="col-span-4 flex items-center justify-end gap-2 sm:col-span-1">
-        <div className="h-1 w-14 overflow-hidden rounded-full bg-white/10">
-          <div
-            className={`h-full rounded-full ${shareTone(share)}`}
-            style={{ width: `${Math.min(100, Math.max(4, share * 400))}%` }}
-          />
+    <li title={market.sourced ? group.source : "Estimate"} className="border-b border-white/5 px-1 py-3.5">
+      {/* Mobile: name + share on top, compact stat line below */}
+      <div className="sm:hidden">
+        <div className="flex items-center justify-between gap-3">
+          <p className="min-w-0 truncate text-sm text-white/90">{name}</p>
+          <div className="flex shrink-0 items-center gap-2">
+            {shareBar}
+            <span className="text-xs text-white/50 tabular-nums">{formatShare(share)}</span>
+          </div>
         </div>
-        <span className="w-16 text-right text-xs text-white/50 tabular-nums">{formatShare(share)}</span>
+        <div className="mt-2 flex items-center gap-3 text-xs tabular-nums">
+          <ReachDots score={market.reach} />
+          <span className="text-sky-200">{formatCount(market.count, region)}</span>
+          <span className="text-white/15">·</span>
+          <span className="text-violet-200">
+            {formatMoney(market.payPerMonth, region)}
+            <span className="text-white/30">/mo</span>
+          </span>
+          <span className="text-white/15">·</span>
+          <span className="text-amber-200">
+            <span className="text-white/30">need </span>
+            {need}
+          </span>
+        </div>
+      </div>
+
+      {/* Desktop: table row */}
+      <div className={`hidden items-center gap-x-4 sm:grid ${COLUMNS}`}>
+        <p className="truncate text-sm text-white/90">{name}</p>
+        <div className="flex justify-end">
+          <ReachDots score={market.reach} />
+        </div>
+        <p className="text-right text-sm text-sky-200 tabular-nums">{formatCount(market.count, region)}</p>
+        <p className="text-right text-sm text-violet-200 tabular-nums">{formatMoney(market.payPerMonth, region)}</p>
+        <p className="text-right text-sm text-amber-200 tabular-nums">{need}</p>
+        <div className="flex items-center justify-end gap-2">
+          {shareBar}
+          <span className="w-16 text-right text-xs text-white/50 tabular-nums">{formatShare(share)}</span>
+        </div>
       </div>
     </li>
   );
