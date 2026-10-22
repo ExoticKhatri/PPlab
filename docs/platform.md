@@ -11,7 +11,7 @@ Status as of 22 Oct 2026. All scrapers run locally with Node.js; raw data stays 
 | Google Play Store | App reviews, 1–5 stars | End users (parents, patients, some staff) | 20,672 school · 15,173 lab reviews | ✅ Working |
 | YouTube | Comments on "how to start/run X" videos | Owners and would-be owners | Labs: 409 comments from 54 videos | ✅ Working (slow) |
 | Google Maps | Reviews of local businesses | Customers of small independent businesses | 0 | ❌ Reviews hidden from automated browsers |
-| Reddit | Posts and comments from professionals | Staff and owners (mostly global) | 0 | ❌ Blocked (403); evaluating `reddit-universal-scraper` |
+| Reddit | Posts and comments from professionals | Staff and owners (mostly global) | 0 (waiting on capture) | ⚠️ Works via browser extension while signed in; see scripts/reddit |
 | Software review sites | Reviews of B2B software | Admins and owners (the buyers) | — | ⚠️ Capterra blocks; SoftwareSuggest too thin |
 
 ## Meta Ad Library
@@ -71,7 +71,7 @@ Status as of 22 Oct 2026. All scrapers run locally with Node.js; raw data stays 
 
 - **What it is:** communities of professionals, such as r/medicallaboratory, r/pathology and r/Teachers. Staff and owners vent there in detail, but mostly outside India.
 - **Status:** ❌ Both Reddit's JSON endpoints and old.reddit.com return 403 or "blocked by network security" to our requests.
-- **Next:** evaluate [ksanjeev284/reddit-universal-scraper](https://github.com/ksanjeev284/reddit-universal-scraper).
+- **Fix:** [ksanjeev284/reddit-universal-scraper](https://github.com/ksanjeev284/reddit-universal-scraper), tested: all 40 tests pass. Two routes: (1) its Chrome extension captures posts and comments while you browse Reddit signed in, then exports JSON. It is DOM-only, reads no cookies and only talks to 127.0.0.1. (2) The official OAuth API, which needs Reddit approval; new requests close 31 Oct 2026. We use route 1. Analysis: [scripts/reddit/](../scripts/reddit/).
 
 ## Software review sites
 
