@@ -3,9 +3,9 @@ import fs from "node:fs";
 const TODAY = new Date();
 const ads = new Map();
 
-for (const file of fs.readdirSync("raw")) {
+for (const file of fs.readdirSync(process.env.OUT || "raw")) {
   const keyword = file.replace(/\.txt$/, "").replace(/_/g, " ");
-  const text = fs.readFileSync(`raw/${file}`, "utf8");
+  const text = fs.readFileSync(`${process.env.OUT || "raw"}/${file}`, "utf8");
   const chunks = text.split("Library ID: ").slice(1);
   for (const chunk of chunks) {
     const id = chunk.match(/^\d+/)?.[0];
@@ -27,5 +27,5 @@ for (const file of fs.readdirSync("raw")) {
 }
 
 const list = [...ads.values()];
-fs.writeFileSync("ads.json", JSON.stringify(list, null, 1));
+fs.writeFileSync(process.env.OUT ? `${process.env.OUT}.json` : "ads.json", JSON.stringify(list, null, 1));
 console.log(`${list.length} unique ads, ${new Set(list.map((a) => a.advertiser)).size} advertisers`);

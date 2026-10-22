@@ -60,6 +60,19 @@ export const LABS_RESEARCH: Research = {
       { text: "Healthians have not updated my partner app where I had given them referrals of patients.", by: "Referral partner · Healthians" },
     ],
   },
+  extra: {
+    label: "YouTube · 54 lab business videos · 409 comments",
+    takeaway:
+      "The comments are mostly would-be owners asking about licences, setup cost (₹5–6 lakh) and franchise vs own lab. Owners who already run a lab talk about growth: marketing that doesn't reach break-even, dependence on doctors, and franchise collection centres where 'the income goes to the company'. Software comments are about price (around ₹3,000 a year), offline use and support.",
+    quotes: [
+      { text: "We are running a diagnostic centre… done lot of marketing strategy but still we are not reaching at break even.", by: "Lab owner · YouTube" },
+      { text: "Can the lab earn income without the support of a doctor?", by: "Lab owner · YouTube" },
+      { text: "Mera sample collection lab hai… only income company ka milega, hum ko kuch nahi hai.", by: "Collection centre owner · YouTube" },
+      { text: "I am lab technician, have own lab. How marketing do? Please help.", by: "Lab owner · YouTube" },
+      { text: "Software log in nahi ho raha hai… important update pending aisa notice aa raha hai.", by: "Lab software user · YouTube" },
+      { text: "Is starting price 3k per year, and how many users?", by: "Lab owner asking about LIMS · YouTube" },
+    ],
+  },
   ideas: [
     {
       rank: 1,

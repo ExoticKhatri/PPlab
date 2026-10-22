@@ -9,7 +9,7 @@ Status as of 22 Oct 2026. All scrapers run locally with Node.js; raw data stays 
 | --- | --- | --- | --- | --- |
 | Meta Ad Library | Live ads aimed at a group | Sellers (what they think hurts buyers) | 2,131 school ads · 1,176 lab ads | ✅ Working |
 | Google Play Store | App reviews, 1–5 stars | End users (parents, patients, some staff) | 20,672 school · 15,173 lab reviews | ✅ Working |
-| YouTube | Comments on "how to start/run X" videos | Owners and would-be owners | Labs: in progress | ✅ Working (slow) |
+| YouTube | Comments on "how to start/run X" videos | Owners and would-be owners | Labs: 409 comments from 54 videos | ✅ Working (slow) |
 | Google Maps | Reviews of local businesses | Customers of small independent businesses | 0 | ❌ Reviews hidden from automated browsers |
 | Reddit | Posts and comments from professionals | Staff and owners (mostly global) | 0 | ❌ Blocked (403); evaluating `reddit-universal-scraper` |
 | Software review sites | Reviews of B2B software | Admins and owners (the buyers) | — | ⚠️ Capterra blocks; SoftwareSuggest too thin |
@@ -48,7 +48,7 @@ Status as of 22 Oct 2026. All scrapers run locally with Node.js; raw data stays 
 ## YouTube
 
 - **What it is:** comments under videos like "pathology lab kaise khole" or "lab owner problems". Owners and would-be owners ask questions and complain there, often in Hindi.
-- **How we pull it:** `yt.mjs`, not yet moved into the repo. Playwright searches YouTube, takes the top videos per query, scrolls each page so the comments load, and saves them.
+- **How we pull it:** [scripts/youtube-comments/](../scripts/youtube-comments/). Playwright searches YouTube, takes the top videos per query, scrolls each page so the comments load, and saves them.
 - **Data per comment:** video, video title, search query, comment text.
 - **What it tells us:** the owner's own voice, which is the one thing Play Store lacks. The video titles are a signal too, for example "Hidden problems of offline pathology software".
 - **Limits:**
