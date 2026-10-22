@@ -72,7 +72,7 @@ export const GROUPS: Group[] = [
   { id: "workshops", name: "Car & bike repair workshops", india: { reach: 4, count: 700_000, payPerMonth: 700 }, global: { reach: 2, count: 5_000_000, payPerMonth: 60 } },
   { id: "fleet", name: "Small truck fleet owners", india: { reach: 3, count: 500_000, payPerMonth: 1_000 }, global: { reach: 2, count: 3_000_000, payPerMonth: 60 } },
   { id: "kirana", name: "Kirana & small retail stores", india: { reach: 5, count: 12_000_000, payPerMonth: 300 }, global: { reach: 1, count: 50_000_000, payPerMonth: 20 } },
-  { id: "tattoo", name: "Tattoo studios & independent artists", india: { reach: 5, count: 12_000, payPerMonth: 1_000 }, global: { reach: 5, count: 150_000, payPerMonth: 40 }, source: "Est. India: ~25k tattoo artists (Daily Pioneer), ~3k studios + ~9k solo artists billing for themselves. Global: US alone 23,774 tattoo businesses (IBISWorld 2025), ~40% of the market. Price: TattooGenda €16–45/mo, Vagaro $24/mo." },
+  { id: "tattoo", name: "Tattoo studios & independent artists", india: { reach: 5, count: 12_000, payPerMonth: 1_000 }, global: { reach: 5, count: 150_000, payPerMonth: 40 }, source: "Est. India: ~25k tattoo artists (Daily Pioneer), ~3k studios + ~9k solo artists billing for themselves. Global: US alone 23,774 tattoo businesses (IBISWorld 2025), ~40% of the market. Price: TattooGenda €16–45/mo, Vagaro $24/mo.", ideas: [{ slug: "tattoo-booking-tool", title: "Booking tool: agreements, cost calculator, custom forms, artist & studio profiles", easeToBuild: 5, payPerMonth: 1_000, status: "building", note: "Our existing product. Research shows what to sharpen and who we compete with." }] },
 ];
 
 export const STEPS = [

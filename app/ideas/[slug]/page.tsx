@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import { SCHOOLS_RESEARCH } from "../../_components/ad-research/ad-data";
 import AdResearch from "../../_components/ad-research/AdResearch";
 import { LABS_RESEARCH } from "../../_components/ad-research/lab-data";
+import { TATTOO_RESEARCH } from "../../_components/ad-research/tattoo-data";
 import type { Research } from "../../_components/ad-research/research-types";
 import type { Group, GroupIdea } from "../../_components/group-finder/group-data";
 import { GROUPS } from "../../_components/group-finder/group-data";
@@ -14,6 +15,7 @@ const ANALYSES: Record<string, Research> = {
   "lab-money-guard": LABS_RESEARCH,
   "lab-home-collection": LABS_RESEARCH,
   "lab-patient-retention": LABS_RESEARCH,
+  "tattoo-booking-tool": TATTOO_RESEARCH,
 };
 
 function findIdea(slug: string): { group: Group; idea: GroupIdea } | null {
