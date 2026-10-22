@@ -24,7 +24,7 @@ export interface Market {
   sourced?: boolean;
 }
 
-export type IdeaStatus = "parked" | "testing" | "building";
+export type IdeaStatus = "new" | "parked" | "testing" | "building";
 
 export interface GroupIdea {
   slug: string;
@@ -50,7 +50,11 @@ export interface Group {
 export const GROUPS: Group[] = [
   { id: "pharmacy", name: "Independent pharmacies", india: { reach: 5, count: 1_000_000, payPerMonth: 800, sourced: true }, global: { reach: 3, count: 1_800_000, payPerMonth: 60 }, source: "Market reports: ~1M regulated pharmacies in India" },
   { id: "coaching", name: "Coaching & tuition centres", india: { reach: 5, count: 190_000, payPerMonth: 2_500, sourced: true }, global: { reach: 3, count: 700_000, payPerMonth: 50 }, source: "poidata.io: 192,867 coaching centres in India (Aug 2025)" },
-  { id: "labs", name: "Diagnostic labs", india: { reach: 4, count: 100_000, payPerMonth: 2_500, sourced: true }, global: { reach: 3, count: 350_000, payPerMonth: 150 }, source: "Ken Research: 100k+ lab players (estimates range 50k–300k)" },
+  { id: "labs", name: "Diagnostic labs", india: { reach: 4, count: 100_000, payPerMonth: 2_500, sourced: true }, global: { reach: 3, count: 350_000, payPerMonth: 150 }, source: "Ken Research: 100k+ lab players (estimates range 50k–300k)", ideas: [
+    { slug: "lab-money-guard", title: "Lab money guard: billing leakage & daily close", easeToBuild: 4, payPerMonth: 1_500, status: "new", note: "Stops staff skimming; owner sees tests vs bills every evening." },
+    { slug: "lab-home-collection", title: "Home collection OS for independent labs", easeToBuild: 3, payPerMonth: 3_000, status: "new", note: "Slots, phlebotomist routes, live status and sample hand-over." },
+    { slug: "lab-patient-retention", title: "Patient retention & report delivery", easeToBuild: 3, payPerMonth: 1_500, status: "new", note: "Report-status links without an app, repeat-test reminders." },
+  ] },
   { id: "gyms", name: "Gyms & fitness studios", india: { reach: 5, count: 46_500, payPerMonth: 2_000, sourced: true }, global: { reach: 4, count: 200_000, payPerMonth: 100 }, source: "Deloitte via industry press: 46,500 facilities in India (2024)" },
   { id: "dental", name: "Dental clinics", india: { reach: 4, count: 120_000, payPerMonth: 2_000 }, global: { reach: 4, count: 900_000, payPerMonth: 150 } },
   { id: "clinics", name: "Small doctor clinics", india: { reach: 4, count: 300_000, payPerMonth: 2_000 }, global: { reach: 3, count: 3_000_000, payPerMonth: 150 } },
@@ -68,6 +72,7 @@ export const GROUPS: Group[] = [
   { id: "workshops", name: "Car & bike repair workshops", india: { reach: 4, count: 700_000, payPerMonth: 700 }, global: { reach: 2, count: 5_000_000, payPerMonth: 60 } },
   { id: "fleet", name: "Small truck fleet owners", india: { reach: 3, count: 500_000, payPerMonth: 1_000 }, global: { reach: 2, count: 3_000_000, payPerMonth: 60 } },
   { id: "kirana", name: "Kirana & small retail stores", india: { reach: 5, count: 12_000_000, payPerMonth: 300 }, global: { reach: 1, count: 50_000_000, payPerMonth: 20 } },
+  { id: "tattoo", name: "Tattoo studios & independent artists", india: { reach: 5, count: 12_000, payPerMonth: 1_000 }, global: { reach: 5, count: 150_000, payPerMonth: 40 }, source: "Est. India: ~25k tattoo artists (Daily Pioneer), ~3k studios + ~9k solo artists billing for themselves. Global: US alone 23,774 tattoo businesses (IBISWorld 2025), ~40% of the market. Price: TattooGenda €16–45/mo, Vagaro $24/mo." },
 ];
 
 export const STEPS = [

@@ -139,7 +139,7 @@ function GroupRow({ group, region }: { group: Group; region: Region }) {
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
-        title={market.sourced ? group.source : "Estimate"}
+        title={group.source ?? "Estimate"}
         className="block w-full cursor-pointer text-left"
       >
       {/* Mobile: name + share on top, compact stat line below */}

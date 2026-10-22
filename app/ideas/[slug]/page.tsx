@@ -1,15 +1,19 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Suspense, type ReactNode } from "react";
+import { Suspense } from "react";
+import { SCHOOLS_RESEARCH } from "../../_components/ad-research/ad-data";
 import AdResearch from "../../_components/ad-research/AdResearch";
+import { LABS_RESEARCH } from "../../_components/ad-research/lab-data";
+import type { Research } from "../../_components/ad-research/research-types";
 import type { Group, GroupIdea } from "../../_components/group-finder/group-data";
 import { GROUPS } from "../../_components/group-finder/group-data";
 
-type AnalysisPage = (props: { header: ReactNode }) => ReactNode;
-
-// Each idea with a full analysis page. Ideas without an entry show "analysis pending".
-const ANALYSES: Record<string, AnalysisPage> = {
-  "k12-school-ops": AdResearch,
+// Each idea's analysis page. Ideas without an entry show "analysis pending".
+const ANALYSES: Record<string, Research> = {
+  "k12-school-ops": SCHOOLS_RESEARCH,
+  "lab-money-guard": LABS_RESEARCH,
+  "lab-home-collection": LABS_RESEARCH,
+  "lab-patient-retention": LABS_RESEARCH,
 };
 
 function findIdea(slug: string): { group: Group; idea: GroupIdea } | null {
@@ -38,7 +42,7 @@ async function IdeaContent({ params }: { params: Promise<{ slug: string }> }) {
   const found = findIdea(slug);
   if (!found) notFound();
   const { group, idea } = found;
-  const Analysis = ANALYSES[slug];
+  const research = ANALYSES[slug];
 
   const header = (
     <header className="mb-8 border-b border-white/5 pb-6">
@@ -62,8 +66,8 @@ async function IdeaContent({ params }: { params: Promise<{ slug: string }> }) {
 
   return (
     <div className="fixed inset-0">
-      {Analysis ? (
-        <Analysis header={header} />
+      {research ? (
+        <AdResearch research={research} header={header} />
       ) : (
         <div className="h-full w-full overflow-y-auto bg-[#05070f] px-4 pt-8 sm:px-8">
           <div className="mx-auto max-w-4xl">

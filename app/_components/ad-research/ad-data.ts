@@ -1,3 +1,5 @@
+import type { Category, Idea, Quote, Research, ReviewTheme } from "./research-types";
+
 // Meta Ad Library scan: active ads shown in India, 22 Oct 2026, 31 school-related keywords.
 // Advertisers below were checked by hand: each one is selling TO schools or school owners.
 // Meta does not publish spend or results for these ads, so "days running" is the proxy for "it works".
@@ -8,18 +10,6 @@ export const SCAN = {
   adsScanned: 2131,
   schoolSellers: 132,
 } as const;
-
-export type Verdict = "crowded" | "busy" | "open";
-
-export interface Category {
-  id: string;
-  name: string;
-  advertisers: number;
-  longestDays: number;
-  longestBy: string;
-  examples: string;
-  verdict: Verdict;
-}
 
 export const CATEGORIES: Category[] = [
   { id: "erp", name: "ERP & admin software", advertisers: 37, longestDays: 468, longestBy: "EduAutomate", examples: "Next Education, Vedmarg, ScientificStudy, Eduvecta, Classe365", verdict: "crowded" },
@@ -34,11 +24,6 @@ export const CATEGORIES: Category[] = [
   { id: "finance", name: "School loans & fee finance", advertisers: 2, longestDays: 422, longestBy: "Varthana", examples: "Varthana, Jodo", verdict: "open" },
 ];
 
-export interface Quote {
-  text: string;
-  by: string;
-}
-
 /** What sellers lead with: their bet on what hurts school owners most. */
 export const PAINS: Quote[] = [
   { text: "100 vacant seats could be costing your school ₹5 Crore every year.", by: "Mediagarh" },
@@ -50,14 +35,6 @@ export const PAINS: Quote[] = [
   { text: "Every summer, that AC fleet becomes one of your biggest recurring expenses.", by: "Optimist AC" },
   { text: "Stop paying monthly fees for your school ERP!", by: "Multi School ERP (₹10,000 source code)" },
 ];
-
-export interface Idea {
-  rank: number;
-  title: string;
-  evidence: string;
-  why: string;
-  risk: string;
-}
 
 export const IDEAS: Idea[] = [
   {
@@ -90,18 +67,13 @@ export const REVIEW_SCAN = {
   complaints: 5904,
 } as const;
 
-export interface ReviewTheme {
-  name: string;
-  count: number;
-}
-
 export const REVIEW_THEMES: ReviewTheme[] = [
   { name: "Crashes, errors, won't open", count: 1336 },
   { name: "Forced updates", count: 769 },
   { name: "Login / password / OTP", count: 559 },
   { name: "Homework & attachments", count: 465 },
   { name: "Slow / loading", count: 450 },
-  { name: "Fee payment", count: 372 },
+  { name: "Fee payment", count: 372, highlight: true },
   { name: "Missing notifications", count: 266 },
   { name: "No support response", count: 162 },
   { name: "Can't talk to the school", count: 61 },
@@ -124,3 +96,18 @@ export const TAKEAWAYS = [
   "Generic school ERP is saturated. 37 sellers, half of them started in the last 30 days, with prices down to free, ₹5,000 a year, or ₹10,000 for the source code.",
   "The money goes to hardware and to rules. ₹2 lakh labs and smart panels sell because a board rule or a parent expectation forces the purchase.",
 ];
+
+export const SCHOOLS_RESEARCH: Research = {
+  audience: "K-12 private schools",
+  scan: { date: SCAN.date, keywords: SCAN.keywords, adsScanned: SCAN.adsScanned, sellers: SCAN.schoolSellers, sellersLabel: "companies selling to schools", longestDays: 558 },
+  takeaways: TAKEAWAYS,
+  categories: CATEGORIES,
+  pains: PAINS,
+  reviews: {
+    label: `Play Store · ${REVIEW_SCAN.apps} school apps · ${REVIEW_SCAN.complaints.toLocaleString("en-IN")} complaints from ${REVIEW_SCAN.reviews.toLocaleString("en-IN")} reviews`,
+    takeaway: REVIEW_TAKEAWAY,
+    themes: REVIEW_THEMES,
+    quotes: REVIEW_QUOTES,
+  },
+  ideas: IDEAS,
+};

@@ -1,15 +1,4 @@
-import type { Verdict } from "./ad-data";
-import {
-  CATEGORIES,
-  IDEAS,
-  PAINS,
-  REVIEW_QUOTES,
-  REVIEW_SCAN,
-  REVIEW_TAKEAWAY,
-  REVIEW_THEMES,
-  SCAN,
-  TAKEAWAYS,
-} from "./ad-data";
+import type { QuoteSection, Research, Verdict } from "./research-types";
 
 const VERDICT_STYLE: Record<Verdict, { bar: string; label: string }> = {
   crowded: { bar: "bg-rose-400", label: "text-rose-300" },
@@ -17,8 +6,6 @@ const VERDICT_STYLE: Record<Verdict, { bar: string; label: string }> = {
   open: { bar: "bg-emerald-400", label: "text-emerald-300" },
 };
 
-const MAX_ADVERTISERS = Math.max(...CATEGORIES.map((c) => c.advertisers));
-const MAX_THEME = Math.max(...REVIEW_THEMES.map((t) => t.count));
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return <p className="mb-3 text-[10px] tracking-[0.2em] text-white/30 uppercase">{children}</p>;
@@ -33,25 +20,46 @@ function Stat({ value, label }: { value: string; label: string }) {
   );
 }
 
-export default function AdResearch({ header }: { header?: React.ReactNode }) {
+function QuoteGrid({ quotes }: { quotes: QuoteSection["quotes"] }) {
+  return (
+    <ul className="grid gap-2 sm:grid-cols-2">
+      {quotes.map((q) => (
+        <li key={q.text} className="rounded-xl border border-white/5 bg-white/[0.02] px-4 py-3">
+          <p className="text-sm leading-snug text-white/80">“{q.text}”</p>
+          <p className="mt-1.5 text-[11px] text-white/35">{q.by}</p>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+interface AdResearchProps {
+  research: Research;
+  header?: React.ReactNode;
+}
+
+export default function AdResearch({ research, header }: AdResearchProps) {
+  const { scan, categories, pains, reviews, extra, ideas, takeaways } = research;
+  const maxAdvertisers = Math.max(...categories.map((c) => c.advertisers));
+  const maxTheme = Math.max(...reviews.themes.map((t) => t.count));
   return (
     <div className="h-full w-full overflow-y-auto bg-[#05070f] text-white">
       <div className="mx-auto max-w-4xl px-4 pt-8 pb-28 sm:px-8">
         {header}
         <p className="text-xs text-white/40">
-          Meta Ad Library · K-12 private schools · India · {SCAN.date}
+          Meta Ad Library · {research.audience} · India · {scan.date}
         </p>
 
         <div className="mt-5 grid grid-cols-3 gap-4 border-b border-white/5 pb-6">
-          <Stat value={SCAN.adsScanned.toLocaleString("en-IN")} label={`ads scanned · ${SCAN.keywords} keywords`} />
-          <Stat value={`~${SCAN.schoolSellers}`} label="companies selling to schools" />
-          <Stat value="558d" label="longest-running ad" />
+          <Stat value={scan.adsScanned.toLocaleString("en-IN")} label={`ads scanned · ${scan.keywords} keywords`} />
+          <Stat value={`~${scan.sellers}`} label={scan.sellersLabel} />
+          <Stat value={`${scan.longestDays}d`} label="longest-running ad" />
         </div>
 
         <section className="mt-8">
           <SectionLabel>What it tells us</SectionLabel>
           <ol className="space-y-3">
-            {TAKEAWAYS.map((t, i) => (
+            {takeaways.map((t, i) => (
               <li key={i} className="flex gap-3 text-sm leading-relaxed text-white/75">
                 <span className="font-mono text-xs text-white/25">0{i + 1}</span>
                 {t}
@@ -63,7 +71,7 @@ export default function AdResearch({ header }: { header?: React.ReactNode }) {
         <section className="mt-10">
           <SectionLabel>Who is selling what · advertisers per category</SectionLabel>
           <ul>
-            {CATEGORIES.map((c) => {
+            {categories.map((c) => {
               const style = VERDICT_STYLE[c.verdict];
               return (
                 <li key={c.id} className="border-b border-white/5 py-3" title={c.examples}>
@@ -77,7 +85,7 @@ export default function AdResearch({ header }: { header?: React.ReactNode }) {
                   <div className="mt-2 h-1 overflow-hidden rounded-full bg-white/5">
                     <div
                       className={`h-full rounded-full ${style.bar}`}
-                      style={{ width: `${(c.advertisers / MAX_ADVERTISERS) * 100}%` }}
+                      style={{ width: `${(c.advertisers / maxAdvertisers) * 100}%` }}
                     />
                   </div>
                   <p className="mt-1.5 truncate text-[11px] text-white/35">
@@ -91,50 +99,43 @@ export default function AdResearch({ header }: { header?: React.ReactNode }) {
 
         <section className="mt-10">
           <SectionLabel>The pain sellers lead with</SectionLabel>
-          <ul className="grid gap-2 sm:grid-cols-2">
-            {PAINS.map((p) => (
-              <li key={p.by} className="rounded-xl border border-white/5 bg-white/[0.02] px-4 py-3">
-                <p className="text-sm leading-snug text-white/80">“{p.text}”</p>
-                <p className="mt-1.5 text-[11px] text-white/35">{p.by}</p>
-              </li>
-            ))}
-          </ul>
+          <QuoteGrid quotes={pains} />
         </section>
 
         <section className="mt-10">
-          <SectionLabel>
-            Play Store · {REVIEW_SCAN.apps} school apps · {REVIEW_SCAN.complaints.toLocaleString("en-IN")} complaints
-            from {REVIEW_SCAN.reviews.toLocaleString("en-IN")} reviews
-          </SectionLabel>
-          <p className="mb-4 text-sm leading-relaxed text-white/70">{REVIEW_TAKEAWAY}</p>
+          <SectionLabel>{reviews.label}</SectionLabel>
+          <p className="mb-4 text-sm leading-relaxed text-white/70">{reviews.takeaway}</p>
           <ul>
-            {REVIEW_THEMES.map((t) => (
+            {reviews.themes.map((t) => (
               <li key={t.name} className="flex items-center gap-3 py-1.5">
                 <span className="w-44 shrink-0 truncate text-xs text-white/70 sm:w-56">{t.name}</span>
                 <div className="h-1 flex-1 overflow-hidden rounded-full bg-white/5">
                   <div
-                    className={`h-full rounded-full ${t.name === "Fee payment" ? "bg-emerald-400" : "bg-white/25"}`}
-                    style={{ width: `${(t.count / MAX_THEME) * 100}%` }}
+                    className={`h-full rounded-full ${t.highlight ? "bg-emerald-400" : "bg-white/25"}`}
+                    style={{ width: `${(t.count / maxTheme) * 100}%` }}
                   />
                 </div>
                 <span className="w-12 text-right text-xs text-white/40 tabular-nums">{t.count}</span>
               </li>
             ))}
           </ul>
-          <ul className="mt-4 grid gap-2 sm:grid-cols-2">
-            {REVIEW_QUOTES.map((q) => (
-              <li key={q.text} className="rounded-xl border border-white/5 bg-white/[0.02] px-4 py-3">
-                <p className="text-sm leading-snug text-white/80">“{q.text}”</p>
-                <p className="mt-1.5 text-[11px] text-white/35">{q.by}</p>
-              </li>
-            ))}
-          </ul>
+          <div className="mt-4">
+            <QuoteGrid quotes={reviews.quotes} />
+          </div>
         </section>
+
+        {extra && (
+          <section className="mt-10">
+            <SectionLabel>{extra.label}</SectionLabel>
+            <p className="mb-4 text-sm leading-relaxed text-white/70">{extra.takeaway}</p>
+            <QuoteGrid quotes={extra.quotes} />
+          </section>
+        )}
 
         <section className="mt-10">
           <SectionLabel>Idea candidates · to test with ads</SectionLabel>
           <ol className="space-y-3">
-            {IDEAS.map((idea) => (
+            {ideas.map((idea) => (
               <li key={idea.rank} className="rounded-xl border border-emerald-400/15 bg-emerald-400/[0.03] px-4 py-3.5">
                 <p className="flex items-baseline gap-2 text-sm font-medium text-white">
                   <span className="font-mono text-xs text-emerald-300/70">0{idea.rank}</span>
