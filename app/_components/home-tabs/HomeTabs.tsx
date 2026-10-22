@@ -1,15 +1,17 @@
 "use client";
 
 import { useState } from "react";
+import AdResearch from "../ad-research/AdResearch";
 import BrainstormBoard from "../brainstorm-board/BrainstormBoard";
 import GroupFinder from "../group-finder/GroupFinder";
 import NetworkMindmap from "../network-mindmap/NetworkMindmap";
 
-type TabId = "industries" | "groups";
+type TabId = "industries" | "groups" | "ads";
 
 const TABS: { id: TabId; label: string }[] = [
   { id: "industries", label: "Industries" },
   { id: "groups", label: "Group finder" },
+  { id: "ads", label: "Ad research" },
 ];
 
 export default function HomeTabs() {
@@ -24,6 +26,7 @@ export default function HomeTabs() {
         </>
       )}
       {active === "groups" && <GroupFinder />}
+      {active === "ads" && <AdResearch />}
 
       <nav
         aria-label="Workspace tabs"
