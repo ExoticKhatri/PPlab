@@ -187,12 +187,45 @@ function GroupRow({ group, region }: { group: Group; region: Region }) {
   );
 }
 
+function SortHeader({
+  label,
+  sortKey,
+  sort,
+  onSort,
+}: {
+  label: string;
+  sortKey: SortKey;
+  sort: SortState;
+  onSort: (key: SortKey) => void;
+}) {
+  const active = sort.key === sortKey;
+  return (
+    <button
+      type="button"
+      onClick={() => onSort(sortKey)}
+      className={`flex items-center justify-end gap-1 ${active ? "text-white/70" : "text-white/30 hover:text-white/50"}`}
+    >
+      <span className="text-[9px]">{active ? (sort.dir === "asc" ? "▲" : "▼") : ""}</span>
+      {label}
+    </button>
+  );
+}
+
 export default function GroupFinder() {
   const [region, setRegion] = useState<Region>("india");
-  const groups = useMemo(
-    () => [...GROUPS].sort((a, b) => shareNeeded(a[region], region) - shareNeeded(b[region], region)),
-    [region],
-  );
+  const [sort, setSort] = useState<SortState>({ key: "share", dir: "asc" });
+
+  const handleSort = (key: SortKey) => {
+    setSort((prev) => {
+      if (prev.key === key) return { key, dir: prev.dir === "asc" ? "desc" : "asc" };
+      return { key, dir: SORT_OPTIONS.find((o) => o.key === key)!.defaultDir };
+    });
+  };
+
+  const groups = useMemo(() => {
+    const dirMul = sort.dir === "asc" ? 1 : -1;
+    return [...GROUPS].sort((a, b) => dirMul * (sortValue(a, region, sort.key) - sortValue(b, region, sort.key)));
+  }, [region, sort]);
 
   return (
     <div className="flex h-full w-full bg-[#05070f] text-white">
@@ -219,13 +252,37 @@ export default function GroupFinder() {
               ))}
             </div>
           </div>
-          <div className={`mt-4 hidden gap-x-4 sm:grid ${COLUMNS} px-1 text-[10px] tracking-wide text-white/30 uppercase`}>
-            <span>Group</span>
-            <span className="text-right">Reach</span>
-            <span className="text-right">Bodies</span>
-            <span className="text-right">Pay / mo</span>
-            <span className="text-right">Need</span>
-            <span className="text-right">Share needed</span>
+
+          {/* Mobile: sort dropdown */}
+          <div className="mt-3 flex items-center gap-2 sm:hidden">
+            <span className="text-[10px] tracking-wide text-white/30 uppercase">Sort by</span>
+            <select
+              value={sort.key}
+              onChange={(e) => handleSort(e.target.value as SortKey)}
+              className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-xs text-white/70"
+            >
+              {SORT_OPTIONS.map((opt) => (
+                <option key={opt.key} value={opt.key} className="bg-[#05070f]">
+                  {opt.label}
+                </option>
+              ))}
+            </select>
+            <button
+              type="button"
+              onClick={() => setSort((prev) => ({ ...prev, dir: prev.dir === "asc" ? "desc" : "asc" }))}
+              className="rounded-full border border-white/10 px-2 py-1 text-xs text-white/50"
+            >
+              {sort.dir === "asc" ? "▲ low→high" : "▼ high→low"}
+            </button>
+          </div>
+
+          <div className={`mt-4 hidden gap-x-4 sm:grid ${COLUMNS} px-1 text-[10px] tracking-wide uppercase`}>
+            <span className="text-white/30">Group</span>
+            <SortHeader label="Reach" sortKey="reach" sort={sort} onSort={handleSort} />
+            <SortHeader label="Bodies" sortKey="count" sort={sort} onSort={handleSort} />
+            <SortHeader label="Pay / mo" sortKey="pay" sort={sort} onSort={handleSort} />
+            <SortHeader label="Need" sortKey="need" sort={sort} onSort={handleSort} />
+            <SortHeader label="Share needed" sortKey="share" sort={sort} onSort={handleSort} />
           </div>
         </div>
 
