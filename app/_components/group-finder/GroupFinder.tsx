@@ -16,6 +16,38 @@ import {
 
 const REGION_IDS: Region[] = ["india", "global"];
 
+type SortKey = "reach" | "count" | "pay" | "need" | "share";
+type SortDir = "asc" | "desc";
+
+interface SortState {
+  key: SortKey;
+  dir: SortDir;
+}
+
+const SORT_OPTIONS: { key: SortKey; label: string; defaultDir: SortDir }[] = [
+  { key: "share", label: "Share needed", defaultDir: "asc" },
+  { key: "reach", label: "Reach", defaultDir: "desc" },
+  { key: "count", label: "Bodies", defaultDir: "desc" },
+  { key: "pay", label: "Pay / mo", defaultDir: "desc" },
+  { key: "need", label: "Need", defaultDir: "asc" },
+];
+
+function sortValue(group: Group, region: Region, key: SortKey): number {
+  const market = group[region];
+  switch (key) {
+    case "reach":
+      return market.reach;
+    case "count":
+      return market.count;
+    case "pay":
+      return market.payPerMonth;
+    case "need":
+      return customersNeeded(market, region);
+    case "share":
+      return shareNeeded(market, region);
+  }
+}
+
 function shareTone(share: number): string {
   if (share <= 0.03) return "bg-emerald-400";
   if (share <= 0.1) return "bg-amber-400";
@@ -25,7 +57,7 @@ function shareTone(share: number): string {
 function StepsPanel() {
   return (
     <aside className="hidden h-full w-64 shrink-0 p-4 md:block">
-      <ol className="flex h-full flex-col gap-5 rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+      <ol className="flex h-full flex-col gap-5 rounded-2xl border border-white/10 bg-white/2 p-5">
         {STEPS.map((step) => (
           <li key={step.n}>
             <span className="font-mono text-[11px] text-white/30">0{step.n}</span>
