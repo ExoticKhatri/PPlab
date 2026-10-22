@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import type { ReactNode } from "react";
+import { Suspense, type ReactNode } from "react";
 import AdResearch from "../../_components/ad-research/AdResearch";
 import type { Group, GroupIdea } from "../../_components/group-finder/group-data";
 import { GROUPS } from "../../_components/group-finder/group-data";
@@ -24,7 +24,16 @@ export function generateStaticParams(): { slug: string }[] {
   return GROUPS.flatMap((g) => g.ideas ?? []).map((i) => ({ slug: i.slug }));
 }
 
-export default async function IdeaPage({ params }: PageProps<"/ideas/[slug]">) {
+export default function IdeaPage({ params }: PageProps<"/ideas/[slug]">) {
+  // params is URL data: read it inside Suspense so the route shell stays instant.
+  return (
+    <Suspense fallback={<div className="fixed inset-0 bg-[#05070f]" />}>
+      <IdeaContent params={params} />
+    </Suspense>
+  );
+}
+
+async function IdeaContent({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const found = findIdea(slug);
   if (!found) notFound();

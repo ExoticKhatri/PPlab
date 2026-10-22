@@ -52,30 +52,25 @@ function ReachDots({ score }: { score: number }) {
 
 function IdeaList({ ideas }: { ideas: GroupIdea[] }) {
   if (ideas.length === 0) {
-    return <p className="px-1 pt-3 text-xs text-white/30">No ideas yet.</p>;
+    return <p className="mt-2 ml-5 border-l border-white/10 py-1 pl-3 text-xs text-white/25">No ideas yet</p>;
   }
   return (
-    <ul className="space-y-2 pt-3">
+    <ul className="mt-2 ml-5 border-l border-white/10">
       {ideas.map((idea) => (
         <li key={idea.slug}>
           <Link
             href={`/ideas/${idea.slug}`}
-            className="group/idea flex items-center gap-3 rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 transition hover:border-white/25 hover:bg-white/[0.06]"
+            className="group/idea flex items-center gap-3 py-1.5 pl-3 text-xs transition"
           >
-            <div className="min-w-0 flex-1">
-              <p className="truncate text-sm text-white/90">{idea.title}</p>
-              <p className="mt-0.5 truncate text-[11px] text-white/40">{idea.note}</p>
-            </div>
-            <div className="hidden shrink-0 items-center gap-4 text-[11px] text-white/40 sm:flex">
-              <span>
-                ease <b className="text-white/80">{idea.easeToBuild}/5</b>
-              </span>
-              <span>
-                <b className="text-violet-200">₹{idea.payPerMonth.toLocaleString("en-IN")}</b>/mo
-              </span>
-              <span className="rounded-full border border-amber-400/30 px-2 py-0.5 text-amber-200/80">{idea.status}</span>
-            </div>
-            <span className="text-white/30 transition group-hover/idea:translate-x-0.5 group-hover/idea:text-white">→</span>
+            <span className="min-w-0 flex-1 truncate text-white/60 transition group-hover/idea:text-white">
+              {idea.title}
+            </span>
+            <span className="hidden shrink-0 text-white/30 tabular-nums sm:inline">
+              ease {idea.easeToBuild}/5 · ₹{idea.payPerMonth.toLocaleString("en-IN")}/mo · {idea.status}
+            </span>
+            <span className="text-white/20 transition group-hover/idea:translate-x-0.5 group-hover/idea:text-white">
+              →
+            </span>
           </Link>
         </li>
       ))}
@@ -91,13 +86,9 @@ function GroupRow({ group, region }: { group: Group; region: Region }) {
   const need = customersNeeded(market, region).toLocaleString(region === "india" ? "en-IN" : "en-US");
   const name = (
     <>
-      <span className={`mr-2 inline-block text-[10px] text-white/30 transition ${open ? "rotate-90" : ""}`}>▶</span>
+      <span className={`mr-2 inline-block w-2 text-white/25 transition ${open ? "rotate-90" : ""}`}>›</span>
       {group.name}
-      {ideaCount > 0 && (
-        <span className="ml-2 rounded-full bg-emerald-400/15 px-1.5 py-0.5 text-[10px] text-emerald-200">
-          {ideaCount} idea{ideaCount > 1 ? "s" : ""}
-        </span>
-      )}
+      {ideaCount > 0 && <span className="ml-2 text-[11px] text-white/30">· {ideaCount}</span>}
       {market.sourced && <span className="ml-1.5 text-[10px] text-emerald-300/70">●</span>}
     </>
   );
