@@ -54,6 +54,7 @@ export const PAINS: Quote[] = [
 export interface Idea {
   rank: number;
   title: string;
+  evidence: string;
   why: string;
   risk: string;
 }
@@ -61,23 +62,62 @@ export interface Idea {
 export const IDEAS: Idea[] = [
   {
     rank: 1,
-    title: "Admission enquiry → enrolment CRM",
-    why: "Owners measure empty seats in crores. Agencies sell leads, ERPs store records. No ad shows a product that follows up every enquiry until the child joins.",
-    risk: "The busy season is seasonal (Nov–Apr). Check whether schools pay all year.",
+    title: "School fee collection that just works",
+    evidence: "Ads + reviews",
+    why: "Sellers lead with fee follow-ups. In app reviews, paying fees is the main thing parents use these apps for, and it keeps breaking: payment taken but not recorded, missing receipts, gateway charges, cash queues.",
+    risk: "Fee startups already exist (Zenda, Jodo, GrayQuest). The edge has to be reliability and recovery rate.",
   },
   {
     rank: 2,
-    title: "Fee dues recovery autopilot",
-    why: "Nearly every ERP ad names fee follow-ups as the pain, but none sells recovery as its own product. WhatsApp reminders, UPI autopay and a defaulter view can sit on top of any ERP.",
-    risk: "ERPs may add the same feature. The edge must be recovery rate, not features.",
+    title: "Admission enquiry → enrolment CRM",
+    evidence: "Ads only",
+    why: "Owners measure empty seats in crores. Agencies sell leads and ERPs store records, but nobody follows up each enquiry until the child is enrolled.",
+    risk: "No buyer complaints confirm this yet, and the season is Nov–Apr.",
   },
   {
     rank: 3,
-    title: "Compliance tracker (CBSE, bus rules, UDISE+)",
-    why: "Sellers use new rules as their hook (skill labs, bus guidelines, NCF) but sell hardware. Nobody sells the tracking itself.",
-    risk: "Smaller market. It may only work as an add-on.",
+    title: "Two-way parent helpdesk on WhatsApp",
+    evidence: "Ads + reviews",
+    why: "\"Endless parent calls\" is a seller hook, and parents complain the apps are one-way, with no way to ask the school anything.",
+    risk: "Weakest count (~60 reviews). It may be a feature rather than a product.",
   },
 ];
+
+// Play Store scan: 38 school ERP / parent apps (Entab, MyClassboard, NextOS, Edunext, Neverskip, Skolaro, Teachmint...).
+export const REVIEW_SCAN = {
+  apps: 38,
+  reviews: 20672,
+  complaints: 5904,
+} as const;
+
+export interface ReviewTheme {
+  name: string;
+  count: number;
+}
+
+export const REVIEW_THEMES: ReviewTheme[] = [
+  { name: "Crashes, errors, won't open", count: 1336 },
+  { name: "Forced updates", count: 769 },
+  { name: "Login / password / OTP", count: 559 },
+  { name: "Homework & attachments", count: 465 },
+  { name: "Slow / loading", count: 450 },
+  { name: "Fee payment", count: 372 },
+  { name: "Missing notifications", count: 266 },
+  { name: "No support response", count: 162 },
+  { name: "Can't talk to the school", count: 61 },
+  { name: "Two kids, one account", count: 54 },
+];
+
+export const REVIEW_QUOTES: Quote[] = [
+  { text: "Payment is successful in bank but not updated in Campus Care. Raised a ticket 2 days ago, no solution.", by: "Parent · CampusCare" },
+  { text: "Because of your regular payment failure, we need to pay penalty.", by: "Parent · school fee app" },
+  { text: "Only feature available is to pay the fees of school.", by: "Parent · MyClassboard" },
+  { text: "My principal has wasted rupees 45000 in this app and got nothing.", by: "Teacher · MCB teacher app" },
+  { text: "There is no option to communicate with school teacher or staff. Every time we have a doubt we have to visit school.", by: "Parent · MyClassboard" },
+];
+
+export const REVIEW_TAKEAWAY =
+  "Reviews come from parents and students, not owners: under 2% read like school staff. They show that school apps are badly built across vendors. They also show that fee payment is the one feature parents depend on, and it often fails.";
 
 export const TAKEAWAYS = [
   "Meta reaches school owners. About 132 companies pay to target \"School Owners & Principals\", in English, Hindi and regional languages. Some have kept the same ad running for over a year.",

@@ -1,5 +1,15 @@
 import type { Verdict } from "./ad-data";
-import { CATEGORIES, IDEAS, PAINS, SCAN, TAKEAWAYS } from "./ad-data";
+import {
+  CATEGORIES,
+  IDEAS,
+  PAINS,
+  REVIEW_QUOTES,
+  REVIEW_SCAN,
+  REVIEW_TAKEAWAY,
+  REVIEW_THEMES,
+  SCAN,
+  TAKEAWAYS,
+} from "./ad-data";
 
 const VERDICT_STYLE: Record<Verdict, { bar: string; label: string }> = {
   crowded: { bar: "bg-rose-400", label: "text-rose-300" },
@@ -8,6 +18,7 @@ const VERDICT_STYLE: Record<Verdict, { bar: string; label: string }> = {
 };
 
 const MAX_ADVERTISERS = Math.max(...CATEGORIES.map((c) => c.advertisers));
+const MAX_THEME = Math.max(...REVIEW_THEMES.map((t) => t.count));
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return <p className="mb-3 text-[10px] tracking-[0.2em] text-white/30 uppercase">{children}</p>;
@@ -90,13 +101,44 @@ export default function AdResearch() {
         </section>
 
         <section className="mt-10">
-          <SectionLabel>Idea candidates · open gaps</SectionLabel>
+          <SectionLabel>
+            Play Store · {REVIEW_SCAN.apps} school apps · {REVIEW_SCAN.complaints.toLocaleString("en-IN")} complaints
+            from {REVIEW_SCAN.reviews.toLocaleString("en-IN")} reviews
+          </SectionLabel>
+          <p className="mb-4 text-sm leading-relaxed text-white/70">{REVIEW_TAKEAWAY}</p>
+          <ul>
+            {REVIEW_THEMES.map((t) => (
+              <li key={t.name} className="flex items-center gap-3 py-1.5">
+                <span className="w-44 shrink-0 truncate text-xs text-white/70 sm:w-56">{t.name}</span>
+                <div className="h-1 flex-1 overflow-hidden rounded-full bg-white/5">
+                  <div
+                    className={`h-full rounded-full ${t.name === "Fee payment" ? "bg-emerald-400" : "bg-white/25"}`}
+                    style={{ width: `${(t.count / MAX_THEME) * 100}%` }}
+                  />
+                </div>
+                <span className="w-12 text-right text-xs text-white/40 tabular-nums">{t.count}</span>
+              </li>
+            ))}
+          </ul>
+          <ul className="mt-4 grid gap-2 sm:grid-cols-2">
+            {REVIEW_QUOTES.map((q) => (
+              <li key={q.text} className="rounded-xl border border-white/5 bg-white/[0.02] px-4 py-3">
+                <p className="text-sm leading-snug text-white/80">“{q.text}”</p>
+                <p className="mt-1.5 text-[11px] text-white/35">{q.by}</p>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <section className="mt-10">
+          <SectionLabel>Idea candidates · to test with ads</SectionLabel>
           <ol className="space-y-3">
             {IDEAS.map((idea) => (
               <li key={idea.rank} className="rounded-xl border border-emerald-400/15 bg-emerald-400/[0.03] px-4 py-3.5">
                 <p className="flex items-baseline gap-2 text-sm font-medium text-white">
                   <span className="font-mono text-xs text-emerald-300/70">0{idea.rank}</span>
                   {idea.title}
+                  <span className="ml-auto shrink-0 text-[10px] font-normal text-white/35">{idea.evidence}</span>
                 </p>
                 <p className="mt-1.5 text-xs leading-relaxed text-white/60">{idea.why}</p>
                 <p className="mt-1.5 text-xs leading-relaxed text-amber-200/60">Risk: {idea.risk}</p>
