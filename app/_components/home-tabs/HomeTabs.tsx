@@ -1,21 +1,23 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
 import { useState } from "react";
-import AdResearch from "../ad-research/AdResearch";
 import BrainstormBoard from "../brainstorm-board/BrainstormBoard";
 import GroupFinder from "../group-finder/GroupFinder";
 import NetworkMindmap from "../network-mindmap/NetworkMindmap";
 
-type TabId = "industries" | "groups" | "ads";
+type TabId = "industries" | "groups";
 
 const TABS: { id: TabId; label: string }[] = [
   { id: "industries", label: "Industries" },
   { id: "groups", label: "Group finder" },
-  { id: "ads", label: "Ad research" },
 ];
 
 export default function HomeTabs() {
-  const [active, setActive] = useState<TabId>("industries");
+  const requested = useSearchParams().get("tab");
+  const [active, setActive] = useState<TabId>(
+    TABS.some((t) => t.id === requested) ? (requested as TabId) : "industries",
+  );
 
   return (
     <div className="fixed inset-0">
@@ -26,7 +28,6 @@ export default function HomeTabs() {
         </>
       )}
       {active === "groups" && <GroupFinder />}
-      {active === "ads" && <AdResearch />}
 
       <nav
         aria-label="Workspace tabs"

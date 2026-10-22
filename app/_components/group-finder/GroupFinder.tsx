@@ -1,7 +1,8 @@
 "use client";
 
+import Link from "next/link";
 import { useMemo, useState } from "react";
-import type { Group, Region } from "./group-data";
+import type { Group, GroupIdea, Region } from "./group-data";
 import {
   GROUPS,
   REGIONS,
@@ -49,13 +50,54 @@ function ReachDots({ score }: { score: number }) {
   );
 }
 
+function IdeaList({ ideas }: { ideas: GroupIdea[] }) {
+  if (ideas.length === 0) {
+    return <p className="px-1 pt-3 text-xs text-white/30">No ideas yet.</p>;
+  }
+  return (
+    <ul className="space-y-2 pt-3">
+      {ideas.map((idea) => (
+        <li key={idea.slug}>
+          <Link
+            href={`/ideas/${idea.slug}`}
+            className="group/idea flex items-center gap-3 rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 transition hover:border-white/25 hover:bg-white/[0.06]"
+          >
+            <div className="min-w-0 flex-1">
+              <p className="truncate text-sm text-white/90">{idea.title}</p>
+              <p className="mt-0.5 truncate text-[11px] text-white/40">{idea.note}</p>
+            </div>
+            <div className="hidden shrink-0 items-center gap-4 text-[11px] text-white/40 sm:flex">
+              <span>
+                ease <b className="text-white/80">{idea.easeToBuild}/5</b>
+              </span>
+              <span>
+                <b className="text-violet-200">₹{idea.payPerMonth.toLocaleString("en-IN")}</b>/mo
+              </span>
+              <span className="rounded-full border border-amber-400/30 px-2 py-0.5 text-amber-200/80">{idea.status}</span>
+            </div>
+            <span className="text-white/30 transition group-hover/idea:translate-x-0.5 group-hover/idea:text-white">→</span>
+          </Link>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 function GroupRow({ group, region }: { group: Group; region: Region }) {
+  const [open, setOpen] = useState(false);
+  const ideaCount = group.ideas?.length ?? 0;
   const market = group[region];
   const share = shareNeeded(market, region);
   const need = customersNeeded(market, region).toLocaleString(region === "india" ? "en-IN" : "en-US");
   const name = (
     <>
+      <span className={`mr-2 inline-block text-[10px] text-white/30 transition ${open ? "rotate-90" : ""}`}>▶</span>
       {group.name}
+      {ideaCount > 0 && (
+        <span className="ml-2 rounded-full bg-emerald-400/15 px-1.5 py-0.5 text-[10px] text-emerald-200">
+          {ideaCount} idea{ideaCount > 1 ? "s" : ""}
+        </span>
+      )}
       {market.sourced && <span className="ml-1.5 text-[10px] text-emerald-300/70">●</span>}
     </>
   );
@@ -69,7 +111,14 @@ function GroupRow({ group, region }: { group: Group; region: Region }) {
   );
 
   return (
-    <li title={market.sourced ? group.source : "Estimate"} className="border-b border-white/5 px-1 py-3.5">
+    <li className="border-b border-white/5 px-1 py-3.5">
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        aria-expanded={open}
+        title={market.sourced ? group.source : "Estimate"}
+        className="block w-full cursor-pointer text-left"
+      >
       {/* Mobile: name + share on top, compact stat line below */}
       <div className="sm:hidden">
         <div className="flex items-center justify-between gap-3">
@@ -109,6 +158,8 @@ function GroupRow({ group, region }: { group: Group; region: Region }) {
           <span className="w-16 text-right text-xs text-white/50 tabular-nums">{formatShare(share)}</span>
         </div>
       </div>
+      </button>
+      {open && <IdeaList ideas={group.ideas ?? []} />}
     </li>
   );
 }

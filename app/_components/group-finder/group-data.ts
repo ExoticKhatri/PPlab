@@ -24,12 +24,26 @@ export interface Market {
   sourced?: boolean;
 }
 
+export type IdeaStatus = "parked" | "testing" | "building";
+
+export interface GroupIdea {
+  slug: string;
+  title: string;
+  /** How easy it is for us to build, 1 (hard) to 5 (easy). */
+  easeToBuild: number;
+  /** What we believe a customer will pay per month, in ₹. */
+  payPerMonth: number;
+  status: IdeaStatus;
+  note: string;
+}
+
 export interface Group {
   id: string;
   name: string;
   india: Market;
   global: Market;
   source?: string;
+  ideas?: GroupIdea[];
 }
 
 // Rough estimates to start from, not facts. Sourced counts are marked; everything else is a best estimate.
@@ -41,7 +55,7 @@ export const GROUPS: Group[] = [
   { id: "dental", name: "Dental clinics", india: { reach: 4, count: 120_000, payPerMonth: 2_000 }, global: { reach: 4, count: 900_000, payPerMonth: 150 } },
   { id: "clinics", name: "Small doctor clinics", india: { reach: 4, count: 300_000, payPerMonth: 2_000 }, global: { reach: 3, count: 3_000_000, payPerMonth: 150 } },
   { id: "physio", name: "Physiotherapy clinics", india: { reach: 4, count: 30_000, payPerMonth: 1_500 }, global: { reach: 3, count: 300_000, payPerMonth: 100 } },
-  { id: "schools", name: "Private K-12 schools", india: { reach: 3, count: 340_000, payPerMonth: 4_000 }, global: { reach: 2, count: 1_500_000, payPerMonth: 150 } },
+  { id: "schools", name: "Private K-12 schools", india: { reach: 3, count: 340_000, payPerMonth: 4_000 }, global: { reach: 2, count: 1_500_000, payPerMonth: 150 }, ideas: [{ slug: "k12-school-ops", title: "All-in-one school ops app: fees, admission leads, parent comms", easeToBuild: 2, payPerMonth: 5_000, status: "parked", note: "Clear demand, but WhatsApp integration makes it hard to build." }] },
   { id: "restaurants", name: "Restaurants & cloud kitchens", india: { reach: 5, count: 500_000, payPerMonth: 1_500 }, global: { reach: 4, count: 15_000_000, payPerMonth: 70 } },
   { id: "salons", name: "Salons & spas", india: { reach: 5, count: 600_000, payPerMonth: 800 }, global: { reach: 4, count: 3_000_000, payPerMonth: 40 } },
   { id: "brokers", name: "Real estate brokers", india: { reach: 5, count: 200_000, payPerMonth: 1_500 }, global: { reach: 5, count: 2_500_000, payPerMonth: 60 } },

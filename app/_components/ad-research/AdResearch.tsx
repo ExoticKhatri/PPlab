@@ -33,10 +33,11 @@ function Stat({ value, label }: { value: string; label: string }) {
   );
 }
 
-export default function AdResearch() {
+export default function AdResearch({ header }: { header?: React.ReactNode }) {
   return (
     <div className="h-full w-full overflow-y-auto bg-[#05070f] text-white">
       <div className="mx-auto max-w-4xl px-4 pt-8 pb-28 sm:px-8">
+        {header}
         <p className="text-xs text-white/40">
           Meta Ad Library · K-12 private schools · India · {SCAN.date}
         </p>
