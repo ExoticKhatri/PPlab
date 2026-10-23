@@ -1,85 +1,142 @@
 # Data platforms
 
-Where we pull data from to find a group's pain points, what each source gives us, and its limits.
-Status as of 22 Oct 2026. All scrapers run locally with Node.js; raw data stays out of git.
+Where we pull data from to understand a group (how big it is, how to reach it, what hurts), what each source gives us, and how we collect it.
+Updated 23 Oct 2026. All scrapers run locally with Node.js; raw data stays out of git.
 
 ## At a glance
 
-| Platform | What we get | Whose voice | Volume so far | Status |
+| Platform | What we get | Whose voice | How | Status |
 | --- | --- | --- | --- | --- |
-| Meta Ad Library | Live ads aimed at a group | Sellers (what they think hurts buyers) | 2,131 school ads · 1,176 lab ads | ✅ Working |
-| Google Play Store | App reviews, 1–5 stars | End users (parents, patients, some staff) | 20,672 school · 15,173 lab reviews | ✅ Working |
-| YouTube | Comments on "how to start/run X" videos | Owners and would-be owners | Labs: 409 comments from 54 videos | ✅ Working (slow) |
-| Google Maps | Reviews of local businesses | Customers of small independent businesses | 0 | ❌ Reviews hidden from automated browsers |
-| Reddit | Posts and comments from professionals | Staff and owners (mostly global) | 0 (waiting on capture) | ⚠️ Works via browser extension while signed in; see scripts/reddit |
-| Software review sites | Reviews of B2B software | Admins and owners (the buyers) | — | ⚠️ Capterra blocks; SoftwareSuggest too thin |
+| Meta Ad Library | Live ads aimed at a group | Sellers (what they think hurts buyers) | Playwright, signed out | ✅ Working |
+| Google Play Store | App details (downloads, price, ratings) + reviews | End users, some staff | `google-play-scraper` + Playwright search | ✅ Reviews working · 🔧 app details to add |
+| Apple App Store | App details + reviews | End users (iPhone-heavy groups, e.g. tattoo artists) | `app-store-scraper` | 🆕 Planned |
+| YouTube | Comments on "how to start/run X" videos | Owners and would-be owners | `yt-dlp` (all comments) | 🔧 Upgrade from Playwright top-20 |
+| Google Maps | Businesses per city + their reviews | Customers of small independent businesses | Playwright, signed-in profile | 🔧 Rebuild with signed-in profile |
+| Reddit | Posts + comments from professionals | Staff and owners (mostly global) | Playwright, signed-in profile | 🔧 Move from extension to automation |
+| LinkedIn | People counts by job title, posts | Owners, managers, decision makers | Playwright, signed-in profile | 🆕 Planned (account risk, see below) |
+| Google Search (autocomplete, "People also ask") | What the group types into Google | Owners and would-be owners | Playwright, signed out | 🆕 Planned |
+| Google Trends | Search interest over time and by region | Everyone searching | Playwright or `google-trends-api` | 🆕 Planned |
+| Google Ads Keyword Planner | Monthly search volume per keyword | Everyone searching | Manual export (free Ads account) | 🆕 Planned |
+
+**Removed:** software review sites (Capterra, SoftwareSuggest, TechJockey). Capterra blocks automation, and the rest have 5–10 mostly vendor-solicited reviews per product, so the volume is too low to be useful.
+
+**Not useful here:** Google Search Console only reports searches that reached *our own* website, so it can't show what a group searches for in general. Google autocomplete, Trends and Keyword Planner answer that question instead.
+
+## Signed-in browser profile (shared by Maps, Reddit, LinkedIn)
+
+These sites hide data from signed-out automated browsers, so we use one persistent Playwright browser profile:
+
+1. Run `scripts/browser-profile/login.mjs`. A normal, visible browser opens.
+2. Sign in by hand to Google, Reddit and LinkedIn once. The profile is saved locally, outside the repo (it holds session cookies; never commit it).
+3. Every scraper launches with that profile (`chromium.launchPersistentContext`), visible rather than headless, so pages behave as they do for a person.
+
+How we keep it safe:
+
+- Human pace: random 2–6 second pauses, a limited number of pages per run, stop at the first sign of a captcha or "unusual activity" warning.
+- Read-only: the scripts never post, like, message or connect.
+- Small batches per group (hundreds of items, not hundreds of thousands).
+
+**Risk:** automation breaks the terms of service of LinkedIn, and to a lesser degree Google and Reddit. LinkedIn is the strictest: it restricts or bans accounts it thinks are automated. Use it sparingly, and accept that the account could be restricted.
 
 ## Meta Ad Library
 
 - **What it is:** Meta's public library of every active ad on Facebook and Instagram, searchable by keyword and country.
-- **How we pull it:** [scripts/ad-library/](../scripts/ad-library/). A headless Chromium browser (Playwright) opens the library search page for each keyword, scrolls and saves the page text. `parse.mjs` turns that into one record per ad.
-- **Data per ad:** advertiser, ad text, start date (so how many days it has run), whether it has multiple versions, which keywords matched.
-- **What it tells us:**
-  - **Can we reach the group?** If many companies keep paying to target them, Meta works for that group.
-  - **What is already sold to them**, and how crowded each category is.
-  - **The pain sellers lead with:** their bet on what hurts the buyer.
-  - **What lasts:** an ad running for months is the best available sign it pays off.
-- **Limits:**
-  - Meta doesn't show spend, reach or targeting for ordinary ads in India, only for political ads. The official API is limited to those too, which is why we use the website.
-  - Keyword search is loose, so a lot of noise comes back (real estate "near school", yoga "teacher training"). The final advertiser list is checked by hand.
-  - It's a snapshot of ads active on the day we scrape.
+- **How we pull it:** [scripts/ad-library/](../scripts/ad-library/). Headless Playwright opens the library search for each keyword (`COUNTRY=US` or `IN`), scrolls, saves the page text, and `parse.mjs` turns that into one record per ad.
+- **Data per ad:** advertiser, ad text, start date (so days running), whether it has multiple versions, which keywords matched.
+- **What it tells us:** whether Meta reaches the group (companies keep paying to target them), what's already sold to them and how crowded each category is, the pain sellers lead with, and which ads last (running for months is the best available sign an ad pays off).
+- **Limits:** no spend or targeting data for non-political ads; keyword search is loose, so advertisers are checked by hand; a snapshot of the day it runs.
 - **Cost:** free.
 
 ## Google Play Store
 
-- **What it is:** reviews of Android apps used by the group or its customers.
-- **How we pull it:** [scripts/play-reviews/](../scripts/play-reviews/).
-  - `playsearch.mjs` searches the Play Store website with Playwright to find app IDs. The library's own search function is broken.
-  - `reviews.mjs` uses `google-play-scraper` to fetch the newest reviews per app (up to ~1,500 each).
-  - `themes.mjs` tags complaints (1–3 stars) by theme and guesses the reviewer's role.
-- **Data per review:** app, star rating, date, text, thumbs-up count, whether the developer replied.
-- **What it tells us:** what breaks in the tools the group (or its customers) already pays for, in their own words, counted by theme.
-- **Limits:**
-  - Reviewers are mostly **end users, not buyers**: parents rather than school owners, patients rather than lab owners. Under 2% of school reviews read like staff.
-  - B2B apps have very few reviews (lab software apps: 2–200 each).
-  - Theme tagging is keyword rules, so counts are approximate. Always read a sample.
+- **What it is:** the Android apps a group (or its customers) uses: who the competitors are, how big they are, and what users complain about.
+- **How we pull it:** [scripts/play-reviews/](../scripts/play-reviews/). `playsearch.mjs` finds app IDs through the Play Store website (the library's own search is broken), `reviews.mjs` fetches reviews, `themes.mjs` tags complaints by theme.
+- **Data per app (to add — `google-play-scraper` already returns all of it):**
+  - downloads (`minInstalls` / `maxInstalls`, e.g. "1M+")
+  - free or paid, price, currency
+  - in-app purchases and their price range, contains ads
+  - rating, number of ratings, number of reviews, star histogram (1–5)
+  - category, developer, developer website and email
+  - released date, last updated, current version, content rating
+- **Data per review:** star rating, date, text, thumbs-up count, whether the developer replied.
+- **What it tells us:** the competitor landscape with sizes (downloads) and business models (free / paid / in-app purchases), plus what breaks in tools the group already pays for.
+- **Limits:** reviewers are mostly end users, not buyers; B2B apps have few reviews; theme counts come from keyword rules, so read a sample.
+- **Cost:** free.
+
+## Apple App Store (planned)
+
+- **Why:** some groups are iPhone-heavy. Tattoo booking tools barely exist on Android, but they do on iOS.
+- **How:** `app-store-scraper` (npm) for app details (price, rating, number of ratings, category, release notes) and up to ~500 recent reviews per app per country.
 - **Cost:** free.
 
 ## YouTube
 
-- **What it is:** comments under videos like "pathology lab kaise khole" or "lab owner problems". Owners and would-be owners ask questions and complain there, often in Hindi.
-- **How we pull it:** [scripts/youtube-comments/](../scripts/youtube-comments/). Playwright searches YouTube, takes the top videos per query, scrolls each page so the comments load, and saves them.
-- **Data per comment:** video, video title, search query, comment text.
-- **What it tells us:** the owner's own voice, which is the one thing Play Store lacks. The video titles are a signal too, for example "Hidden problems of offline pathology software".
-- **Limits:**
-  - Only the top ~20 comments per video load without logging in.
-  - It's slow (about 25 seconds per video) and needs careful scrolling or no comments load.
-  - Lots of noise ("nice video", "call me").
-  - The official YouTube Data API would be faster and more complete, but it needs an API key (free quota).
+- **What it is:** comments under videos like "pathology lab kaise khole" or "tattoo artist no-shows". Owners and would-be owners ask questions and complain there, often in Hindi.
+- **Today:** [scripts/youtube-comments/](../scripts/youtube-comments/). Playwright scrolls each video page; only ~20 top comments load per video, at about a minute each.
+- **Upgrade:** switch comment collection to **`yt-dlp --write-comments`**. It pulls every comment and reply on a video without an API key or login, in seconds. Keep Playwright (or `yt-dlp ytsearchN:`) only to find videos per search query.
+- **Data per video:** title, channel, views, likes, upload date, duration, description, comment count.
+- **Data per comment:** text, author, likes, date, whether it's a reply, whether the creator pinned or hearted it.
+- **What it tells us:** the owner's own voice, which Play Store lacks; video titles and view counts also show which topics this group cares about.
+- **Fallback:** the official YouTube Data API (free key, 10,000 units/day) if `yt-dlp` gets rate-limited.
 - **Cost:** free.
 
 ## Google Maps
 
-- **What it is:** reviews of local businesses. This is the best source for **small independent** businesses, which chain apps don't cover.
-- **Status:** ❌ The scraper (`gmaps.mjs`) finds places, but Google shows a limited view with no reviews to an automated browser that isn't signed in.
-- **Options:**
-  - The Google Places API (paid, returns only 5 reviews per place).
-  - A paid scraping service.
-  - Collecting a sample by hand for a few cities.
+- **What it is:** the best source for **small independent businesses**, which chain apps don't cover. It serves two jobs:
+  1. **Group size and reach:** how many businesses of a type exist per city, with phone and website.
+  2. **Customer pain:** reviews of those businesses (what their customers complain about = what the owner struggles with).
+- **Why it failed before:** signed out, Google shows automated browsers a limited view without reviews.
+- **Plan:** Playwright with the signed-in profile. Search "pathology lab in Lucknow" (etc.), scroll the results list to the end, open each place, sort reviews by lowest rating and scroll.
+- **Data per place:** name, category, rating, review count, address, phone, website, opening hours, price level.
+- **Data per review:** stars, text, date, whether the owner replied (and the reply).
+- **Limits:** Maps stops listing after ~120 results per search, so we search per city or neighbourhood; Google is quick to show captchas, so runs stay small.
+- **Cost:** free (no Places API).
 
 ## Reddit
 
-- **What it is:** communities of professionals, such as r/medicallaboratory, r/pathology and r/Teachers. Staff and owners vent there in detail, but mostly outside India.
-- **Status:** ❌ Both Reddit's JSON endpoints and old.reddit.com return 403 or "blocked by network security" to our requests.
-- **Fix:** [ksanjeev284/reddit-universal-scraper](https://github.com/ksanjeev284/reddit-universal-scraper), tested: all 40 tests pass. Two routes: (1) its Chrome extension captures posts and comments while you browse Reddit signed in, then exports JSON. It is DOM-only, reads no cookies and only talks to 127.0.0.1. (2) The official OAuth API, which needs Reddit approval; new requests close 31 Oct 2026. We use route 1. Analysis: [scripts/reddit/](../scripts/reddit/).
+- **What it is:** communities of professionals (r/TattooArtists, r/medicallaboratory, r/Teachers). Staff and owners vent there in detail, mostly outside India.
+- **Today:** Reddit blocks signed-out requests (403). The [reddit-universal-scraper](https://github.com/ksanjeev284/reddit-universal-scraper) Chrome extension works but needs someone to browse by hand; its OAuth route needs Reddit's approval (new requests close 31 Oct 2026).
+- **Plan:** Playwright with the signed-in profile on old.reddit.com: run searches inside each subreddit, open threads, expand comments, save. [scripts/reddit/analyze.mjs](../scripts/reddit/) already counts themes from the same post/comment shape.
+- **Data per post:** subreddit, title, text, score, comment count, date, link. **Per comment:** text, score, date.
+- **Cost:** free.
 
-## Software review sites
+## LinkedIn (planned, use sparingly)
 
-- **Capterra:** blocked by Cloudflare.
-- **SoftwareSuggest / TechJockey:** load fine, but have only about 5–10 reviews per product, nearly all positive (likely vendor-solicited). Not worth scraping at scale.
+- **What it gives us:**
+  1. **Group size:** people search by job title ("tattoo studio owner", "laboratory director", "school principal") with location filters shows how many members match — a real count of reachable decision makers.
+  2. **Voice:** posts from owners and managers about their problems.
+  3. **Competitors:** company pages (size, followers, recent posts).
+- **How:** Playwright with the signed-in profile, a handful of searches per group, read-only.
+- **Limits:** free accounts see limited search results per month; LinkedIn actively restricts automated accounts (see Risk above).
+- **Cost:** free.
+
+## Google Search: autocomplete and "People also ask" (planned)
+
+- **What it is:** what people actually type into Google about a topic, e.g. "tattoo booking app for…", "how to stop no shows tattoo", "pathology lab software price".
+- **How:** Playwright, signed out: type each seed keyword with a–z suffixes to collect autocomplete suggestions, and read the "People also ask" and "Related searches" boxes on result pages.
+- **What it tells us:** the problems and questions the group searches for, in their own words — good for pain points and later for ad and landing-page wording.
+- **Cost:** free.
+
+## Google Trends and Keyword Planner (planned)
+
+- **Google Trends:** relative search interest over time and by state/country (is this topic growing? where?). Free; via the website or the `google-trends-api` npm package.
+- **Google Ads Keyword Planner:** actual monthly search volumes and ad cost per click for each keyword. Free with a Google Ads account (no ad spend needed); exported by hand as CSV.
+
+## Other sources worth adding later
+
+| Source | What it adds | Notes |
+| --- | --- | --- |
+| Facebook Groups | Owner communities (e.g. "Tattoo Artists India", lab owner groups) — very candid | Signed-in profile; only groups you've joined |
+| Instagram | Tattoo artists live here: how many exist per city, their bios (booking links = which tools they use) | Signed-in profile; strict on automation |
+| JustDial / IndiaMART | Indian business counts and contacts per city and category | Signed out works; good for group size in India |
+| Trustpilot | Reviews of big competitors (Booksy, Vagaro, Fresha, Tattoodo) written by paying businesses | Signed out works; competitor-level, not per-group |
+| Job posts (Naukri, Indeed) | Which tasks businesses hire people for = manual work software could replace | Signed out works |
+| Public registries (NABL labs, UDISE+ schools) | Official counts to replace estimates | Downloadable lists, no scraping needed |
+| Competitor pricing pages | What competitors charge and how it changes | Signed out; snapshot monthly |
 
 ## Rules we follow
 
-- Only public pages, no logins, slow request rates.
-- Raw scraped data stays local (gitignored). Only summaries go into pplab.
+- Read-only: never post, message, like or connect from automation.
+- Human pace and small batches; stop at the first captcha or warning.
+- The signed-in browser profile and raw scraped data stay local (gitignored). Only summaries go into pplab.
 - Numbers shown in pplab are labelled as estimates unless they come from a sourced count.
