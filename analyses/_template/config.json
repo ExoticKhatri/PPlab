@@ -74,8 +74,13 @@
     "searchQueries": [
       "problem phrase"
     ],
+    "searchSort": "relevance",
+    "searchTimeframe": "all",
     "searchAllReddit": true,
     "discoverSubreddits": true,
+    "discoveryQueries": [
+      "group term, e.g. tattoo artist"
+    ],
     "postsPerSearch": 25,
     "topPostsPerSub": 25,
     "topTimeframe": "year",

@@ -90,7 +90,7 @@ How we keep it safe:
 ## Reddit
 
 - **What it is:** communities of professionals (r/TattooArtists, r/medicallaboratory, r/Teachers). Staff and owners vent there in detail, mostly outside India.
-- **How we pull it:** [scripts/collect/reddit.mjs](../scripts/collect/reddit.mjs), in the signed-in Brave profile on old.reddit.com (old Reddit now requires an account; signed out, every page redirects to login). It discovers matching subreddits with member counts, searches each subreddit and all of Reddit for the configured queries, takes each subreddit's top posts, then opens the most-commented threads and reads their comments.
+- **How we pull it:** [scripts/collect/reddit.mjs](../scripts/collect/reddit.mjs), inside the signed-in Brave profile, reading Reddit's own JSON (the data the site itself loads) with the session's cookies. Signed-out requests get 403, and old.reddit now redirects logged-in users to the redesign, so page scraping was fragile. It discovers subreddits for group terms (`discoveryQueries`), searches each subreddit and all of Reddit for problem phrases, takes each subreddit's top posts, then reads comments on the most-commented threads.
 - **Data per subreddit:** name, members, description. **Per post:** subreddit, title, score, comment count, date, link. **Per thread:** post body and comments (author, score, depth, text, date).
 - **Setup:** run `node login.mjs` once and sign in to Reddit. If the session expires the collector stops with a clear message.
 - **Limits:** human-paced (~5 s per page); Reddit skews US/global.

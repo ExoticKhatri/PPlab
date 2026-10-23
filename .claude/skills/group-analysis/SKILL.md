@@ -31,7 +31,7 @@ cd scripts/collect
 ls node_modules .venv >/dev/null 2>&1 || npm run setup   # npm deps, Playwright Chromium, yt-dlp in .venv
 ```
 
-**Signed-in browser (Reddit, Google result pages):** these run in a visible Brave window with its own profile (`~/.pplab-browser-profile`, outside the repo). Reddit needs an account: if the profile isn't signed in, `reddit.mjs` stops with "old Reddit requires a signed-in account". Then ask the user to run `node login.mjs` from `scripts/collect`, sign in to Reddit (and Google) in the window that opens, and close it — you can't sign in for them. The window appears on their screen while collectors run; tell them not to close it mid-run.
+**Signed-in browser (Reddit, Google result pages):** these run in a visible Brave window with its own profile (`~/.pplab-browser-profile`, outside the repo). Reddit reads Reddit's JSON through that signed-in session; if the session is missing or expired, `reddit.mjs` stops with a 401/403 message. Then ask the user to run `node login.mjs` from `scripts/collect`, sign in to Reddit (and Google) in the window that opens, and close it — you can't sign in for them. The window appears on their screen while collectors run; tell them not to close it mid-run.
 
 ## 2. Create or update the group's config
 
@@ -80,7 +80,10 @@ Anything left out falls back to the default in `scripts/collect/lib/config.mjs`.
 | `reddit.subreddits` | `[]` | Communities to search, without "r/" |
 | `reddit.searchQueries` | `[]` | Searched inside each subreddit (and across Reddit) |
 | `reddit.searchAllReddit` | `true` | Also search all of Reddit for each query |
-| `reddit.discoverSubreddits` | `true` | Find communities matching the queries, with member counts |
+| `reddit.searchSort` | `relevance` | `relevance`, `new`, `top`, `comments` |
+| `reddit.searchTimeframe` | `all` | `hour` … `year`, `all`; use `year`/`month` (or `new` sort) when the user wants recent talk |
+| `reddit.discoverSubreddits` | `true` | Find communities (with member counts) using `discoveryQueries` |
+| `reddit.discoveryQueries` | `[]` | Group terms for discovery ("tattoo artist", "lab owner") — not problem phrases, which return unrelated big subreddits |
 | `reddit.postsPerSearch` | `25` | Posts kept per search |
 | `reddit.topPostsPerSub` | `25` | Each subreddit's top posts in `topTimeframe` |
 | `reddit.topTimeframe` | `year` | hour, day, week, month, year, all |
@@ -95,7 +98,7 @@ Anything left out falls back to the default in `scripts/collect/lib/config.mjs`.
 - **YouTube queries:** how owners talk: "how to start a …", "… business problems", "… profit", "best … software", plus Hindi phrasing for Indian groups ("… kaise khole").
 - **Google search seeds:** 3–8 short phrases in the group's words about their problems and tools ("tattoo deposit", "pathology lab software"). `resultsQueries`: a few full questions ("how to stop no shows tattoo").
 - **Google Trends keywords:** broad anchor first ("tattoo artist"), then 4–12 topic terms; use the group's main country as `geo`.
-- **Reddit:** 2–6 subreddits where the group talks shop (r/TattooArtists, r/medicallaboratory, r/Teachers); leave `discoverSubreddits` on to find more. Queries are problem phrases ("no show", "deposit", "booking app", "software", "pricing").
+- **Reddit:** 2–6 subreddits where the group talks shop (r/TattooArtists, r/medicallaboratory, r/Teachers); set `discoveryQueries` to group terms to find more communities. Queries are problem phrases ("no show", "deposit", "booking app", "software", "pricing").
 - **Limits:** quick look = defaults. Deep run = `maxAdsPerKeyword` 200, `reviewsPerApp` 1500, `maxCommentsPerVideo` 1000. Mention roughly how long it will take: Meta ~30–60 s per keyword per country, YouTube ~10–40 s per video, Google search ~25 s per seed plus ~10 s per result page, Trends ~10 s per keyword, Reddit ~5 s per page (searches + threads).
 
 ## 3. Collect
@@ -156,7 +159,7 @@ The pplab group page (`/groups/<id>`) reads `app/_components/ad-research/researc
 | YouTube (all comments via yt-dlp) | `youtube.mjs` | Ready |
 | Google search (autocomplete + People also ask + related) | `google-search.mjs` | Ready (autocomplete via plain HTTP; result pages via signed-in Brave, stops on captcha) |
 | Google Trends | `google-trends.mjs` | Ready (`google-trends-api`) |
-| Reddit | `reddit.mjs` | Ready (signed-in Brave on old.reddit.com; needs `node login.mjs` once) |
+| Reddit | `reddit.mjs` | Ready (Reddit JSON through the signed-in Brave session; needs `node login.mjs` once) |
 | Google Maps, LinkedIn | — | Planned (see docs/platform.md). If config lists one, skip it and note it under Data gaps. |
 
 ## Rules

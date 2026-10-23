@@ -65,7 +65,10 @@ export const DEFAULTS = {
     subreddits: [], // without "r/", e.g. "TattooArtists"
     searchQueries: [], // searched inside each subreddit (and across Reddit if searchAllReddit)
     searchAllReddit: true,
-    discoverSubreddits: true, // also find communities matching the queries (with member counts)
+    searchSort: "relevance", // relevance, new, top, comments
+    searchTimeframe: "all", // hour, day, week, month, year, all — use "year" or "month" for recent talk
+    discoverSubreddits: true, // also find communities (with member counts) …
+    discoveryQueries: [], // … using these group terms, e.g. "tattoo artist" (not problem phrases)
     postsPerSearch: 25,
     topPostsPerSub: 25, // also take each subreddit's top posts
     topTimeframe: "year", // hour, day, week, month, year, all
