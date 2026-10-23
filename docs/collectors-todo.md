@@ -1,0 +1,66 @@
+# Collectors TODO
+
+From the first full run (K-12 private schools, India, 23 Oct 2026 — all 7 platforms, 2 h 1 min end to end).
+Raw numbers: Meta 3,060 ads · Play 40 apps / 38,394 reviews · YouTube 56 videos / 6,045 comments · Google 1,468 autocomplete / 0 "People also ask" pages · Trends 7 terms · Reddit 640 posts / 9,080 comments · Maps 180 schools / 672 reviews.
+
+## 1. Fixes (data quality)
+
+### Google search — "People also ask" blocked
+- [ ] First result page hit Google's "I'm not a robot" captcha, so 0 result pages were read (autocomplete was fine).
+- [ ] **Human-in-the-loop captcha:** when a captcha appears, keep the window open, print "solve the captcha in the Brave window", and wait (up to ~3 min) for the page to clear, then continue — instead of stopping immediately.
+- [ ] Warm up like a person before searching: open google.com, wait, type the query into the search box (instead of loading a `/search?q=` URL directly).
+- [ ] Longer, random gaps between result pages (15–40 s) and a lower default `maxResultsPages`.
+- [ ] Fallback when Google blocks: read "People also ask"-style questions from Bing (`bing.com/search`), which rarely shows captchas.
+
+### Google Trends — misleading numbers
+- [ ] Show "too little data" instead of a % change when the previous 12-month average is below ~2 or the peak is below ~5 (e.g. "fee management software +1667%" was 0.1 → 1).
+- [ ] Filter related/rising queries that are just logins or brand names ("erp login vivekanand school", "lexicon school erp login") into a separate "navigational" list.
+- [ ] Note in the output when a keyword returned no regional data.
+
+### Reddit — noise
+- [ ] **Subreddit relevance filter:** discovery returned r/AbbottElementary, r/AdvaitaVedanta, r/teenagers, r/news. Keep only subreddits whose name or description matches group terms; list the rest separately as "discovered but off-topic".
+- [ ] **Post relevance filter for all-of-Reddit search:** it pulled r/AITAH, r/politics, r/Superstonk. Keep a post only if its title or body contains a query term (or the subreddit is in the config list).
+- [ ] Validate configured subreddits exist and report empty/private ones (r/IndianTeachers returned nothing).
+- [ ] Read threads chosen by relevance, not only by comment count (the most-commented threads can be off-topic drama).
+- [ ] Add India-focused discovery hints for Indian groups (r/india, r/StartUpIndia, city subreddits) and flag in the output that Reddit skews US.
+
+### YouTube — coverage and relevance
+- [ ] `minViews: 1000` cut some Hindi queries to 1–2 videos ("school kaise khole": 2, "school fees collection problem": 1). Report per query how many videos were found vs kept, and default `minViews` to 0 for Hindi/regional queries.
+- [ ] Optional title relevance filter (drop videos whose title shares no word with the query, e.g. "School Principal interview questions" for "school principal challenges").
+- [ ] Record each comment's video query so the analysis can split by topic.
+
+### Google Maps — reviews switched off
+- [ ] Google has reviews disabled on many listings (124 of 180 private schools had no Reviews tab or rating). Detect "no Reviews tab" explicitly and record `reviewsDisabled: true`, and show it in the output as "reviews off" (not "0 reviews").
+- [ ] Rating fallback: read the rating only from the place's own header; never from a nearby-place card (a nearby school's "4.5 stars · 109 reviews" was on the same page).
+- [ ] Show per city: places, places with reviews, reviews read.
+
+### Meta Ad Library — noise
+- [ ] Keyword search is loose (1,554 advertisers for 28 keywords). Add a rule-based first pass that tags each advertiser as "sells to the group", "the group advertising itself" (e.g. schools' admission ads) or "noise", using group terms in the ad text; the skill then checks by hand.
+- [ ] Record the ad's language (Hindi/regional vs English) for the reachability verdict.
+
+### All collectors
+- [ ] Per-platform log files (`raw/<platform>/run.log`) plus one summary line per platform with counts kept vs dropped.
+- [ ] Progress with ETA ("Maps 48/180, ~30 min left").
+- [ ] Resume: re-running a platform skips items already in `raw/` (e.g. videos or places already read) unless `--fresh`.
+- [ ] Each `.md` lists what was skipped or filtered and why, so data gaps are visible.
+
+## 2. Parallelisation (the run took 2 h 1 min serially)
+
+Time per platform in that run: Meta 21 min · Play 7 min · YouTube 38 min · Google search 2 min · Trends 1 min · Reddit 7 min · Maps 45 min.
+
+- [ ] **Run platforms in parallel in `run.mjs`.** Two lanes running at the same time:
+  - Lane A (no signed-in browser, safe to run together): Meta ads, Play Store, YouTube, Google Trends, Google search autocomplete.
+  - Lane B (shares the one signed-in Brave profile, so one at a time): Google search result pages → Reddit → Google Maps.
+  - Expected wall time ≈ the longest lane (~50 min) instead of ~2 h.
+- [ ] **YouTube:** fetch 3–4 videos' comments at once (parallel `yt-dlp` processes) — biggest single saving.
+- [ ] **Play Store:** fetch reviews for several apps at once (3–5 concurrent).
+- [ ] **Meta ads:** 2–3 browser tabs scraping different keywords at once (watch for rate limits).
+- [ ] **Google Maps:** read place details in 2 tabs of the same signed-in browser; keep reviews sequential and human-paced (captcha risk).
+- [ ] **Reddit:** 2–3 concurrent JSON requests within Reddit's rate limit (~60/min signed in).
+- [ ] Config: `concurrency` per platform (default conservative), and `run.mjs --parallel` / `--serial`.
+- [ ] Interleaved output must stay readable: prefix every line with the platform (already done) and write per-platform logs.
+
+## 3. Later
+
+- [ ] LinkedIn collector (see docs/platform.md — account risk).
+- [ ] pplab group pages read `analyses/<group>/README.md` instead of the hand-written research files.

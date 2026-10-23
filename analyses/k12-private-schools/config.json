@@ -1,0 +1,107 @@
+{
+  "group": "Private K-12 schools (India)",
+  "groupId": "schools",
+  "platforms": "all",
+
+  "metaAds": {
+    "countries": ["IN"],
+    "keywords": [
+      "school ERP", "school management software", "school software", "school app", "school fee",
+      "fee collection", "school admission", "admissions open", "school principal", "school owners",
+      "CBSE school", "CBSE affiliation", "school franchise", "start a school", "school website",
+      "school marketing", "school bus tracking", "attendance app", "report card", "school LMS",
+      "smart class", "interactive panel", "robotics lab", "STEM lab", "school curriculum",
+      "teacher training", "parents app", "school loan"
+    ],
+    "maxAdsPerKeyword": 150,
+    "maxScrollRounds": 30,
+    "activeOnly": true
+  },
+
+  "playStore": {
+    "country": "in",
+    "lang": "en",
+    "searchTerms": [
+      "school erp", "school management app", "school app for parents", "school fee payment app",
+      "school attendance app", "school admin app", "teacher app school", "school diary app"
+    ],
+    "appIds": [
+      "com.campuscare.entab.ui", "com.entab.learninglab", "com.mcb.myclassboard.activity", "com.mcb.teacherapp",
+      "com.next.nlp", "com.nskparent", "com.edunext.tsmv10", "com.teachmint.teachmint", "com.buzzyears.ibuzz",
+      "com.twobasetechnologies.skoolbeep", "com.classon.parentapp", "com.vedmarg", "org.school.mitra",
+      "com.kranti.android.edumarshal", "io.nexquare.parent", "com.leadschool.parentapp", "in.helloparent.parent"
+    ],
+    "maxApps": 40,
+    "minReviews": 20,
+    "reviewsPerApp": 1000,
+    "complaintMaxStars": 3
+  },
+
+  "youtube": {
+    "queries": [
+      "how to run a private school successfully", "private school business plan india", "school kaise khole",
+      "school management problems principal", "school fees collection problem", "school admission marketing ideas",
+      "school ERP software review india", "CBSE affiliation process", "school owner income india",
+      "school principal challenges india"
+    ],
+    "videosPerQuery": 8,
+    "maxCommentsPerVideo": 1000,
+    "maxRepliesPerThread": 5,
+    "commentSort": "top",
+    "minViews": 1000
+  },
+
+  "googleSearch": {
+    "hl": "en",
+    "gl": "in",
+    "seeds": [
+      "school erp", "school management software", "school fee collection", "school admission",
+      "cbse affiliation", "school app for parents", "private school"
+    ],
+    "expandAlphabet": true,
+    "resultsQueries": [
+      "best school management software in india", "how to increase admissions in private school",
+      "how to collect school fees online", "school erp price in india", "problems faced by private school owners"
+    ],
+    "maxResultsPages": 5,
+    "expandPeopleAlsoAsk": 3
+  },
+
+  "googleTrends": {
+    "geo": "IN",
+    "timeframe": "today 5-y",
+    "keywords": [
+      "school management software", "school erp", "fee management software", "school app",
+      "cbse affiliation", "school admission", "online fee payment school"
+    ],
+    "regionsResolution": "REGION"
+  },
+
+  "reddit": {
+    "subreddits": ["Teachers", "Principals", "edtech", "k12sysadmin", "IndianTeachers"],
+    "searchQueries": [
+      "school ERP", "school management software", "fee collection", "parent communication app",
+      "admissions", "attendance app", "report cards software"
+    ],
+    "searchAllReddit": true,
+    "searchSort": "relevance",
+    "searchTimeframe": "all",
+    "discoverSubreddits": true,
+    "discoveryQueries": ["school principal", "school administration", "indian teachers", "school owner"],
+    "postsPerSearch": 25,
+    "topPostsPerSub": 15,
+    "topTimeframe": "year",
+    "maxThreads": 50,
+    "commentsPerThread": 200,
+    "minPostScore": 0
+  },
+
+  "googleMaps": {
+    "hl": "en",
+    "queries": ["private school"],
+    "locations": ["Mumbai", "Delhi", "Bengaluru", "Lucknow", "Jaipur", "Indore"],
+    "maxPlacesPerSearch": 30,
+    "reviewsPerPlace": 12,
+    "reviewSort": "lowest"
+  }
+}
