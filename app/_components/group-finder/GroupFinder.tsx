@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import type { Group, GroupIdea, Region } from "./group-data";
+import { getGroupResearch } from "../ad-research/research-registry";
+import type { Group, Region } from "./group-data";
 import {
   GROUPS,
   REGIONS,
@@ -82,45 +83,16 @@ function ReachDots({ score }: { score: number }) {
   );
 }
 
-function IdeaList({ ideas }: { ideas: GroupIdea[] }) {
-  if (ideas.length === 0) {
-    return <p className="mt-2 ml-5 border-l border-white/10 py-1 pl-3 text-xs text-white/25">No ideas yet</p>;
-  }
-  return (
-    <ul className="mt-2 ml-5 border-l border-white/10">
-      {ideas.map((idea) => (
-        <li key={idea.slug}>
-          <Link
-            href={`/ideas/${idea.slug}`}
-            className="group/idea flex items-center gap-3 py-1.5 pl-3 text-xs transition"
-          >
-            <span className="min-w-0 flex-1 truncate text-white/60 transition group-hover/idea:text-white">
-              {idea.title}
-            </span>
-            <span className="hidden shrink-0 text-white/30 tabular-nums sm:inline">
-              ease {idea.easeToBuild}/5 · ₹{idea.payPerMonth.toLocaleString("en-IN")}/mo · {idea.status}
-            </span>
-            <span className="text-white/20 transition group-hover/idea:translate-x-0.5 group-hover/idea:text-white">
-              →
-            </span>
-          </Link>
-        </li>
-      ))}
-    </ul>
-  );
-}
-
 function GroupRow({ group, region }: { group: Group; region: Region }) {
-  const [open, setOpen] = useState(false);
-  const ideaCount = group.ideas?.length ?? 0;
+  const analysed = getGroupResearch(group.id) !== null;
   const market = group[region];
   const share = shareNeeded(market, region);
   const need = customersNeeded(market, region).toLocaleString(region === "india" ? "en-IN" : "en-US");
   const name = (
     <>
-      <span className={`mr-2 inline-block w-2 text-white/25 transition ${open ? "rotate-90" : ""}`}>›</span>
+      <span className="mr-2 inline-block w-2 text-white/25 transition group-hover/row:translate-x-0.5 group-hover/row:text-white">›</span>
       {group.name}
-      {ideaCount > 0 && <span className="ml-2 text-[11px] text-white/30">· {ideaCount}</span>}
+      {analysed && <span className="ml-2 text-[10px] tracking-wide text-white/35 uppercase">· analysed</span>}
       {market.sourced && <span className="ml-1.5 text-[10px] text-emerald-300/70">●</span>}
     </>
   );
@@ -135,13 +107,7 @@ function GroupRow({ group, region }: { group: Group; region: Region }) {
 
   return (
     <li className="border-b border-white/5 px-1 py-3.5">
-      <button
-        type="button"
-        onClick={() => setOpen((v) => !v)}
-        aria-expanded={open}
-        title={group.source ?? "Estimate"}
-        className="block w-full cursor-pointer text-left"
-      >
+      <Link href={`/groups/${group.id}`} title={group.source ?? "Estimate"} className="group/row block w-full text-left">
       {/* Mobile: name + share on top, compact stat line below */}
       <div className="sm:hidden">
         <div className="flex items-center justify-between gap-3">
@@ -181,8 +147,7 @@ function GroupRow({ group, region }: { group: Group; region: Region }) {
           <span className="w-16 text-right text-xs text-white/50 tabular-nums">{formatShare(share)}</span>
         </div>
       </div>
-      </button>
-      {open && <IdeaList ideas={group.ideas ?? []} />}
+      </Link>
     </li>
   );
 }

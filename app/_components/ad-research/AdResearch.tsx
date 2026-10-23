@@ -47,7 +47,7 @@ export default function AdResearch({ research, header }: AdResearchProps) {
       <div className="mx-auto max-w-4xl px-4 pt-8 pb-28 sm:px-8">
         {header}
         <p className="text-xs text-white/40">
-          Meta Ad Library · {research.audience} · India · {scan.date}
+          Meta Ad Library · {research.audience} · {scan.market ?? "India"} · {scan.date}
         </p>
 
         <div className="mt-5 grid grid-cols-3 gap-4 border-b border-white/5 pb-6">
@@ -133,7 +133,7 @@ export default function AdResearch({ research, header }: AdResearchProps) {
         )}
 
         <section className="mt-10">
-          <SectionLabel>Idea candidates · to test with ads</SectionLabel>
+          <SectionLabel>Opportunities spotted in the data</SectionLabel>
           <ol className="space-y-3">
             {ideas.map((idea) => (
               <li key={idea.rank} className="rounded-xl border border-emerald-400/15 bg-emerald-400/[0.03] px-4 py-3.5">

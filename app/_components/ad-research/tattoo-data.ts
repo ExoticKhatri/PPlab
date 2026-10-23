@@ -7,6 +7,7 @@ import type { Research } from "./research-types";
 export const TATTOO_RESEARCH: Research = {
   audience: "Tattoo studios & artists",
   scan: {
+    market: "US + India",
     date: "22 Oct 2026",
     keywords: 20,
     adsScanned: 1869,

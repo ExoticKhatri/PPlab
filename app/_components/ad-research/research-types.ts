@@ -38,7 +38,7 @@ export interface QuoteSection {
 /** Everything one group's analysis page shows. */
 export interface Research {
   audience: string;
-  scan: { date: string; keywords: number; adsScanned: number; sellers: number; sellersLabel: string; longestDays: number };
+  scan: { market?: string; date: string; keywords: number; adsScanned: number; sellers: number; sellersLabel: string; longestDays: number };
   takeaways: string[];
   categories: Category[];
   pains: Quote[];
