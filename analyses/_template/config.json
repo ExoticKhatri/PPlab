@@ -12,7 +12,14 @@
     ],
     "maxAdsPerKeyword": 100,
     "maxScrollRounds": 25,
-    "activeOnly": true
+    "activeOnly": true,
+    "sellerTerms": [
+      "words a seller to this group uses, e.g. your school"
+    ],
+    "selfTerms": [
+      "words the group uses advertising itself, e.g. admissions open"
+    ],
+    "concurrency": 2
   },
   "playStore": {
     "country": "in",
@@ -24,7 +31,10 @@
     "maxApps": 30,
     "minReviews": 10,
     "reviewsPerApp": 500,
-    "complaintMaxStars": 3
+    "complaintMaxStars": 3,
+    "excludeGames": true,
+    "excludeTitles": [],
+    "concurrency": 4
   },
   "youtube": {
     "queries": [
@@ -35,7 +45,9 @@
     "maxCommentsPerVideo": 500,
     "maxRepliesPerThread": 5,
     "commentSort": "top",
-    "minViews": 0
+    "minViews": 0,
+    "titleMustMatch": false,
+    "concurrency": 3
   },
   "googleSearch": {
     "hl": "en",
@@ -55,8 +67,14 @@
       "where"
     ],
     "resultsQueries": [],
-    "maxResultsPages": 10,
-    "expandPeopleAlsoAsk": 3
+    "maxResultsPages": 6,
+    "expandPeopleAlsoAsk": 3,
+    "captchaWaitSeconds": 180,
+    "bingFallback": true,
+    "pageGapSeconds": [
+      15,
+      40
+    ]
   },
   "googleTrends": {
     "geo": "IN",
@@ -86,7 +104,9 @@
     "topTimeframe": "year",
     "maxThreads": 60,
     "commentsPerThread": 200,
-    "minPostScore": 0
+    "minPostScore": 0,
+    "relevanceFilter": true,
+    "groupTerms": []
   },
   "googleMaps": {
     "hl": "en",
@@ -99,6 +119,7 @@
     ],
     "maxPlacesPerSearch": 40,
     "reviewsPerPlace": 20,
-    "reviewSort": "lowest"
+    "reviewSort": "lowest",
+    "maxReviewsPerBrand": 0
   }
 }

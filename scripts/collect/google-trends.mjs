@@ -11,6 +11,8 @@ import googleTrends from "google-trends-api";
 import { loadConfig, log, mdTable, pause, rawDir, today, writeJson, writeMarkdown } from "./lib/config.mjs";
 
 const P = "google-trends";
+// Logins, portals, app downloads and websites of a specific institution.
+const NAV = /\b(login|log in|sign in|portal|apk|website)\b|\.(com|in|org)\b/i;
 
 function timeframeToStart(timeframe) {
   const now = new Date();
@@ -109,7 +111,22 @@ async function main() {
   const rows = Object.entries(series).map(([keyword, points]) => {
     const values = points.map((p) => p.value);
     const t = trendOf(points);
-    return [keyword, Math.max(...values), t.recentAvg, t.previousAvg, t.change === null ? "—" : `${t.change > 0 ? "+" : ""}${t.change}%`];
+    const peak = Math.max(...values);
+    // Tiny values swing wildly (0.1 → 1 = +900%); don't show a % for them.
+    const thin = peak < 5 || (t.previousAvg < 2 && t.recentAvg < 2);
+    const change = thin ? "too little data" : t.change === null ? "—" : `${t.change > 0 ? "+" : ""}${t.change}%`;
+    return [keyword, peak, t.recentAvg, t.previousAvg, change];
+  });
+  const regionLines = c.keywords.map((k) => {
+    const list = regions[k] ?? [];
+    const top = [...list].sort((a, b) => b.value - a.value).slice(0, 8).map((r) => `${r.name} (${r.value})`);
+    return `- **${k}:** ${top.length ? top.join(", ") : "no regional data (too few searches)"}`;
+  });
+  const relatedLines = Object.entries(related).map(([k, r]) => {
+    const top = r.top.filter((q) => !NAV.test(q.query));
+    const rising = r.rising.filter((q) => !NAV.test(q.query));
+    const nav = [...new Set([...r.top, ...r.rising].filter((q) => NAV.test(q.query)).map((q) => q.query))];
+    return `- **${k}** — top: ${top.slice(0, 6).map((q) => q.query).join(", ") || "—"} · rising: ${rising.slice(0, 6).map((q) => `${q.query} (${q.value})`).join(", ") || "—"}${nav.length ? ` · navigational: ${nav.slice(0, 6).join(", ")}` : ""}`;
   });
   const markdown = `# Google Trends — ${config.group}
 
@@ -125,11 +142,13 @@ ${mdTable(["Keyword", "Peak", "Last 12 months avg", "Previous 12 months avg", "C
 
 ## Where interest is highest
 
-${Object.entries(regions).map(([k, list]) => `- **${k}:** ${list.sort((a, b) => b.value - a.value).slice(0, 8).map((r) => `${r.name} (${r.value})`).join(", ") || "not enough data"}`).join("\n") || "_No data._"}
+${regionLines.join("\n")}
 
 ## Related searches (Trends)
 
-${Object.entries(related).map(([k, r]) => `- **${k}** — top: ${r.top.slice(0, 6).map((q) => q.query).join(", ") || "—"} · rising: ${r.rising.slice(0, 6).map((q) => `${q.query} (${q.value})`).join(", ") || "—"}`).join("\n") || "_No data._"}
+Logins, portals and single-institution lookups are listed as "navigational" — they show an installed base, not new interest.
+
+${relatedLines.join("\n") || "_No data._"}
 
 ## Insights
 

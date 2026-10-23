@@ -34,10 +34,11 @@ These sites hide data from signed-out automated browsers, so we use one persiste
 
 How we keep it safe:
 
-- Human pace: random 2–6 second pauses, a limited number of pages per run, stop at the first sign of a captcha or "unusual activity" warning.
+- Human pace: random 2–6 second pauses (15–40 s between Google result pages), a limited number of pages per run. On a Google captcha the run waits for you to solve it in the window (`captchaWaitSeconds`), then falls back to Bing; other blocks stop that platform cleanly.
 - Tabs: tabs restored from the last session are closed at start, and every tab a run opened is closed at the end.
 - Pre-flight: `node doctor.mjs` (run automatically by `run.mjs`) checks tools, Brave, the profile and the Reddit/Google sign-ins.
 - Per-item retries; one failed item is skipped, not fatal. Google Maps checkpoints every 5 places.
+- Parallel runs: `run.mjs` runs the platforms that don't need this profile all at once, and the signed-in ones (Google result pages → Reddit → Maps) one after another alongside them, because only one run can use the profile at a time. `--serial` runs everything one by one. Each platform's output is also saved to `raw/<platform>/run.log`.
 - Read-only: the scripts never post, like, message or connect.
 - Small batches per group (hundreds of items, not hundreds of thousands).
 
@@ -46,8 +47,9 @@ How we keep it safe:
 ## Meta Ad Library
 
 - **What it is:** Meta's public library of every active ad on Facebook and Instagram, searchable by keyword and country.
-- **How we pull it:** [scripts/ad-library/](../scripts/ad-library/). Headless Playwright opens the library search for each keyword (`COUNTRY=US` or `IN`), scrolls, saves the page text, and `parse.mjs` turns that into one record per ad.
-- **Data per ad:** advertiser, ad text, start date (so days running), whether it has multiple versions, which keywords matched.
+- **How we pull it:** [scripts/collect/meta-ads.mjs](../scripts/collect/meta-ads.mjs). Headless Playwright opens the library search for each keyword and country in 2 tabs at once (`concurrency`), scrolls until `maxAdsPerKeyword` ads have loaded, and parses one record per ad.
+- **Data per ad:** advertiser, ad text, start date (so days running), whether it has multiple versions, which keywords matched, language (from the script: Hindi, Tamil, … or Hinglish/English).
+- **Advertiser tags:** a rule-based first pass using `sellerTerms` and `selfTerms` — "sells to the group", "the group advertising itself" (e.g. schools' admission ads) or "noise". The skill checks samples by hand.
 - **What it tells us:** whether Meta reaches the group (companies keep paying to target them), what's already sold to them and how crowded each category is, the pain sellers lead with, and which ads last (running for months is the best available sign an ad pays off).
 - **Limits:** no spend or targeting data for non-political ads; keyword search is loose, so advertisers are checked by hand; a snapshot of the day it runs.
 - **Cost:** free.
@@ -55,7 +57,7 @@ How we keep it safe:
 ## Google Play Store
 
 - **What it is:** the Android apps a group (or its customers) uses: who the competitors are, how big they are, and what users complain about.
-- **How we pull it:** [scripts/play-reviews/](../scripts/play-reviews/). `playsearch.mjs` finds app IDs through the Play Store website (the library's own search is broken), `reviews.mjs` fetches reviews, `themes.mjs` tags complaints by theme.
+- **How we pull it:** [scripts/collect/play-store.mjs](../scripts/collect/play-store.mjs). Finds app IDs through the Play Store website (the library's own search is broken), drops games and `excludeTitles` matches (listed in the .md), then fetches reviews for 4 apps at a time (`concurrency`).
 - **Data per app** (`google-play-scraper`, or the app page itself when the library can't parse an app):
   - downloads (`minInstalls` / `maxInstalls`, e.g. "1M+")
   - free or paid, price, currency
@@ -71,7 +73,7 @@ How we keep it safe:
 ## YouTube
 
 - **What it is:** comments under videos like "pathology lab kaise khole" or "tattoo artist no-shows". Owners and would-be owners ask questions and complain there, often in Hindi.
-- **How we pull it:** [scripts/collect/youtube.mjs](../scripts/collect/youtube.mjs). `yt-dlp ytsearchN:` finds videos per query, then `yt-dlp --write-comments` pulls every comment and reply (limits set in config), no API key or login. Replaced the old Playwright scroller that only got ~20 comments per video.
+- **How we pull it:** [scripts/collect/youtube.mjs](../scripts/collect/youtube.mjs). `yt-dlp ytsearchN:` finds videos per query, then `yt-dlp --write-comments` pulls every comment and reply (limits set in config) for 3 videos at a time, no API key or login. The .md shows per query how many videos were found vs kept (`minViews`, optional `titleMustMatch`), and each comment records its query.
 - **Data per video:** title, channel, views, likes, upload date, duration, description, comment count.
 - **Data per comment:** text, author, likes, date, whether it's a reply, whether the creator pinned or hearted it.
 - **What it tells us:** the owner's own voice, which Play Store lacks; video titles and view counts also show which topics this group cares about.
@@ -84,15 +86,16 @@ How we keep it safe:
   1. **Group size and reach:** how many businesses of a type exist per city, with phone and website.
   2. **Customer pain:** reviews of those businesses (what their customers complain about is often what the owner struggles with).
 - **How we pull it:** [scripts/collect/google-maps.mjs](../scripts/collect/google-maps.mjs), in the signed-in Brave profile (signed out, Maps hides reviews). For each "<query> in <location>" it scrolls the results list to the end, opens each place, then opens Reviews sorted lowest-first (configurable) and reads them.
-- **Data per place:** name, category, rating, review count, address, phone, website, open/closed.
-- **Data per review:** stars, text, relative date, owner reply.
+- **Data per place:** name, category, rating (from the place's own panel only), review count, whether reviews are switched off (no Reviews tab — common for schools), address, phone, website, open/closed.
+- **Data per review:** stars, the reviewer's own text (never the owner's reply), relative date, owner reply.
+- **Output:** per-city places / with reviews / reviews off / reviews read, and chains (3+ places with the same first words) with their share of low reviews. `maxReviewsPerBrand` caps how many reviews one chain contributes.
 - **Limits:** Maps lists up to ~120 places per search, so search per city or area; ~10–20 s per place with reviews.
 - **Cost:** free (no Places API).
 
 ## Reddit
 
 - **What it is:** communities of professionals (r/TattooArtists, r/medicallaboratory, r/Teachers). Staff and owners vent there in detail, mostly outside India.
-- **How we pull it:** [scripts/collect/reddit.mjs](../scripts/collect/reddit.mjs), inside the signed-in Brave profile, reading Reddit's own JSON (the data the site itself loads) with the session's cookies. Signed-out requests get 403, and old.reddit now redirects logged-in users to the redesign, so page scraping was fragile. It discovers subreddits for group terms (`discoveryQueries`), searches each subreddit and all of Reddit for problem phrases, takes each subreddit's top posts, then reads comments on the most-commented threads.
+- **How we pull it:** [scripts/collect/reddit.mjs](../scripts/collect/reddit.mjs), inside the signed-in Brave profile, reading Reddit's own JSON (the data the site itself loads) with the session's cookies. Signed-out requests get 403, and old.reddit now redirects logged-in users to the redesign, so page scraping was fragile. It discovers subreddits for group terms (`discoveryQueries`), searches each subreddit and all of Reddit for problem phrases, takes each subreddit's top posts, then reads comments on the most relevant, most-commented threads. Configured subreddits are checked first (missing or private ones are reported and skipped). With `relevanceFilter`, discovered communities and all-of-Reddit posts must mention a group term (`groupTerms`, or the words of `discoveryQueries`); the rest are listed as off-topic.
 - **Data per subreddit:** name, members, description. **Per post:** subreddit, title, score, comment count, date, link. **Per thread:** post body and comments (author, score, depth, text, date).
 - **Setup:** run `node login.mjs` once and sign in to Reddit. If the session expires the collector stops with a clear message.
 - **Limits:** human-paced (~5 s per page); Reddit skews US/global.
@@ -113,7 +116,7 @@ How we keep it safe:
 - **What it is:** what people actually type into Google about a topic, e.g. "is it normal to pay a deposit for a tattoo", "pathology lab software price".
 - **How we pull it:** [scripts/collect/google-search.mjs](../scripts/collect/google-search.mjs).
   - Autocomplete: Google's suggest endpoint (plain HTTP, no browser) for each seed, "<seed> a…z" and "<question word> <seed>".
-  - "People also ask" and related searches: result pages opened in the signed-in Brave profile (a signed-out headless browser gets a captcha). It clicks a few questions to load more, and stops at the first captcha.
+  - "People also ask" and related searches: result pages opened in the signed-in Brave profile (a signed-out headless browser gets a captcha). It opens google.com and types each query like a person, with 15–40 s gaps, and clicks a few questions to load more. On a captcha it waits for you to solve it in the window; if Google stays blocked it reads the remaining pages' "People also ask" and related searches from Bing (`bingFallback`). The .md shows the source of each page.
 - **What it tells us:** the problems and questions the group searches for, in their own words — for pain points and later for ad and landing-page wording.
 - **Limits:** autocomplete has no search volumes; "hits" (how many probes returned a suggestion) is only a rough centrality signal.
 - **Cost:** free.
@@ -142,6 +145,6 @@ How we keep it safe:
 ## Rules we follow
 
 - Read-only: never post, message, like or connect from automation.
-- Human pace and small batches; stop at the first captcha or warning.
+- Human pace and small batches; on a captcha, wait for a person or switch source — never solve or bypass it automatically.
 - The signed-in browser profile and raw scraped data stay local (gitignored). Only summaries go into pplab.
 - Numbers shown in pplab are labelled as estimates unless they come from a sourced count.

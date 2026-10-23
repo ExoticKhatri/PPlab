@@ -26,6 +26,10 @@ export const DEFAULTS = {
     maxAdsPerKeyword: 100, // stop scrolling a keyword once this many ads have loaded
     maxScrollRounds: 25, // hard cap on scroll rounds per keyword
     activeOnly: true,
+    // First-pass tagging of advertisers (the skill still checks by hand):
+    sellerTerms: [], // words a seller TO this group uses, e.g. "your school", "school ERP", "for principals"
+    selfTerms: [], // words the group uses advertising ITSELF, e.g. "admissions open", "enrol your child"
+    concurrency: 2, // browser tabs scraping different keywords at once (keep low: Meta rate-limits)
   },
   playStore: {
     country: "in",
@@ -36,6 +40,9 @@ export const DEFAULTS = {
     minReviews: 10, // skip apps with fewer total reviews than this
     reviewsPerApp: 500, // newest reviews fetched per app (pages of 200)
     complaintMaxStars: 3, // reviews at or below this count as complaints
+    excludeGames: true, // drop apps in Play's game categories
+    excludeTitles: [], // case-insensitive title fragments to drop, e.g. "simulator", "family link"
+    concurrency: 4, // apps whose reviews are fetched at the same time
   },
   youtube: {
     queries: [],
@@ -44,6 +51,8 @@ export const DEFAULTS = {
     maxRepliesPerThread: 5,
     commentSort: "top", // "top" or "new"
     minViews: 0, // skip videos with fewer views
+    titleMustMatch: false, // drop videos whose title shares no word (4+ letters) with the query; leave off for Hindi/regional queries
+    concurrency: 3, // videos fetched at the same time (parallel yt-dlp)
   },
   googleSearch: {
     hl: "en",
@@ -52,8 +61,11 @@ export const DEFAULTS = {
     expandAlphabet: true, // also query "<seed> a" … "<seed> z"
     questionPrefixes: ["how", "why", "what", "best", "is", "can", "which", "where"], // "<prefix> <seed>"
     resultsQueries: [], // queries whose result pages we open for "People also ask" / related searches (signed-in browser); empty = first 5 seeds
-    maxResultsPages: 10, // cap on result pages opened per run
+    maxResultsPages: 6, // cap on result pages opened per run (each takes ~30 s with human-like gaps)
     expandPeopleAlsoAsk: 3, // click this many questions to load more of them
+    captchaWaitSeconds: 180, // on a captcha, wait this long for a person to solve it in the window (0 = stop at once)
+    bingFallback: true, // if Google blocks, read "People also ask" from Bing instead
+    pageGapSeconds: [15, 40], // random wait between result pages
   },
   googleTrends: {
     geo: "IN", // "" = worldwide, "US", "IN", …
@@ -75,6 +87,8 @@ export const DEFAULTS = {
     maxThreads: 60, // threads opened to read comments (most-commented first)
     commentsPerThread: 200,
     minPostScore: 0,
+    relevanceFilter: true, // keep only on-topic subreddits/posts (match query or group terms); off-topic ones are listed separately
+    groupTerms: [], // extra words that mark a post or subreddit as on-topic, e.g. "school", "principal"
   },
   googleMaps: {
     hl: "en",
@@ -83,6 +97,7 @@ export const DEFAULTS = {
     maxPlacesPerSearch: 40, // Maps lists up to ~120 per search
     reviewsPerPlace: 20, // 0 = details only (faster)
     reviewSort: "lowest", // lowest, newest, highest, relevant
+    maxReviewsPerBrand: 0, // cap reviews read per brand/chain (first word of the name); 0 = no cap
   },
 };
 
@@ -163,6 +178,25 @@ export function log(platform, ...args) {
 
 // Retry a flaky step (network blips, slow page loads). Errors whose class
 // name is "StopError" (captcha, signed out, rate limit) are never retried.
+// Run fn over items with at most n in flight; results keep input order.
+export async function mapLimit(items, n, fn) {
+  const out = new Array(items.length);
+  let next = 0;
+  async function worker() {
+    while (next < items.length) {
+      const i = next++;
+      out[i] = await fn(items[i], i);
+    }
+  }
+  await Promise.all(Array.from({ length: Math.max(1, Math.min(n, items.length)) }, worker));
+  return out;
+}
+
+// Words (4+ letters) from text, for loose relevance matching.
+export function words(text) {
+  return new Set(String(text ?? "").toLowerCase().match(/[a-zऀ-ॿ]{4,}/g) ?? []);
+}
+
 export async function retry(fn, { tries = 3, label = "step", platform = "collect", baseDelayMs = 2000 } = {}) {
   let lastError;
   for (let attempt = 1; attempt <= tries; attempt++) {
@@ -176,4 +210,18 @@ export async function retry(fn, { tries = 3, label = "step", platform = "collect
     }
   }
   throw lastError;
+}
+
+// Progress tracker: tick() returns "48/180, ~30 min left" based on the pace so far.
+export function progress(total) {
+  const started = Date.now();
+  let done = 0;
+  return {
+    tick() {
+      done++;
+      const left = ((Date.now() - started) / done) * (total - done);
+      const eta = done >= total ? "done" : left < 60_000 ? "<1 min left" : `~${Math.round(left / 60_000)} min left`;
+      return `${done}/${total}, ${eta}`;
+    },
+  };
 }

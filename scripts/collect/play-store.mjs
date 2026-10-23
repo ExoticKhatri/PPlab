@@ -9,7 +9,7 @@
 
 import gplay from "google-play-scraper";
 import { chromium } from "playwright";
-import { loadConfig, log, mdTable, pause, quote, rawDir, retry, today, writeJson, writeMarkdown } from "./lib/config.mjs";
+import { loadConfig, log, mapLimit, mdTable, pause, progress, quote, rawDir, retry, today, writeJson, writeMarkdown } from "./lib/config.mjs";
 
 const P = "play-store";
 
@@ -45,6 +45,7 @@ function toAppRecord(d) {
     developerWebsite: d.developerWebsite ?? null,
     developerEmail: d.developerEmail ?? null,
     genre: d.genre,
+    genreId: d.genreId ?? null,
     summary: d.summary,
     installs: d.installs, // e.g. "1,000,000+"
     minInstalls: d.minInstalls ?? 0,
@@ -99,6 +100,7 @@ async function scrapeDetailsFromPage(page, appId, { country, lang }) {
     developerWebsite: ld.author?.url ?? null,
     developerEmail: null,
     genre: ld.applicationCategory ?? null,
+    genreId: ld.applicationCategory ?? null,
     summary: ld.description ?? null,
     installs: downloads,
     minInstalls: parseCount(downloads),
@@ -195,7 +197,11 @@ function businessModel(app) {
   return parts.join(" · ");
 }
 
-function buildMarkdown(config, apps, reviews) {
+function isGame(app) {
+  return /^GAME/i.test(app.genreId ?? "") || /^(action|adventure|arcade|board|card|casino|casual|puzzle|racing|role playing|simulation|strategy|trivia|word)$/i.test(app.genre ?? "");
+}
+
+function buildMarkdown(config, apps, reviews, dropped = []) {
   const c = config.playStore;
   const complaints = reviews.filter((r) => r.score <= c.complaintMaxStars);
   const byApp = new Map(apps.map((a) => [a.appId, a]));
@@ -208,7 +214,7 @@ function buildMarkdown(config, apps, reviews) {
 
   return `# Google Play Store — ${config.group}
 
-Collected ${today()} · store: ${c.country.toUpperCase()} / ${c.lang} · ${apps.length} apps · ${reviews.length} reviews fetched · ${complaints.length} complaints (≤${c.complaintMaxStars}★)
+Collected ${today()} · store: ${c.country.toUpperCase()} / ${c.lang} · ${apps.length} apps (${dropped.length} dropped) · ${reviews.length} reviews fetched · ${complaints.length} complaints (≤${c.complaintMaxStars}★)
 
 Raw data: \`raw/play-store/apps.json\`, \`raw/play-store/reviews.json\`
 
@@ -241,6 +247,10 @@ ${mdTable(
 
 ${topComplaints.map((r) => `- **${byApp.get(r.appId)?.title ?? r.appId}** · ${r.score}★ · 👍${r.thumbsUp} — “${quote(r.text)}”`).join("\n") || "_No complaints fetched._"}
 
+## Filtered out
+
+${dropped.length ? mdTable(["App", "Category", "Why"], dropped.map((d) => [d.app.title, d.app.genre ?? "—", d.reason])) : "_Nothing filtered._"}
+
 ## Insights
 
 _To be written by the group-analysis skill: complaint themes with counts, who is complaining (buyer vs end user), and what it means for this group._
@@ -258,26 +268,39 @@ async function main() {
 
   const details = await fetchDetails(ids, c);
   const forced = new Set(c.appIds);
-  const apps = details
-    .filter((a) => forced.has(a.appId) || Math.max(a.reviews, a.ratings) >= c.minReviews)
+  const dropped = [];
+  const excluded = details.filter((a) => {
+    if (forced.has(a.appId)) return true;
+    const title = c.excludeTitles.find((t) => a.title?.toLowerCase().includes(t.toLowerCase()));
+    if (title) dropped.push({ app: a, reason: `title matches "${title}"` });
+    else if (c.excludeGames && isGame(a)) dropped.push({ app: a, reason: "game" });
+    else if (Math.max(a.reviews, a.ratings) < c.minReviews) dropped.push({ app: a, reason: `under ${c.minReviews} reviews` });
+    else return true;
+    return false;
+  });
+  const apps = excluded
     .sort((a, b) => Math.max(b.reviews, b.ratings) - Math.max(a.reviews, a.ratings))
     .slice(0, Math.max(c.maxApps, forced.size));
   writeJson(`${dir}/apps.json`, apps);
-  log(P, `kept ${apps.length} apps`);
+  writeJson(`${dir}/dropped-apps.json`, dropped.map((d) => ({ appId: d.app.appId, title: d.app.title, genre: d.app.genre, reason: d.reason })));
+  log(P, `kept ${apps.length} apps, dropped ${dropped.filter((d) => d.reason !== `under ${c.minReviews} reviews`).length} irrelevant`);
 
-  const reviews = [];
-  for (const app of apps) {
+  // Several apps' reviews at once (google-play-scraper is plain HTTP).
+  const bar = progress(apps.length);
+  const perApp = await mapLimit(apps, c.concurrency, async (app) => {
     try {
       const got = await retry(() => fetchReviews(app.appId, c), { label: `reviews ${app.appId}`, platform: P });
-      reviews.push(...got);
-      log(P, `${app.title}: ${got.length} reviews`);
+      log(P, `[${bar.tick()}] ${app.title}: ${got.length} reviews`);
+      return got;
     } catch (error) {
-      log(P, `reviews failed for ${app.appId}: ${error.message}`);
+      log(P, `[${bar.tick()}] reviews failed for ${app.appId}: ${error.message}`);
+      return [];
     }
-  }
+  });
+  const reviews = perApp.flat();
   writeJson(`${dir}/reviews.json`, reviews);
 
-  const file = writeMarkdown(config.slug, P, buildMarkdown(config, apps, reviews));
+  const file = writeMarkdown(config.slug, P, buildMarkdown(config, apps, reviews, dropped.filter((d) => !d.reason.startsWith("under"))));
   log(P, `wrote ${file}`);
 }
 

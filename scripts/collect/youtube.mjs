@@ -8,7 +8,7 @@ import { spawn } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { loadConfig, log, mdTable, pause, quote, rawDir, retry, today, writeJson, writeMarkdown } from "./lib/config.mjs";
+import { loadConfig, log, mapLimit, mdTable, pause, progress, quote, rawDir, retry, today, words, writeJson, writeMarkdown } from "./lib/config.mjs";
 
 const P = "youtube";
 const here = path.dirname(fileURLToPath(import.meta.url));
@@ -40,7 +40,7 @@ function runYtDlp(args) {
 
 async function searchVideos(query, count) {
   const result = await runYtDlp([`ytsearch${count}:${query}`, "--flat-playlist", "--dump-single-json", "--no-warnings"]);
-  return (result.entries ?? []).filter((e) => e.id).map((e) => ({ id: e.id, query }));
+  return (result.entries ?? []).filter((e) => e.id).map((e) => ({ id: e.id, query, title: e.title ?? "", views: e.view_count ?? null }));
 }
 
 async function fetchVideo(id, c) {
@@ -81,7 +81,7 @@ async function fetchVideo(id, c) {
   return { video, comments };
 }
 
-function buildMarkdown(config, videos, comments) {
+function buildMarkdown(config, videos, comments, perQuery = []) {
   const byVideo = new Map(videos.map((v) => [v.id, v]));
   const substantive = comments.filter((c) => c.text && c.text.length >= 40);
   const topComments = [...substantive].sort((a, b) => b.likes - a.likes).slice(0, 30);
@@ -92,6 +92,10 @@ function buildMarkdown(config, videos, comments) {
 Collected ${today()} · ${config.youtube.queries.length} queries · ${videos.length} videos · ${comments.length} comments (${comments.filter((c) => c.isReply).length} replies)
 
 Raw data: \`raw/youtube/videos.json\`, \`raw/youtube/comments.json\`
+
+## Videos per query (found → kept)
+
+${mdTable(["Query", "Found", "Kept", "Dropped (why)"], perQuery.map((q) => [q.query, q.found, q.kept, q.dropped.length ? Object.entries(q.dropped.reduce((m, r) => ({ ...m, [r]: (m[r] ?? 0) + 1 }), {})).map(([r, n]) => `${n} ${r}`).join(", ") : "—"]))}
 
 ## Videos (by views)
 
@@ -119,35 +123,49 @@ async function main() {
   const c = config.youtube;
   const dir = rawDir(config.slug, P);
 
+  // 1. Search, then filter on title/views BEFORE fetching comments (saves time).
   const found = new Map();
+  const perQuery = [];
   for (const query of c.queries) {
+    const stats = { query, found: 0, kept: 0, dropped: [] };
+    perQuery.push(stats);
     try {
       const hits = await retry(() => searchVideos(query, c.videosPerQuery), { label: `search "${query}"`, platform: P });
-      hits.forEach((h) => found.has(h.id) || found.set(h.id, h));
-      log(P, `search "${query}": ${hits.length} videos`);
+      stats.found = hits.length;
+      const queryWords = words(query);
+      for (const h of hits) {
+        if (found.has(h.id)) { stats.dropped.push("duplicate"); continue; }
+        if (h.views !== null && h.views < c.minViews) { stats.dropped.push(`under ${c.minViews} views`); continue; }
+        if (c.titleMustMatch && queryWords.size && ![...words(h.title)].some((w) => queryWords.has(w))) { stats.dropped.push("title off-topic"); continue; }
+        found.set(h.id, h);
+        stats.kept++;
+      }
+      log(P, `search "${query}": ${hits.length} found, ${stats.kept} kept`);
     } catch (error) {
       log(P, `search failed "${query}": ${error.message}`);
     }
   }
 
-  const videos = [];
-  const comments = [];
-  for (const { id, query } of found.values()) {
+  // 2. Comments for several videos at once (parallel yt-dlp processes).
+  const list = [...found.values()];
+  const bar = progress(list.length);
+  const results = await mapLimit(list, c.concurrency, async ({ id, query }) => {
     try {
       const { video, comments: got } = await retry(() => fetchVideo(id, c), { label: `video ${id}`, platform: P });
-      if (video.views < c.minViews) continue;
-      videos.push({ ...video, query });
-      comments.push(...got);
-      log(P, `${quote(video.title, 50)}: ${got.length} comments`);
+      log(P, `[${bar.tick()}] ${quote(video.title, 50)}: ${got.length} comments`);
+      await pause(300, 900);
+      return { video: { ...video, query }, comments: got.map((cm) => ({ ...cm, query })) };
     } catch (error) {
-      log(P, `video ${id} failed: ${error.message}`);
+      log(P, `[${bar.tick()}] video ${id} failed: ${error.message}`);
+      return null;
     }
-    await pause(500, 1500);
-  }
+  });
+  const videos = results.filter(Boolean).map((r) => r.video);
+  const comments = results.filter(Boolean).flatMap((r) => r.comments);
 
   writeJson(`${dir}/videos.json`, videos);
   writeJson(`${dir}/comments.json`, comments);
-  const file = writeMarkdown(config.slug, P, buildMarkdown(config, videos, comments));
+  const file = writeMarkdown(config.slug, P, buildMarkdown(config, videos, comments, perQuery));
   log(P, `wrote ${file}`);
 }
 

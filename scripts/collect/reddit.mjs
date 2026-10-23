@@ -9,7 +9,10 @@
 //   1. discover subreddits matching the queries (with member counts)
 //   2. search each subreddit (and optionally all of Reddit)
 //   3. take each subreddit's top posts
-//   4. open the most-commented threads and read their comments
+//   4. open the most relevant, most-commented threads and read their comments
+// Configured subreddits are checked first (missing/private ones are reported).
+// With relevanceFilter on, discovered communities and all-of-Reddit posts
+// must mention a group term; the rest are kept aside and counted in the .md.
 // Read-only, human-paced; stops on 401/403/429 or when signed out.
 
 import { closeProfileBrowser, openProfileBrowser } from "./lib/browser.mjs";
@@ -19,6 +22,36 @@ const P = "reddit";
 const BASE = "https://www.reddit.com";
 
 class StopError extends Error {}
+
+const FILLER = new Set(["the", "and", "for", "with", "how", "what", "why", "are", "you", "your", "best", "from", "india", "indian", "about", "into", "that", "this"]);
+
+// Lowercase words (3+ letters) from phrases, minus filler words; "teachers" → "teacher".
+function terms(phrases) {
+  return [...new Set(phrases.flatMap((p) => String(p).toLowerCase().match(/[a-z]{3,}/g) ?? []).filter((w) => !FILLER.has(w)).map((w) => (w.length > 4 && w.endsWith("s") ? w.slice(0, -1) : w)))];
+}
+
+// How many of the terms start a word in the text ("fee" matches "fees").
+function matchCount(text, list) {
+  const t = String(text).toLowerCase();
+  return list.filter((w) => new RegExp(`\\b${w}`).test(t)).length;
+}
+
+// A configured subreddit: does it exist, is it public, how big. Reads the status
+// itself because a private subreddit answers 403, which must not stop the run.
+async function aboutSub(page, sub) {
+  const res = await page.evaluate(async (url) => {
+    const r = await fetch(url, { credentials: "include", headers: { Accept: "application/json" } });
+    return { status: r.status, text: r.status === 200 ? await r.text() : "" };
+  }, `${BASE}/r/${encodeURIComponent(sub)}/about.json?raw_json=1`);
+  if (res.status === 429) throw new StopError("Reddit returned 429 (rate limited) — wait and re-run.");
+  if (res.status === 403) return { name: sub, ok: false, status: "private or banned" };
+  if (res.status === 404) return { name: sub, ok: false, status: "does not exist" };
+  if (res.status !== 200) return { name: sub, ok: true, status: `unchecked (HTTP ${res.status})` };
+  const d = JSON.parse(res.text);
+  if (d?.kind !== "t5") return { name: sub, ok: false, status: "does not exist" };
+  const type = d.data.subreddit_type;
+  return { name: d.data.display_name, ok: type === "public" || type === "restricted", status: type, members: d.data.subscribers ?? null };
+}
 
 async function getJson(page, path) {
   return retry(() => getJsonOnce(page, path), { label: path.split("?")[0], platform: P });
@@ -99,8 +132,11 @@ async function readThread(page, post, max) {
   return comments;
 }
 
-function buildMarkdown(config, subs, posts, threads, stopped, user) {
+function buildMarkdown(config, { subs, subStatus, posts, offTopicPosts, groupTerms, threads, stopped, user }) {
   const c = config.reddit;
+  const onSubs = subs.filter((s) => s.onTopic !== false);
+  const offSubs = subs.filter((s) => s.onTopic === false);
+  const badSubs = subStatus.filter((s) => !s.ok);
   const allComments = threads.flatMap((t) => t.comments.map((cm) => ({ ...cm, thread: t })));
   const topComments = allComments.filter((cm) => cm.text.length >= 60).sort((a, b) => b.score - a.score).slice(0, 30);
   const bySub = new Map();
@@ -110,15 +146,21 @@ function buildMarkdown(config, subs, posts, threads, stopped, user) {
   const span = dated.length ? `${new Date(dated[0]).toISOString().slice(0, 10)} → ${new Date(dated.at(-1)).toISOString().slice(0, 10)}` : "—";
   return `# Reddit — ${config.group}
 
-Collected ${today()}${user ? "" : " (not signed in)"} · searches: ${c.searchSort}, ${c.searchTimeframe} · top posts: ${c.topTimeframe} · ${c.subreddits.length} subreddits · ${c.searchQueries.length} queries · ${posts.length} posts · ${threads.length} threads read · ${allComments.length} comments${stopped ? ` · stopped early: ${stopped}` : ""}
+Collected ${today()}${user ? "" : " (not signed in)"} · searches: ${c.searchSort}, ${c.searchTimeframe} · top posts: ${c.topTimeframe} · ${c.subreddits.length} subreddits · ${c.searchQueries.length} queries · ${posts.length} posts · ${threads.length} threads read · ${allComments.length} comments${stopped ? ` · stopped early: ${stopped}` : ""}${offTopicPosts.length ? ` · ${offTopicPosts.length} off-topic posts set aside` : ""}
+
+Reddit skews to the US and other English-speaking countries — for India-focused groups, treat it as a weak signal unless Indian subreddits show up below.
 
 Posts span ${span} (median ${dated.length ? new Date(dated[Math.floor(dated.length / 2)]).toISOString().slice(0, 10) : "—"}).
 
 Raw data: \`raw/reddit/subreddits.json\`, \`raw/reddit/posts.json\`, \`raw/reddit/threads.json\`
 
+## Configured subreddits
+
+${subStatus.length ? mdTable(["Subreddit", "Status", "Members"], subStatus.map((s) => [`r/${s.name}`, s.ok ? s.status : `**${s.status}** — skipped`, s.members?.toLocaleString("en-US") ?? "—"])) : "_None configured._"}${badSubs.length ? `\n\n${badSubs.length} configured subreddit(s) could not be read — remove or replace them in config.json.` : ""}
+
 ## Communities found (Reddit's relevance order)
 
-${subs.length ? mdTable(["Subreddit", "Members", "About"], subs.slice(0, 30).map((s) => [`r/${s.name}`, s.members?.toLocaleString("en-US") ?? "—", quote(s.description, 120)])) : "_Discovery off or nothing found._"}
+${onSubs.length ? mdTable(["Subreddit", "Members", "About"], onSubs.slice(0, 30).map((s) => [`r/${s.name}`, s.members?.toLocaleString("en-US") ?? "—", quote(s.description, 120)])) : "_Discovery off or nothing on-topic found._"}${offSubs.length ? `\n\n**Discovered but off-topic** (no group term in the name and fewer than two in the description): ${offSubs.slice(0, 40).map((s) => `r/${s.name}`).join(", ")}` : ""}
 
 ## Posts collected per subreddit
 
@@ -128,7 +170,7 @@ ${bySub.size ? mdTable(["Subreddit", "Posts"], [...bySub.entries()].sort((a, b) 
 
 ${[...posts].sort((a, b) => b.comments - a.comments).slice(0, 25).map((p) => `- **${quote(p.title, 140)}** · r/${p.subreddit} · ⬆${p.score} · 💬${p.comments} · ${p.created ? new Date(p.created * 1000).toISOString().slice(0, 10) : "—"}`).join("\n") || "_None._"}
 
-## Top comments
+${offTopicPosts.length ? `## Off-topic posts set aside\n\nAll-of-Reddit search results that mention none of the group terms (${groupTerms.join(", ")}). Busiest subreddits among them: ${[...offTopicPosts.reduce((m, p) => m.set(p.subreddit, (m.get(p.subreddit) ?? 0) + 1), new Map())].sort((a, b) => b[1] - a[1]).slice(0, 12).map(([s, n]) => `r/${s} (${n})`).join(", ")}\n\n` : ""}## Top comments
 
 ${topComments.map((cm) => `- ⬆${cm.score} · _${quote(cm.thread.title, 60)}_ — “${quote(cm.text)}”`).join("\n") || "_None._"}
 
@@ -147,10 +189,26 @@ async function main() {
   const { context, page } = await openProfileBrowser();
   const posts = new Map();
   const threads = [];
+  const offTopic = new Map();
+  const subStatus = [];
   let subs = [];
   let stopped = null;
   let user = null;
-  const addPosts = (rows) => rows.filter((r) => !r.nsfw && r.score >= c.minPostScore).forEach((r) => posts.has(r.id) || posts.set(r.id, r));
+  const groupTerms = terms(c.groupTerms.length ? c.groupTerms : c.discoveryQueries);
+  const queryTerms = terms(c.searchQueries);
+  const filtering = c.relevanceFilter && groupTerms.length > 0;
+  const configured = new Set(c.subreddits.map((s) => s.toLowerCase()));
+  // Posts from configured subreddits are on-topic by choice; all-of-Reddit posts must mention a group term.
+  const addPosts = (rows, fromConfigured) => {
+    for (const r of rows.filter((x) => !x.nsfw && x.score >= c.minPostScore)) {
+      if (posts.has(r.id)) continue;
+      const text = `${r.title} ${r.body}`;
+      const group = matchCount(text, groupTerms);
+      r.relevance = group + matchCount(text, queryTerms);
+      if (fromConfigured || configured.has(r.subreddit.toLowerCase()) || !filtering || group > 0) posts.set(r.id, r);
+      else offTopic.set(r.id, r);
+    }
+  };
 
   try {
     await page.goto(BASE, { waitUntil: "domcontentloaded" });
@@ -160,13 +218,30 @@ async function main() {
     if (c.discoverSubreddits) {
       if (c.discoveryQueries.length) subs = await discoverSubreddits(page, c.discoveryQueries);
       else log(P, "discoverSubreddits is on but discoveryQueries is empty — skipped");
+      if (filtering) {
+        // "IndianTeachers" → "Indian Teachers" so camel-case names match too.
+        // On-topic: a group term in the name, or two in the description (one alone is too loose: "a school of Hinduism").
+        subs = subs.map((s) => ({ ...s, onTopic: matchCount(s.name.replace(/([a-z])([A-Z])/g, "$1 $2"), groupTerms) > 0 || matchCount(s.description, groupTerms) >= 2 }));
+        log(P, `communities: ${subs.filter((s) => s.onTopic).length} on-topic, ${subs.filter((s) => !s.onTopic).length} off-topic`);
+      }
     }
 
     for (const sub of c.subreddits) {
+      try {
+        subStatus.push(await aboutSub(page, sub));
+      } catch (error) {
+        if (error instanceof StopError) throw error;
+        subStatus.push({ name: sub, ok: true, status: `unchecked (${error.message})` });
+      }
+      log(P, `r/${sub}: ${subStatus.at(-1).status}`);
+      await pause(1000, 2500);
+    }
+
+    for (const sub of subStatus.filter((s) => s.ok).map((s) => s.name)) {
       for (const q of c.searchQueries) {
         try {
           const rows = listing(await getJson(page, `/r/${sub}/search.json?q=${encodeURIComponent(q)}&restrict_sr=1&sort=${c.searchSort}&t=${c.searchTimeframe}&limit=${c.postsPerSearch}`));
-          addPosts(rows);
+          addPosts(rows, true);
           log(P, `r/${sub} "${q}": ${rows.length} posts`);
         } catch (error) {
           if (error instanceof StopError) throw error;
@@ -177,7 +252,7 @@ async function main() {
       if (c.topPostsPerSub > 0) {
         try {
           const rows = listing(await getJson(page, `/r/${sub}/top.json?t=${c.topTimeframe}&limit=${c.topPostsPerSub}`));
-          addPosts(rows);
+          addPosts(rows, true);
           log(P, `r/${sub} top (${c.topTimeframe}): ${rows.length} posts`);
         } catch (error) {
           if (error instanceof StopError) throw error;
@@ -191,8 +266,9 @@ async function main() {
       for (const q of c.searchQueries) {
         try {
           const rows = listing(await getJson(page, `/search.json?q=${encodeURIComponent(q)}&sort=${c.searchSort}&t=${c.searchTimeframe}&limit=${c.postsPerSearch}`));
-          addPosts(rows);
-          log(P, `all of Reddit "${q}": ${rows.length} posts`);
+          const before = offTopic.size;
+          addPosts(rows, false);
+          log(P, `all of Reddit "${q}": ${rows.length} posts${offTopic.size > before ? ` (${offTopic.size - before} off-topic set aside)` : ""}`);
         } catch (error) {
           if (error instanceof StopError) throw error;
           log(P, `request failed, skipped: ${error.message}`);
@@ -201,12 +277,14 @@ async function main() {
       }
     }
 
-    const toRead = [...posts.values()].filter((p) => p.comments > 0).sort((a, b) => b.comments - a.comments).slice(0, c.maxThreads);
-    for (const post of toRead) {
+    // Most relevant first, then busiest: each matched term counts like a 10x bigger thread.
+    const rank = (p) => p.relevance + Math.log10(p.comments + 1);
+    const toRead = [...posts.values()].filter((p) => p.comments > 0).sort((a, b) => rank(b) - rank(a)).slice(0, c.maxThreads);
+    for (const [i, post] of toRead.entries()) {
       try {
         const comments = await readThread(page, post, c.commentsPerThread);
         threads.push({ ...post, comments });
-        log(P, `thread "${quote(post.title, 50)}": ${comments.length} comments`);
+        log(P, `[${i + 1}/${toRead.length}] thread "${quote(post.title, 50)}": ${comments.length} comments`);
       } catch (error) {
         if (error instanceof StopError) throw error;
         log(P, `thread "${quote(post.title, 50)}" failed, skipped: ${error.message}`);
@@ -224,7 +302,9 @@ async function main() {
   writeJson(`${dir}/subreddits.json`, subs);
   writeJson(`${dir}/posts.json`, [...posts.values()]);
   writeJson(`${dir}/threads.json`, threads);
-  const file = writeMarkdown(config.slug, P, buildMarkdown(config, subs, [...posts.values()], threads, stopped, user));
+  writeJson(`${dir}/off-topic-posts.json`, [...offTopic.values()]);
+  writeJson(`${dir}/configured-subreddits.json`, subStatus);
+  const file = writeMarkdown(config.slug, P, buildMarkdown(config, { subs, subStatus, posts: [...posts.values()], offTopicPosts: [...offTopic.values()], groupTerms, threads, stopped, user }));
   log(P, `wrote ${file}`);
   if (stopped && posts.size === 0) process.exit(1);
 }

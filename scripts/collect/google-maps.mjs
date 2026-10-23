@@ -9,15 +9,22 @@
 //   2. open each place: name, category, rating, review count, address,
 //      phone, website
 //   3. open Reviews, sort (lowest first by default), read reviewsPerPlace
+//      (places with no Reviews tab are marked reviewsDisabled — Google turns
+//      reviews off for many schools; maxReviewsPerBrand caps chains)
 // Human-paced; stops at the first captcha/block.
 
 import { closeProfileBrowser, isBlocked, openProfileBrowser } from "./lib/browser.mjs";
-import { loadConfig, log, mdTable, pause, quote, rawDir, retry, today, writeJson, writeMarkdown } from "./lib/config.mjs";
+import { loadConfig, log, mdTable, pause, progress, quote, rawDir, retry, today, writeJson, writeMarkdown } from "./lib/config.mjs";
 
 const P = "google-maps";
 const SORT_LABELS = { relevant: /most relevant/i, newest: /newest/i, highest: /highest/i, lowest: /lowest/i };
 
 class StopError extends Error {}
+
+// Chain/brand key: the first two words of the name ("Orchids The International School, Andheri" → "orchids international").
+function brandOf(name) {
+  return String(name ?? "").toLowerCase().replace(/[^a-z0-9\s]/g, " ").split(/\s+/).filter((w) => w && w !== "the").slice(0, 2).join(" ");
+}
 
 async function guard(page) {
   if (await isBlocked(page)) throw new StopError("Google showed a captcha/block — stopped. Re-run later (or sign in again with node login.mjs).");
@@ -65,9 +72,14 @@ async function readPlace(page, link, hl) {
   await guard(page);
   const d = await page.evaluate(() => {
     const strip = (s) => (s ?? "").replace(/^(Address|Phone|Website):\s*/i, "").trim() || null;
-    const ratingText = document.querySelector("div.F7nice")?.innerText ?? "";
+    // Read only inside the place's own panel — nearby-place cards carry ratings too.
+    const h1 = document.querySelector("h1");
+    const panel = h1?.closest('div[role="main"]') ?? document;
+    const ratingText = panel.querySelector("div.F7nice")?.innerText ?? "";
+    const reviewsTab = [...panel.querySelectorAll('button[role="tab"]')].some((t) => /reviews/i.test(t.textContent ?? ""));
     return {
-      name: document.querySelector("h1")?.textContent?.trim() ?? null,
+      reviewsTab,
+      name: h1?.textContent?.trim() ?? null,
       category: document.querySelector('button[jsaction*="category"]')?.textContent?.trim() ?? null,
       ratingText,
       address: strip(document.querySelector('button[data-item-id="address"]')?.getAttribute("aria-label")),
@@ -78,7 +90,8 @@ async function readPlace(page, link, hl) {
   });
   const rating = Number(d.ratingText.match(/(\d[.,]\d)/)?.[1]?.replace(",", ".")) || null;
   const reviewCount = Number((d.ratingText.match(/\(([\d,.]+)\)/)?.[1] ?? "").replace(/[,.]/g, "")) || 0;
-  return { id: placeId(link.href), url: link.href, name: d.name ?? link.name, category: d.category, rating, reviewCount, address: d.address, phone: d.phone, website: d.website, closed: d.closed };
+  const reviewsDisabled = !d.reviewsTab && !rating;
+  return { id: placeId(link.href), url: link.href, name: d.name ?? link.name, category: d.category, rating, reviewCount, reviewsDisabled, address: d.address, phone: d.phone, website: d.website, closed: d.closed };
 }
 
 async function readReviews(page, place, max, sort) {
@@ -138,7 +151,8 @@ async function readReviews(page, place, max, sort) {
         id,
         stars,
         date: el.querySelector(".rsqaWe")?.textContent?.trim() ?? null,
-        text: el.querySelector(".wiI7pd")?.innerText?.trim() ?? "",
+        // The owner's reply uses the same text class; take only the reviewer's own block.
+        text: [...el.querySelectorAll(".wiI7pd")].find((n) => !n.closest(".CDe7pd"))?.innerText?.trim() ?? "",
         ownerReply: reply,
       });
       if (out.length >= limit) break;
@@ -157,10 +171,23 @@ function buildMarkdown(config, searches, places, reviews, stopped) {
   const rated = open.filter((p) => p.rating);
   const avg = (list, f) => (list.length ? list.reduce((s, x) => s + f(x), 0) / list.length : 0);
   const replyRate = withReviews.length ? Math.round((withReviews.filter((r) => r.ownerReply).length / withReviews.length) * 100) : 0;
+  const reviewsOff = places.filter((p) => p.reviewsDisabled).length;
+  const reviewsOf = new Map();
+  for (const r of reviews) reviewsOf.set(r.placeId, (reviewsOf.get(r.placeId) ?? 0) + 1);
+  const cityRows = searches.map((sr) => {
+    const list = places.filter((p) => p.search === sr.search);
+    return [sr.search, sr.failed ? "failed" : sr.count, sr.count >= c.maxPlacesPerSearch ? "yes — more exist" : "no", list.filter((p) => p.reviewCount > 0).length, list.filter((p) => p.reviewsDisabled).length, list.reduce((n, p) => n + (reviewsOf.get(p.id) ?? 0), 0)];
+  });
+  const brands = new Map();
+  for (const p of places) brands.set(brandOf(p.name), [...(brands.get(brandOf(p.name)) ?? []), p]);
+  const lowBy = new Map();
+  for (const r of low) { const b = brandOf(byPlace.get(r.placeId)?.name); lowBy.set(b, (lowBy.get(b) ?? 0) + 1); }
+  const chains = [...brands].filter(([, list]) => list.length >= 3).sort((a, b) => b[1].length - a[1].length);
+  const capped = places.filter((p) => p.reviewsSkipped).length;
 
   return `# Google Maps — ${config.group}
 
-Collected ${today()} · ${searches.length} searches · ${places.length} places · ${reviews.length} reviews read (sorted: ${c.reviewSort})${stopped ? ` · stopped early: ${stopped}` : ""}
+Collected ${today()} · ${searches.length} searches · ${places.length} places · ${reviews.length} reviews read (sorted: ${c.reviewSort}) · reviews off on ${reviewsOff} places${capped ? ` · ${capped} places skipped by maxReviewsPerBrand` : ""}${stopped ? ` · stopped early: ${stopped}` : ""}
 
 Raw data: \`raw/google-maps/places.json\`, \`raw/google-maps/reviews.json\`
 
@@ -168,7 +195,9 @@ Maps lists at most ~120 places per search, so counts are a floor per city, not a
 
 ## Places found per search
 
-${mdTable(["Search", "Places", "Hit the limit?"], searches.map((s) => [s.search, s.count, s.count >= c.maxPlacesPerSearch ? "yes — more exist" : "no"]))}
+${mdTable(["Search", "Places", "Hit the limit?", "With reviews", "Reviews off", "Reviews read"], cityRows)}
+
+"Reviews off" = the listing has no Reviews tab and no rating (Google switches reviews off for some categories, e.g. many schools) — not the same as 0 reviews.
 
 ## Snapshot
 
@@ -176,11 +205,18 @@ ${mdTable(["Search", "Places", "Hit the limit?"], searches.map((s) => [s.search,
 - Average rating: ${avg(rated, (p) => p.rating).toFixed(2)} · median reviews per place: ${open.length ? [...open].map((p) => p.reviewCount).sort((a, b) => a - b)[Math.floor(open.length / 2)] : 0}
 - Have a website: ${open.length ? Math.round((open.filter((p) => p.website).length / open.length) * 100) : 0}% · have a phone listed: ${open.length ? Math.round((open.filter((p) => p.phone).length / open.length) * 100) : 0}%
 - Owner replies to the reviews we read: ${replyRate}%
+- Reviews switched off: ${reviewsOff} of ${places.length} places (${places.length ? Math.round((reviewsOff / places.length) * 100) : 0}%)
 - Categories: ${[...open.reduce((m, p) => m.set(p.category ?? "—", (m.get(p.category ?? "—") ?? 0) + 1), new Map())].sort((a, b) => b[1] - a[1]).slice(0, 8).map(([k, n]) => `${k} (${n})`).join(", ")}
 
 ## Places (by review count)
 
-${mdTable(["Place", "Category", "Rating", "Reviews", "Website", "Search"], [...places].sort((a, b) => b.reviewCount - a.reviewCount).slice(0, 80).map((p) => [p.name, p.category ?? "—", p.rating ?? "—", p.reviewCount, p.website ? "yes" : "—", p.search]))}
+${mdTable(["Place", "Category", "Rating", "Reviews", "Website", "Search"], [...places].sort((a, b) => b.reviewCount - a.reviewCount).slice(0, 80).map((p) => [p.name, p.category ?? "—", p.rating ?? "—", p.reviewsDisabled ? "reviews off" : p.reviewCount, p.website ? "yes" : "—", p.search]))}
+
+## Chains (3+ places with the same first words)
+
+${chains.length ? mdTable(["Brand", "Places", "Low reviews (≤2★)", "Share of all low reviews"], chains.slice(0, 15).map(([b, list]) => [b, list.length, lowBy.get(b) ?? 0, low.length ? `${Math.round(((lowBy.get(b) ?? 0) / low.length) * 100)}%` : "—"])) : "_None._"}
+
+A chain with a large share of low reviews skews the themes — read its complaints separately.
 
 ## Low-rated reviews (≤2★)
 
@@ -203,6 +239,8 @@ async function main() {
   const searches = [];
   const places = new Map();
   const reviews = [];
+  const perBrand = new Map(); // brand → reviews read
+  const bar = progress(searchesToRun.length * c.maxPlacesPerSearch); // upper bound: most searches hit the cap
   let stopped = null;
 
   try {
@@ -225,16 +263,19 @@ async function main() {
           const place = { ...(await retry(() => readPlace(page, link, c.hl), { label: `place "${link.name}"`, platform: P })), search };
           places.set(id, place);
           let got = [];
-          if (c.reviewsPerPlace > 0 && place.reviewCount > 0) {
+          const brand = brandOf(place.name);
+          if (c.maxReviewsPerBrand > 0 && (perBrand.get(brand) ?? 0) >= c.maxReviewsPerBrand) place.reviewsSkipped = "maxReviewsPerBrand";
+          else if (c.reviewsPerPlace > 0 && place.reviewCount > 0) {
             try {
               got = await retry(() => readReviews(page, place, c.reviewsPerPlace, c.reviewSort), { tries: 2, label: `reviews "${place.name}"`, platform: P });
               reviews.push(...got);
+              perBrand.set(brand, (perBrand.get(brand) ?? 0) + got.length);
             } catch (error) {
               if (error instanceof StopError) throw error;
               log(P, `  reviews failed for ${place.name}: ${error.message}`);
             }
           }
-          log(P, `  ${quote(place.name, 40)}: ${place.rating ?? "—"}★ (${place.reviewCount})${c.reviewsPerPlace > 0 ? ` · ${got.length} reviews read` : ""}`);
+          log(P, `  [${bar.tick()}] ${quote(place.name, 40)}: ${place.reviewsDisabled ? "reviews off" : `${place.rating ?? "—"}★ (${place.reviewCount})`}${place.reviewsSkipped ? " · brand cap reached" : c.reviewsPerPlace > 0 && !place.reviewsDisabled ? ` · ${got.length} reviews read` : ""}`);
         } catch (error) {
           if (error instanceof StopError) throw error;
           log(P, `  place "${link.name}" failed, skipped: ${error.message}`);
