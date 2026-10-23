@@ -33,6 +33,11 @@ Raw numbers: Meta 3,060 ads · Play 40 apps / 38,394 reviews · YouTube 56 video
 - [ ] Google has reviews disabled on many listings (124 of 180 private schools had no Reviews tab or rating). Detect "no Reviews tab" explicitly and record `reviewsDisabled: true`, and show it in the output as "reviews off" (not "0 reviews").
 - [ ] Rating fallback: read the rating only from the place's own header; never from a nearby-place card (a nearby school's "4.5 stars · 109 reviews" was on the same page).
 - [ ] Show per city: places, places with reviews, reviews read.
+- [ ] Bug: when a review has no text but the owner replied, the owner's reply was saved as the review text (37 of 672). Read only the reviewer's own text block.
+- [ ] Cap reviews per chain/brand (one chain, Orchids, was 140 of 413 low reviews) or flag chains in the output.
+
+### Play Store — irrelevant apps
+- [ ] App discovery pulled in 7 irrelevant apps (games like "Scary Teacher 3D", "Teacher Simulator", Google Family Link, study planners). Exclude the Games category and add an `excludeTitles` / `excludeGenres` config.
 
 ### Meta Ad Library — noise
 - [ ] Keyword search is loose (1,554 advertisers for 28 keywords). Add a rule-based first pass that tags each advertiser as "sells to the group", "the group advertising itself" (e.g. schools' admission ads) or "noise", using group terms in the ad text; the skill then checks by hand.
