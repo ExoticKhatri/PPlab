@@ -87,5 +87,18 @@
     "maxThreads": 60,
     "commentsPerThread": 200,
     "minPostScore": 0
+  },
+  "googleMaps": {
+    "hl": "en",
+    "queries": [
+      "place type, e.g. tattoo studio"
+    ],
+    "locations": [
+      "City one",
+      "City two"
+    ],
+    "maxPlacesPerSearch": 40,
+    "reviewsPerPlace": 20,
+    "reviewSort": "lowest"
   }
 }

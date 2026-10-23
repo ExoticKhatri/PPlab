@@ -7,7 +7,7 @@
 // maxAdsPerKeyword ads have loaded (or scrolling stops adding any).
 
 import { chromium } from "playwright";
-import { loadConfig, log, mdTable, pause, quote, rawDir, today, writeJson, writeMarkdown } from "./lib/config.mjs";
+import { loadConfig, log, mdTable, pause, quote, rawDir, retry, today, writeJson, writeMarkdown } from "./lib/config.mjs";
 
 const P = "meta-ads";
 
@@ -120,7 +120,7 @@ async function main() {
   for (const country of c.countries) {
     for (const keyword of c.keywords) {
       try {
-        const text = await scrapeKeyword(page, keyword, country, c);
+        const text = await retry(() => scrapeKeyword(page, keyword, country, c), { label: `${country} "${keyword}"`, platform: P });
         const parsed = parseAds(text, keyword, country);
         perKeyword.push({ country, keyword, count: parsed.length });
         for (const ad of parsed) {

@@ -8,7 +8,7 @@
 //    signed-in Brave profile (signed-out headless browsers get a captcha).
 //    Stops at the first captcha instead of working around it.
 
-import { isBlocked, openProfileBrowser } from "./lib/browser.mjs";
+import { closeProfileBrowser, isBlocked, openProfileBrowser } from "./lib/browser.mjs";
 import { loadConfig, log, mdTable, pause, rawDir, today, writeJson, writeMarkdown } from "./lib/config.mjs";
 
 const P = "google-search";
@@ -71,6 +71,7 @@ async function collectResultsPages(queries, c) {
   let blocked = false;
   try {
     for (const query of queries.slice(0, c.maxResultsPages)) {
+      try {
       await page.goto(`https://www.google.com/search?q=${encodeURIComponent(query)}&hl=${c.hl}&gl=${c.gl}`, { waitUntil: "domcontentloaded" });
       await page.waitForTimeout(2500);
       if (await isBlocked(page)) {
@@ -90,10 +91,13 @@ async function collectResultsPages(queries, c) {
       const related = section(text, /^(People also search for|Related searches)$/i);
       pages.push({ query, peopleAlsoAsk: [...new Set(peopleAlsoAsk)], related: [...new Set(related)] });
       log(P, `"${query}": ${peopleAlsoAsk.length} questions, ${related.length} related`);
+      } catch (error) {
+        log(P, `result page "${query}" failed, skipped: ${error.message}`);
+      }
       await pause(4000, 9000);
     }
   } finally {
-    await context.close();
+    await closeProfileBrowser(context);
   }
   return { pages, blocked };
 }

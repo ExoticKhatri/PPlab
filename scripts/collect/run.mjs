@@ -2,6 +2,7 @@
 //
 //   node run.mjs <group-slug>              # platforms from config.json
 //   node run.mjs <group-slug> youtube      # just these platforms
+//   node run.mjs <group-slug> --skip-doctor   # skip the pre-flight check
 //
 // A failing platform is reported and skipped; the rest still run.
 
@@ -11,7 +12,9 @@ import { fileURLToPath } from "node:url";
 import { isEnabled, loadConfig, PLATFORMS } from "./lib/config.mjs";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
-const [slug, ...only] = process.argv.slice(2);
+const args = process.argv.slice(2);
+const skipDoctor = args.includes("--skip-doctor");
+const [slug, ...only] = args.filter((a) => !a.startsWith("--"));
 const config = loadConfig(slug);
 
 const unknown = only.filter((p) => !PLATFORMS.includes(p));
@@ -21,6 +24,20 @@ if (unknown.length) {
 }
 
 const targets = only.length ? only : PLATFORMS.filter((p) => isEnabled(config, p));
+const SIGNED_IN = ["google-search", "reddit", "google-maps"];
+
+// Pre-flight: tools, browser and (if needed) sign-ins. Fail fast instead of
+// discovering a missing tool an hour into a run.
+if (!skipDoctor) {
+  const needsBrowser = targets.some((p) => SIGNED_IN.includes(p));
+  console.log("=== doctor ===");
+  const doc = spawnSync(process.execPath, [path.join(here, "doctor.mjs"), ...(needsBrowser ? [] : ["--quick"])], { stdio: "inherit" });
+  if (doc.status !== 0) {
+    console.error("\nDoctor found problems — fix them (or re-run with --skip-doctor).");
+    process.exit(1);
+  }
+}
+
 const results = [];
 for (const platform of targets) {
   console.log(`\n=== ${platform} ===`);

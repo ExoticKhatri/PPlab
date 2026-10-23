@@ -8,7 +8,7 @@ import { spawn } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { loadConfig, log, mdTable, pause, quote, rawDir, today, writeJson, writeMarkdown } from "./lib/config.mjs";
+import { loadConfig, log, mdTable, pause, quote, rawDir, retry, today, writeJson, writeMarkdown } from "./lib/config.mjs";
 
 const P = "youtube";
 const here = path.dirname(fileURLToPath(import.meta.url));
@@ -122,7 +122,7 @@ async function main() {
   const found = new Map();
   for (const query of c.queries) {
     try {
-      const hits = await searchVideos(query, c.videosPerQuery);
+      const hits = await retry(() => searchVideos(query, c.videosPerQuery), { label: `search "${query}"`, platform: P });
       hits.forEach((h) => found.has(h.id) || found.set(h.id, h));
       log(P, `search "${query}": ${hits.length} videos`);
     } catch (error) {
@@ -134,7 +134,7 @@ async function main() {
   const comments = [];
   for (const { id, query } of found.values()) {
     try {
-      const { video, comments: got } = await fetchVideo(id, c);
+      const { video, comments: got } = await retry(() => fetchVideo(id, c), { label: `video ${id}`, platform: P });
       if (video.views < c.minViews) continue;
       videos.push({ ...video, query });
       comments.push(...got);

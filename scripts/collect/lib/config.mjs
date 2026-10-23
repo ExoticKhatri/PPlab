@@ -14,7 +14,7 @@ const here = path.dirname(fileURLToPath(import.meta.url));
 export const REPO_ROOT = path.resolve(here, "../../..");
 export const ANALYSES_DIR = path.join(REPO_ROOT, "analyses");
 
-export const PLATFORMS = ["meta-ads", "play-store", "youtube", "google-search", "google-trends", "reddit"];
+export const PLATFORMS = ["meta-ads", "play-store", "youtube", "google-search", "google-trends", "reddit", "google-maps"];
 
 export const DEFAULTS = {
   group: "",
@@ -75,6 +75,14 @@ export const DEFAULTS = {
     maxThreads: 60, // threads opened to read comments (most-commented first)
     commentsPerThread: 200,
     minPostScore: 0,
+  },
+  googleMaps: {
+    hl: "en",
+    queries: [], // place types, e.g. "tattoo studio", "pathology lab"
+    locations: [], // cities/areas; each query runs as "<query> in <location>" (empty = query as-is)
+    maxPlacesPerSearch: 40, // Maps lists up to ~120 per search
+    reviewsPerPlace: 20, // 0 = details only (faster)
+    reviewSort: "lowest", // lowest, newest, highest, relevant
   },
 };
 
@@ -151,4 +159,21 @@ export function today() {
 
 export function log(platform, ...args) {
   console.log(`[${platform}]`, ...args);
+}
+
+// Retry a flaky step (network blips, slow page loads). Errors whose class
+// name is "StopError" (captcha, signed out, rate limit) are never retried.
+export async function retry(fn, { tries = 3, label = "step", platform = "collect", baseDelayMs = 2000 } = {}) {
+  let lastError;
+  for (let attempt = 1; attempt <= tries; attempt++) {
+    try {
+      return await fn(attempt);
+    } catch (error) {
+      lastError = error;
+      if (error?.constructor?.name === "StopError" || attempt === tries) break;
+      log(platform, `${label} failed (attempt ${attempt}/${tries}): ${String(error.message).slice(0, 120)} — retrying`);
+      await new Promise((resolve) => setTimeout(resolve, baseDelayMs * attempt + Math.random() * 1000));
+    }
+  }
+  throw lastError;
 }

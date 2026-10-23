@@ -1,6 +1,6 @@
 ---
 name: group-analysis
-description: Collect and analyse market data for one target customer group (e.g. "tattoo artists", "diagnostic labs") from Meta Ad Library, Google Play Store, YouTube, Google search (autocomplete, People also ask), Google Trends and Reddit, then write analyses/<group-slug>/<platform>.md files with data and insights plus a README.md overview. Use when the user asks to analyse, research, scrape or pull data for a group, add a new group's analysis, or re-run/refresh an existing one. Supports per-group config (which platforms, how many ads/apps/reviews/videos/comments).
+description: Collect and analyse market data for one target customer group (e.g. "tattoo artists", "diagnostic labs") from Meta Ad Library, Google Play Store, YouTube, Google search (autocomplete, People also ask), Google Trends, Reddit and Google Maps, then write analyses/<group-slug>/<platform>.md files with data and insights plus a README.md overview. Use when the user asks to analyse, research, scrape or pull data for a group, add a new group's analysis, or re-run/refresh an existing one. Supports per-group config (which platforms, how many ads/apps/reviews/videos/comments).
 ---
 
 # Group analysis
@@ -19,6 +19,7 @@ analyses/<group-slug>/
   google-search.md   data summary (generated) + Insights (you write)
   google-trends.md   data summary (generated) + Insights (you write)
   reddit.md          data summary (generated) + Insights (you write)
+  google-maps.md     data summary (generated) + Insights (you write)
   raw/<platform>/    raw JSON (gitignored, never committed)
 ```
 
@@ -29,9 +30,12 @@ Collectors live in `scripts/collect/` (see [docs/platform.md](../../../docs/plat
 ```bash
 cd scripts/collect
 ls node_modules .venv >/dev/null 2>&1 || npm run setup   # npm deps, Playwright Chromium, yt-dlp in .venv
+node doctor.mjs                                          # tools, Brave, profile, Reddit/Google sign-in
 ```
 
-**Signed-in browser (Reddit, Google result pages):** these run in a visible Brave window with its own profile (`~/.pplab-browser-profile`, outside the repo). Reddit reads Reddit's JSON through that signed-in session; if the session is missing or expired, `reddit.mjs` stops with a 401/403 message. Then ask the user to run `node login.mjs` from `scripts/collect`, sign in to Reddit (and Google) in the window that opens, and close it — you can't sign in for them. The window appears on their screen while collectors run; tell them not to close it mid-run.
+`run.mjs` runs the doctor automatically before collecting and stops if something is missing; fix what it reports (it prints the fix) rather than skipping it with `--skip-doctor`.
+
+**Signed-in browser (Reddit, Google result pages, Google Maps):** these run in a visible Brave window with its own profile (`~/.pplab-browser-profile`, outside the repo). Reddit reads Reddit's JSON through that signed-in session; if the session is missing or expired, `reddit.mjs` stops with a 401/403 message. Then ask the user to run `node login.mjs` from `scripts/collect`, sign in to Reddit (and Google) in the window that opens, and close it — you can't sign in for them. The window appears on their screen while collectors run; tell them not to close it mid-run. Only one run can use the profile at a time (a second one fails with "profile is already open"), so run signed-in platforms one after another. Restored tabs are closed at start and every tab a run opened is closed at the end.
 
 ## 2. Create or update the group's config
 
@@ -47,7 +51,7 @@ Anything left out falls back to the default in `scripts/collect/lib/config.mjs`.
 | --- | --- | --- |
 | `group` | — | Human-readable name used in headings |
 | `groupId` | — | Optional: the group's id in `app/_components/group-finder/group-data.ts` |
-| `platforms` | `"all"` | `"all"` or a list of: `meta-ads`, `play-store`, `youtube`, `google-search`, `google-trends`, `reddit` |
+| `platforms` | `"all"` | `"all"` or a list of: `meta-ads`, `play-store`, `youtube`, `google-search`, `google-trends`, `reddit`, `google-maps` |
 | `metaAds.countries` | `["IN"]` | Ad Library country codes, e.g. `["US", "IN"]` |
 | `metaAds.keywords` | `[]` | Searches run per country |
 | `metaAds.maxAdsPerKeyword` | `100` | Stop scrolling a keyword once this many ads have loaded |
@@ -90,6 +94,12 @@ Anything left out falls back to the default in `scripts/collect/lib/config.mjs`.
 | `reddit.maxThreads` | `60` | Threads opened to read comments (most-commented first) |
 | `reddit.commentsPerThread` | `200` | Comments read per thread |
 | `reddit.minPostScore` | `0` | Skip posts below this score |
+| `googleMaps.hl` | `en` | Maps language |
+| `googleMaps.queries` | `[]` | Place types ("tattoo studio", "pathology lab") |
+| `googleMaps.locations` | `[]` | Cities/areas; each query runs as "<query> in <location>" |
+| `googleMaps.maxPlacesPerSearch` | `40` | Places per search (Maps lists up to ~120) |
+| `googleMaps.reviewsPerPlace` | `20` | Reviews read per place; `0` = details only (much faster) |
+| `googleMaps.reviewSort` | `lowest` | `lowest`, `newest`, `highest`, `relevant` |
 
 ### Choosing good inputs
 
@@ -99,7 +109,8 @@ Anything left out falls back to the default in `scripts/collect/lib/config.mjs`.
 - **Google search seeds:** 3–8 short phrases in the group's words about their problems and tools ("tattoo deposit", "pathology lab software"). `resultsQueries`: a few full questions ("how to stop no shows tattoo").
 - **Google Trends keywords:** broad anchor first ("tattoo artist"), then 4–12 topic terms; use the group's main country as `geo`.
 - **Reddit:** 2–6 subreddits where the group talks shop (r/TattooArtists, r/medicallaboratory, r/Teachers); set `discoveryQueries` to group terms to find more communities. Queries are problem phrases ("no show", "deposit", "booking app", "software", "pricing").
-- **Limits:** quick look = defaults. Deep run = `maxAdsPerKeyword` 200, `reviewsPerApp` 1500, `maxCommentsPerVideo` 1000. Mention roughly how long it will take: Meta ~30–60 s per keyword per country, YouTube ~10–40 s per video, Google search ~25 s per seed plus ~10 s per result page, Trends ~10 s per keyword, Reddit ~5 s per page (searches + threads).
+- **Google Maps:** the place type as people search it ("tattoo studio", "pathology lab", "CBSE school") and 3–10 cities where the group lives (big metros + a few tier-2 cities for India). For group size only, set `reviewsPerPlace: 0` and raise `maxPlacesPerSearch` to 120.
+- **Limits:** quick look = defaults. Deep run = `maxAdsPerKeyword` 200, `reviewsPerApp` 1500, `maxCommentsPerVideo` 1000. Mention roughly how long it will take: Meta ~30–60 s per keyword per country, YouTube ~10–40 s per video, Google search ~25 s per seed plus ~10 s per result page, Trends ~10 s per keyword, Reddit ~5 s per page (searches + threads), Google Maps ~10–20 s per place with reviews (~4 s without).
 
 ## 3. Collect
 
@@ -135,6 +146,9 @@ For each platform file, replace the placeholder under `## Insights` with your an
 - **reddit.md**
   - Recurring pains with counts and real quotes (comments are often the richest source), tools people name and their complaints about them, prices mentioned, and which communities matter most (members, activity).
   - Reddit skews US/global; say so for India-focused groups.
+- **google-maps.md**
+  - Group size and reach per city (places found; "hit the limit" means more exist), how digitally mature they are (website share, owner reply rate).
+  - What their customers complain about in low-rated reviews, themed with counts — often what the owner struggles with (e.g. waiting, rescheduling, no-shows, pricing).
 
 Then write **README.md** for the group:
 
@@ -160,7 +174,14 @@ The pplab group page (`/groups/<id>`) reads `app/_components/ad-research/researc
 | Google search (autocomplete + People also ask + related) | `google-search.mjs` | Ready (autocomplete via plain HTTP; result pages via signed-in Brave, stops on captcha) |
 | Google Trends | `google-trends.mjs` | Ready (`google-trends-api`) |
 | Reddit | `reddit.mjs` | Ready (Reddit JSON through the signed-in Brave session; needs `node login.mjs` once) |
-| Google Maps, LinkedIn | — | Planned (see docs/platform.md). If config lists one, skip it and note it under Data gaps. |
+| Google Maps | `google-maps.mjs` | Ready (signed-in Brave; place details + sorted reviews; checkpoints every 5 places) |
+| LinkedIn | — | Planned (see docs/platform.md). If config lists it, skip it and note it under Data gaps. |
+
+## Reliability built in
+
+- Every item (keyword, app, video, page, place, thread) is retried and isolated: one failure is logged as "failed, skipped" and the run continues. Mention skipped items under Data gaps.
+- A captcha, block, rate limit or sign-out stops that platform cleanly and keeps what was already collected (the `.md` says "stopped early" and why).
+- Google Maps writes its raw data every 5 places, so a stopped run still leaves usable data.
 
 ## Rules
 

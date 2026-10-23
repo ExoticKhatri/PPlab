@@ -12,7 +12,7 @@ Updated 23 Oct 2026. All scrapers run locally with Node.js; raw data stays out o
 | Meta Ad Library | Live ads aimed at a group | Sellers (what they think hurts buyers) | Playwright, signed out | ✅ Working |
 | Google Play Store | App details (downloads, price, ratings) + reviews | End users, some staff | `google-play-scraper` + Playwright search | ✅ Working (details + reviews) |
 | YouTube | Comments on "how to start/run X" videos | Owners and would-be owners | `yt-dlp` (all comments) | ✅ Working |
-| Google Maps | Businesses per city + their reviews | Customers of small independent businesses | Playwright, signed-in profile | 🔧 Rebuild with signed-in profile |
+| Google Maps | Businesses per city + their reviews | Customers of small independent businesses | Playwright, signed-in Brave profile | ✅ Working |
 | Reddit | Communities, posts + comments from professionals | Staff and owners (mostly global) | Playwright, signed-in Brave profile | ✅ Working (needs one-time sign-in) |
 | LinkedIn | People counts by job title, posts | Owners, managers, decision makers | Playwright, signed-in profile | 🆕 Planned (account risk, see below) |
 | Google search (autocomplete, "People also ask", related) | What the group types into Google | Owners and would-be owners | HTTP + signed-in Brave profile | ✅ Working |
@@ -35,6 +35,9 @@ These sites hide data from signed-out automated browsers, so we use one persiste
 How we keep it safe:
 
 - Human pace: random 2–6 second pauses, a limited number of pages per run, stop at the first sign of a captcha or "unusual activity" warning.
+- Tabs: tabs restored from the last session are closed at start, and every tab a run opened is closed at the end.
+- Pre-flight: `node doctor.mjs` (run automatically by `run.mjs`) checks tools, Brave, the profile and the Reddit/Google sign-ins.
+- Per-item retries; one failed item is skipped, not fatal. Google Maps checkpoints every 5 places.
 - Read-only: the scripts never post, like, message or connect.
 - Small batches per group (hundreds of items, not hundreds of thousands).
 
@@ -77,14 +80,13 @@ How we keep it safe:
 
 ## Google Maps
 
-- **What it is:** the best source for **small independent businesses**, which chain apps don't cover. It serves two jobs:
+- **What it is:** the best source for **small independent businesses**, which chain apps don't cover. Two jobs:
   1. **Group size and reach:** how many businesses of a type exist per city, with phone and website.
-  2. **Customer pain:** reviews of those businesses (what their customers complain about = what the owner struggles with).
-- **Why it failed before:** signed out, Google shows automated browsers a limited view without reviews.
-- **Plan:** Playwright with the signed-in profile. Search "pathology lab in Lucknow" (etc.), scroll the results list to the end, open each place, sort reviews by lowest rating and scroll.
-- **Data per place:** name, category, rating, review count, address, phone, website, opening hours, price level.
-- **Data per review:** stars, text, date, whether the owner replied (and the reply).
-- **Limits:** Maps stops listing after ~120 results per search, so we search per city or neighbourhood; Google is quick to show captchas, so runs stay small.
+  2. **Customer pain:** reviews of those businesses (what their customers complain about is often what the owner struggles with).
+- **How we pull it:** [scripts/collect/google-maps.mjs](../scripts/collect/google-maps.mjs), in the signed-in Brave profile (signed out, Maps hides reviews). For each "<query> in <location>" it scrolls the results list to the end, opens each place, then opens Reviews sorted lowest-first (configurable) and reads them.
+- **Data per place:** name, category, rating, review count, address, phone, website, open/closed.
+- **Data per review:** stars, text, relative date, owner reply.
+- **Limits:** Maps lists up to ~120 places per search, so search per city or area; ~10–20 s per place with reviews.
 - **Cost:** free (no Places API).
 
 ## Reddit

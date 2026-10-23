@@ -12,8 +12,8 @@
 //   4. open the most-commented threads and read their comments
 // Read-only, human-paced; stops on 401/403/429 or when signed out.
 
-import { openProfileBrowser } from "./lib/browser.mjs";
-import { loadConfig, log, mdTable, pause, quote, rawDir, today, writeJson, writeMarkdown } from "./lib/config.mjs";
+import { closeProfileBrowser, openProfileBrowser } from "./lib/browser.mjs";
+import { loadConfig, log, mdTable, pause, quote, rawDir, retry, today, writeJson, writeMarkdown } from "./lib/config.mjs";
 
 const P = "reddit";
 const BASE = "https://www.reddit.com";
@@ -21,6 +21,10 @@ const BASE = "https://www.reddit.com";
 class StopError extends Error {}
 
 async function getJson(page, path) {
+  return retry(() => getJsonOnce(page, path), { label: path.split("?")[0], platform: P });
+}
+
+async function getJsonOnce(page, path) {
   const res = await page.evaluate(async (url) => {
     const r = await fetch(url, { credentials: "include", headers: { Accept: "application/json" } });
     return { status: r.status, text: await r.text() };
@@ -160,33 +164,53 @@ async function main() {
 
     for (const sub of c.subreddits) {
       for (const q of c.searchQueries) {
-        const rows = listing(await getJson(page, `/r/${sub}/search.json?q=${encodeURIComponent(q)}&restrict_sr=1&sort=${c.searchSort}&t=${c.searchTimeframe}&limit=${c.postsPerSearch}`));
-        addPosts(rows);
-        log(P, `r/${sub} "${q}": ${rows.length} posts`);
+        try {
+          const rows = listing(await getJson(page, `/r/${sub}/search.json?q=${encodeURIComponent(q)}&restrict_sr=1&sort=${c.searchSort}&t=${c.searchTimeframe}&limit=${c.postsPerSearch}`));
+          addPosts(rows);
+          log(P, `r/${sub} "${q}": ${rows.length} posts`);
+        } catch (error) {
+          if (error instanceof StopError) throw error;
+          log(P, `request failed, skipped: ${error.message}`);
+        }
         await pause(1500, 3500);
       }
       if (c.topPostsPerSub > 0) {
-        const rows = listing(await getJson(page, `/r/${sub}/top.json?t=${c.topTimeframe}&limit=${c.topPostsPerSub}`));
-        addPosts(rows);
-        log(P, `r/${sub} top (${c.topTimeframe}): ${rows.length} posts`);
+        try {
+          const rows = listing(await getJson(page, `/r/${sub}/top.json?t=${c.topTimeframe}&limit=${c.topPostsPerSub}`));
+          addPosts(rows);
+          log(P, `r/${sub} top (${c.topTimeframe}): ${rows.length} posts`);
+        } catch (error) {
+          if (error instanceof StopError) throw error;
+          log(P, `request failed, skipped: ${error.message}`);
+        }
         await pause(1500, 3500);
       }
     }
 
     if (c.searchAllReddit) {
       for (const q of c.searchQueries) {
-        const rows = listing(await getJson(page, `/search.json?q=${encodeURIComponent(q)}&sort=${c.searchSort}&t=${c.searchTimeframe}&limit=${c.postsPerSearch}`));
-        addPosts(rows);
-        log(P, `all of Reddit "${q}": ${rows.length} posts`);
+        try {
+          const rows = listing(await getJson(page, `/search.json?q=${encodeURIComponent(q)}&sort=${c.searchSort}&t=${c.searchTimeframe}&limit=${c.postsPerSearch}`));
+          addPosts(rows);
+          log(P, `all of Reddit "${q}": ${rows.length} posts`);
+        } catch (error) {
+          if (error instanceof StopError) throw error;
+          log(P, `request failed, skipped: ${error.message}`);
+        }
         await pause(1500, 3500);
       }
     }
 
     const toRead = [...posts.values()].filter((p) => p.comments > 0).sort((a, b) => b.comments - a.comments).slice(0, c.maxThreads);
     for (const post of toRead) {
-      const comments = await readThread(page, post, c.commentsPerThread);
-      threads.push({ ...post, comments });
-      log(P, `thread "${quote(post.title, 50)}": ${comments.length} comments`);
+      try {
+        const comments = await readThread(page, post, c.commentsPerThread);
+        threads.push({ ...post, comments });
+        log(P, `thread "${quote(post.title, 50)}": ${comments.length} comments`);
+      } catch (error) {
+        if (error instanceof StopError) throw error;
+        log(P, `thread "${quote(post.title, 50)}" failed, skipped: ${error.message}`);
+      }
       await pause(2000, 4500);
     }
   } catch (error) {
@@ -194,7 +218,7 @@ async function main() {
     stopped = error.message;
     log(P, stopped);
   } finally {
-    await context.close();
+    await closeProfileBrowser(context);
   }
 
   writeJson(`${dir}/subreddits.json`, subs);

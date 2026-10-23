@@ -9,7 +9,7 @@
 
 import gplay from "google-play-scraper";
 import { chromium } from "playwright";
-import { loadConfig, log, mdTable, pause, quote, rawDir, today, writeJson, writeMarkdown } from "./lib/config.mjs";
+import { loadConfig, log, mdTable, pause, quote, rawDir, retry, today, writeJson, writeMarkdown } from "./lib/config.mjs";
 
 const P = "play-store";
 
@@ -268,7 +268,7 @@ async function main() {
   const reviews = [];
   for (const app of apps) {
     try {
-      const got = await fetchReviews(app.appId, c);
+      const got = await retry(() => fetchReviews(app.appId, c), { label: `reviews ${app.appId}`, platform: P });
       reviews.push(...got);
       log(P, `${app.title}: ${got.length} reviews`);
     } catch (error) {
