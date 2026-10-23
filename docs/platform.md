@@ -3,14 +3,16 @@
 Where we pull data from to understand a group (how big it is, how to reach it, what hurts), what each source gives us, and how we collect it.
 Updated 23 Oct 2026. All scrapers run locally with Node.js; raw data stays out of git.
 
+**Run them through the `group-analysis` Claude skill** ([.claude/skills/group-analysis/SKILL.md](../.claude/skills/group-analysis/SKILL.md)): collectors live in [scripts/collect/](../scripts/collect/), each group's settings in `analyses/<group>/config.json`, results in `analyses/<group>/*.md`. The older one-off scripts under `scripts/ad-library`, `scripts/play-reviews` and `scripts/youtube-comments` are superseded.
+
 ## At a glance
 
 | Platform | What we get | Whose voice | How | Status |
 | --- | --- | --- | --- | --- |
 | Meta Ad Library | Live ads aimed at a group | Sellers (what they think hurts buyers) | Playwright, signed out | ✅ Working |
-| Google Play Store | App details (downloads, price, ratings) + reviews | End users, some staff | `google-play-scraper` + Playwright search | ✅ Reviews working · 🔧 app details to add |
+| Google Play Store | App details (downloads, price, ratings) + reviews | End users, some staff | `google-play-scraper` + Playwright search | ✅ Working (details + reviews) |
 | Apple App Store | App details + reviews | End users (iPhone-heavy groups, e.g. tattoo artists) | `app-store-scraper` | 🆕 Planned |
-| YouTube | Comments on "how to start/run X" videos | Owners and would-be owners | `yt-dlp` (all comments) | 🔧 Upgrade from Playwright top-20 |
+| YouTube | Comments on "how to start/run X" videos | Owners and would-be owners | `yt-dlp` (all comments) | ✅ Working |
 | Google Maps | Businesses per city + their reviews | Customers of small independent businesses | Playwright, signed-in profile | 🔧 Rebuild with signed-in profile |
 | Reddit | Posts + comments from professionals | Staff and owners (mostly global) | Playwright, signed-in profile | 🔧 Move from extension to automation |
 | LinkedIn | People counts by job title, posts | Owners, managers, decision makers | Playwright, signed-in profile | 🆕 Planned (account risk, see below) |
@@ -51,7 +53,7 @@ How we keep it safe:
 
 - **What it is:** the Android apps a group (or its customers) uses: who the competitors are, how big they are, and what users complain about.
 - **How we pull it:** [scripts/play-reviews/](../scripts/play-reviews/). `playsearch.mjs` finds app IDs through the Play Store website (the library's own search is broken), `reviews.mjs` fetches reviews, `themes.mjs` tags complaints by theme.
-- **Data per app (to add — `google-play-scraper` already returns all of it):**
+- **Data per app** (`google-play-scraper`, or the app page itself when the library can't parse an app):
   - downloads (`minInstalls` / `maxInstalls`, e.g. "1M+")
   - free or paid, price, currency
   - in-app purchases and their price range, contains ads
@@ -72,8 +74,7 @@ How we keep it safe:
 ## YouTube
 
 - **What it is:** comments under videos like "pathology lab kaise khole" or "tattoo artist no-shows". Owners and would-be owners ask questions and complain there, often in Hindi.
-- **Today:** [scripts/youtube-comments/](../scripts/youtube-comments/). Playwright scrolls each video page; only ~20 top comments load per video, at about a minute each.
-- **Upgrade:** switch comment collection to **`yt-dlp --write-comments`**. It pulls every comment and reply on a video without an API key or login, in seconds. Keep Playwright (or `yt-dlp ytsearchN:`) only to find videos per search query.
+- **How we pull it:** [scripts/collect/youtube.mjs](../scripts/collect/youtube.mjs). `yt-dlp ytsearchN:` finds videos per query, then `yt-dlp --write-comments` pulls every comment and reply (limits set in config), no API key or login. Replaced the old Playwright scroller that only got ~20 comments per video.
 - **Data per video:** title, channel, views, likes, upload date, duration, description, comment count.
 - **Data per comment:** text, author, likes, date, whether it's a reply, whether the creator pinned or hearted it.
 - **What it tells us:** the owner's own voice, which Play Store lacks; video titles and view counts also show which topics this group cares about.
