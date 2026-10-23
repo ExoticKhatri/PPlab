@@ -2,32 +2,85 @@
   "group": "Human-readable group name",
   "groupId": "id used in app/_components/group-finder/group-data.ts (optional)",
   "platforms": "all",
-
   "metaAds": {
-    "countries": ["IN"],
-    "keywords": ["keyword one", "keyword two"],
+    "countries": [
+      "IN"
+    ],
+    "keywords": [
+      "keyword one",
+      "keyword two"
+    ],
     "maxAdsPerKeyword": 100,
     "maxScrollRounds": 25,
     "activeOnly": true
   },
-
   "playStore": {
     "country": "in",
     "lang": "en",
-    "searchTerms": ["app search term"],
+    "searchTerms": [
+      "app search term"
+    ],
     "appIds": [],
     "maxApps": 30,
     "minReviews": 10,
     "reviewsPerApp": 500,
     "complaintMaxStars": 3
   },
-
   "youtube": {
-    "queries": ["how to start ...", "... owner problems"],
+    "queries": [
+      "how to start ...",
+      "... owner problems"
+    ],
     "videosPerQuery": 8,
     "maxCommentsPerVideo": 500,
     "maxRepliesPerThread": 5,
     "commentSort": "top",
     "minViews": 0
+  },
+  "googleSearch": {
+    "hl": "en",
+    "gl": "in",
+    "seeds": [
+      "short phrase the group types"
+    ],
+    "expandAlphabet": true,
+    "questionPrefixes": [
+      "how",
+      "why",
+      "what",
+      "best",
+      "is",
+      "can",
+      "which",
+      "where"
+    ],
+    "resultsQueries": [],
+    "maxResultsPages": 10,
+    "expandPeopleAlsoAsk": 3
+  },
+  "googleTrends": {
+    "geo": "IN",
+    "timeframe": "today 5-y",
+    "keywords": [
+      "anchor keyword",
+      "keyword two"
+    ],
+    "regionsResolution": "REGION"
+  },
+  "reddit": {
+    "subreddits": [
+      "SubredditName"
+    ],
+    "searchQueries": [
+      "problem phrase"
+    ],
+    "searchAllReddit": true,
+    "discoverSubreddits": true,
+    "postsPerSearch": 25,
+    "topPostsPerSub": 25,
+    "topTimeframe": "year",
+    "maxThreads": 60,
+    "commentsPerThread": 200,
+    "minPostScore": 0
   }
 }

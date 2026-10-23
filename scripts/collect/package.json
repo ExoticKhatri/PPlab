@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "google-play-scraper": "^10.0.1",
+    "google-trends-api": "^4.9.2",
     "playwright": "^1.48.2"
   }
 }

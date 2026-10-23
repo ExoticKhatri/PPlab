@@ -14,7 +14,7 @@ const here = path.dirname(fileURLToPath(import.meta.url));
 export const REPO_ROOT = path.resolve(here, "../../..");
 export const ANALYSES_DIR = path.join(REPO_ROOT, "analyses");
 
-export const PLATFORMS = ["meta-ads", "play-store", "youtube"];
+export const PLATFORMS = ["meta-ads", "play-store", "youtube", "google-search", "google-trends", "reddit"];
 
 export const DEFAULTS = {
   group: "",
@@ -44,6 +44,34 @@ export const DEFAULTS = {
     maxRepliesPerThread: 5,
     commentSort: "top", // "top" or "new"
     minViews: 0, // skip videos with fewer views
+  },
+  googleSearch: {
+    hl: "en",
+    gl: "in",
+    seeds: [], // short phrases the group would type, e.g. "tattoo booking", "pathology lab software"
+    expandAlphabet: true, // also query "<seed> a" … "<seed> z"
+    questionPrefixes: ["how", "why", "what", "best", "is", "can", "which", "where"], // "<prefix> <seed>"
+    resultsQueries: [], // queries whose result pages we open for "People also ask" / related searches (signed-in browser); empty = first 5 seeds
+    maxResultsPages: 10, // cap on result pages opened per run
+    expandPeopleAlsoAsk: 3, // click this many questions to load more of them
+  },
+  googleTrends: {
+    geo: "IN", // "" = worldwide, "US", "IN", …
+    timeframe: "today 5-y", // "today 12-m", "today 5-y", "all"
+    keywords: [], // compared in batches of up to 5 (Google's limit); the first keyword anchors every batch
+    regionsResolution: "REGION", // "COUNTRY", "REGION" (state), "CITY"
+  },
+  reddit: {
+    subreddits: [], // without "r/", e.g. "TattooArtists"
+    searchQueries: [], // searched inside each subreddit (and across Reddit if searchAllReddit)
+    searchAllReddit: true,
+    discoverSubreddits: true, // also find communities matching the queries (with member counts)
+    postsPerSearch: 25,
+    topPostsPerSub: 25, // also take each subreddit's top posts
+    topTimeframe: "year", // hour, day, week, month, year, all
+    maxThreads: 60, // threads opened to read comments (most-commented first)
+    commentsPerThread: 200,
+    minPostScore: 0,
   },
 };
 

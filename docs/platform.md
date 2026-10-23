@@ -11,26 +11,26 @@ Updated 23 Oct 2026. All scrapers run locally with Node.js; raw data stays out o
 | --- | --- | --- | --- | --- |
 | Meta Ad Library | Live ads aimed at a group | Sellers (what they think hurts buyers) | Playwright, signed out | ✅ Working |
 | Google Play Store | App details (downloads, price, ratings) + reviews | End users, some staff | `google-play-scraper` + Playwright search | ✅ Working (details + reviews) |
-| Apple App Store | App details + reviews | End users (iPhone-heavy groups, e.g. tattoo artists) | `app-store-scraper` | 🆕 Planned |
 | YouTube | Comments on "how to start/run X" videos | Owners and would-be owners | `yt-dlp` (all comments) | ✅ Working |
 | Google Maps | Businesses per city + their reviews | Customers of small independent businesses | Playwright, signed-in profile | 🔧 Rebuild with signed-in profile |
-| Reddit | Posts + comments from professionals | Staff and owners (mostly global) | Playwright, signed-in profile | 🔧 Move from extension to automation |
+| Reddit | Communities, posts + comments from professionals | Staff and owners (mostly global) | Playwright, signed-in Brave profile | ✅ Working (needs one-time sign-in) |
 | LinkedIn | People counts by job title, posts | Owners, managers, decision makers | Playwright, signed-in profile | 🆕 Planned (account risk, see below) |
-| Google Search (autocomplete, "People also ask") | What the group types into Google | Owners and would-be owners | Playwright, signed out | 🆕 Planned |
-| Google Trends | Search interest over time and by region | Everyone searching | Playwright or `google-trends-api` | 🆕 Planned |
-| Google Ads Keyword Planner | Monthly search volume per keyword | Everyone searching | Manual export (free Ads account) | 🆕 Planned |
+| Google search (autocomplete, "People also ask", related) | What the group types into Google | Owners and would-be owners | HTTP + signed-in Brave profile | ✅ Working |
+| Google Trends | Search interest over time and by region | Everyone searching | `google-trends-api` | ✅ Working |
 
 **Removed:** software review sites (Capterra, SoftwareSuggest, TechJockey). Capterra blocks automation, and the rest have 5–10 mostly vendor-solicited reviews per product, so the volume is too low to be useful.
 
-**Not useful here:** Google Search Console only reports searches that reached *our own* website, so it can't show what a group searches for in general. Google autocomplete, Trends and Keyword Planner answer that question instead.
+**Not useful here:** Google Search Console only reports searches that reached *our own* website, so it can't show what a group searches for in general. Google autocomplete, "People also ask" and Trends answer that question instead.
 
-## Signed-in browser profile (shared by Maps, Reddit, LinkedIn)
+**Dropped:** Apple App Store (not now) and Google Ads Keyword Planner (needs an ad account with spend).
+
+## Signed-in browser profile (Reddit, Google result pages; later Maps, LinkedIn)
 
 These sites hide data from signed-out automated browsers, so we use one persistent Playwright browser profile:
 
-1. Run `scripts/browser-profile/login.mjs`. A normal, visible browser opens.
-2. Sign in by hand to Google, Reddit and LinkedIn once. The profile is saved locally, outside the repo (it holds session cookies; never commit it).
-3. Every scraper launches with that profile (`chromium.launchPersistentContext`), visible rather than headless, so pages behave as they do for a person.
+1. Run `node login.mjs` in `scripts/collect`. Your Brave opens with a separate automation profile (`~/.pplab-browser-profile`), on Google and Reddit sign-in tabs.
+2. Sign in by hand, then close the window. The session is saved in that profile (it holds session cookies; it lives outside the repo and must never be committed). It's separate from your everyday Brave profile.
+3. Collectors launch Brave with that profile (`lib/browser.mjs`), visible rather than headless, so pages behave as they do for a person.
 
 How we keep it safe:
 
@@ -65,12 +65,6 @@ How we keep it safe:
 - **Limits:** reviewers are mostly end users, not buyers; B2B apps have few reviews; theme counts come from keyword rules, so read a sample.
 - **Cost:** free.
 
-## Apple App Store (planned)
-
-- **Why:** some groups are iPhone-heavy. Tattoo booking tools barely exist on Android, but they do on iOS.
-- **How:** `app-store-scraper` (npm) for app details (price, rating, number of ratings, category, release notes) and up to ~500 recent reviews per app per country.
-- **Cost:** free.
-
 ## YouTube
 
 - **What it is:** comments under videos like "pathology lab kaise khole" or "tattoo artist no-shows". Owners and would-be owners ask questions and complain there, often in Hindi.
@@ -96,9 +90,10 @@ How we keep it safe:
 ## Reddit
 
 - **What it is:** communities of professionals (r/TattooArtists, r/medicallaboratory, r/Teachers). Staff and owners vent there in detail, mostly outside India.
-- **Today:** Reddit blocks signed-out requests (403). The [reddit-universal-scraper](https://github.com/ksanjeev284/reddit-universal-scraper) Chrome extension works but needs someone to browse by hand; its OAuth route needs Reddit's approval (new requests close 31 Oct 2026).
-- **Plan:** Playwright with the signed-in profile on old.reddit.com: run searches inside each subreddit, open threads, expand comments, save. [scripts/reddit/analyze.mjs](../scripts/reddit/) already counts themes from the same post/comment shape.
-- **Data per post:** subreddit, title, text, score, comment count, date, link. **Per comment:** text, score, date.
+- **How we pull it:** [scripts/collect/reddit.mjs](../scripts/collect/reddit.mjs), in the signed-in Brave profile on old.reddit.com (old Reddit now requires an account; signed out, every page redirects to login). It discovers matching subreddits with member counts, searches each subreddit and all of Reddit for the configured queries, takes each subreddit's top posts, then opens the most-commented threads and reads their comments.
+- **Data per subreddit:** name, members, description. **Per post:** subreddit, title, score, comment count, date, link. **Per thread:** post body and comments (author, score, depth, text, date).
+- **Setup:** run `node login.mjs` once and sign in to Reddit. If the session expires the collector stops with a clear message.
+- **Limits:** human-paced (~5 s per page); Reddit skews US/global.
 - **Cost:** free.
 
 ## LinkedIn (planned, use sparingly)
@@ -111,17 +106,24 @@ How we keep it safe:
 - **Limits:** free accounts see limited search results per month; LinkedIn actively restricts automated accounts (see Risk above).
 - **Cost:** free.
 
-## Google Search: autocomplete and "People also ask" (planned)
+## Google search: autocomplete, "People also ask", related searches
 
-- **What it is:** what people actually type into Google about a topic, e.g. "tattoo booking app for…", "how to stop no shows tattoo", "pathology lab software price".
-- **How:** Playwright, signed out: type each seed keyword with a–z suffixes to collect autocomplete suggestions, and read the "People also ask" and "Related searches" boxes on result pages.
-- **What it tells us:** the problems and questions the group searches for, in their own words — good for pain points and later for ad and landing-page wording.
+- **What it is:** what people actually type into Google about a topic, e.g. "is it normal to pay a deposit for a tattoo", "pathology lab software price".
+- **How we pull it:** [scripts/collect/google-search.mjs](../scripts/collect/google-search.mjs).
+  - Autocomplete: Google's suggest endpoint (plain HTTP, no browser) for each seed, "<seed> a…z" and "<question word> <seed>".
+  - "People also ask" and related searches: result pages opened in the signed-in Brave profile (a signed-out headless browser gets a captcha). It clicks a few questions to load more, and stops at the first captcha.
+- **What it tells us:** the problems and questions the group searches for, in their own words — for pain points and later for ad and landing-page wording.
+- **Limits:** autocomplete has no search volumes; "hits" (how many probes returned a suggestion) is only a rough centrality signal.
 - **Cost:** free.
 
-## Google Trends and Keyword Planner (planned)
+## Google Trends
 
-- **Google Trends:** relative search interest over time and by state/country (is this topic growing? where?). Free; via the website or the `google-trends-api` npm package.
-- **Google Ads Keyword Planner:** actual monthly search volumes and ad cost per click for each keyword. Free with a Google Ads account (no ad spend needed); exported by hand as CSV.
+- **What it is:** relative search interest (0–100) over time and by region, plus related and rising searches.
+- **How we pull it:** [scripts/collect/google-trends.mjs](../scripts/collect/google-trends.mjs) with the `google-trends-api` package. Keywords are compared in batches of 5 sharing an anchor keyword; growth = last 12 months vs the 12 months before.
+- **Limits:** relative values, not search counts; weekly values are noisy for niche terms; related queries are often empty for small topics.
+- **Cost:** free.
+
+**Dropped:** Google Ads Keyword Planner. Real search volumes need an active Google Ads account with spend.
 
 ## Other sources worth adding later
 

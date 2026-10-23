@@ -1,6 +1,6 @@
 ---
 name: group-analysis
-description: Collect and analyse market data for one target customer group (e.g. "tattoo artists", "diagnostic labs") from Meta Ad Library, Google Play Store and YouTube, then write analyses/<group-slug>/<platform>.md files with data and insights plus a README.md overview. Use when the user asks to analyse, research, scrape or pull data for a group, add a new group's analysis, or re-run/refresh an existing one. Supports per-group config (which platforms, how many ads/apps/reviews/videos/comments).
+description: Collect and analyse market data for one target customer group (e.g. "tattoo artists", "diagnostic labs") from Meta Ad Library, Google Play Store, YouTube, Google search (autocomplete, People also ask), Google Trends and Reddit, then write analyses/<group-slug>/<platform>.md files with data and insights plus a README.md overview. Use when the user asks to analyse, research, scrape or pull data for a group, add a new group's analysis, or re-run/refresh an existing one. Supports per-group config (which platforms, how many ads/apps/reviews/videos/comments).
 ---
 
 # Group analysis
@@ -16,6 +16,9 @@ analyses/<group-slug>/
   meta-ads.md        data summary (generated) + Insights (you write)
   play-store.md      data summary (generated) + Insights (you write)
   youtube.md         data summary (generated) + Insights (you write)
+  google-search.md   data summary (generated) + Insights (you write)
+  google-trends.md   data summary (generated) + Insights (you write)
+  reddit.md          data summary (generated) + Insights (you write)
   raw/<platform>/    raw JSON (gitignored, never committed)
 ```
 
@@ -27,6 +30,8 @@ Collectors live in `scripts/collect/` (see [docs/platform.md](../../../docs/plat
 cd scripts/collect
 ls node_modules .venv >/dev/null 2>&1 || npm run setup   # npm deps, Playwright Chromium, yt-dlp in .venv
 ```
+
+**Signed-in browser (Reddit, Google result pages):** these run in a visible Brave window with its own profile (`~/.pplab-browser-profile`, outside the repo). Reddit needs an account: if the profile isn't signed in, `reddit.mjs` stops with "old Reddit requires a signed-in account". Then ask the user to run `node login.mjs` from `scripts/collect`, sign in to Reddit (and Google) in the window that opens, and close it — you can't sign in for them. The window appears on their screen while collectors run; tell them not to close it mid-run.
 
 ## 2. Create or update the group's config
 
@@ -42,7 +47,7 @@ Anything left out falls back to the default in `scripts/collect/lib/config.mjs`.
 | --- | --- | --- |
 | `group` | — | Human-readable name used in headings |
 | `groupId` | — | Optional: the group's id in `app/_components/group-finder/group-data.ts` |
-| `platforms` | `"all"` | `"all"` or a list: `["meta-ads", "play-store", "youtube"]` |
+| `platforms` | `"all"` | `"all"` or a list of: `meta-ads`, `play-store`, `youtube`, `google-search`, `google-trends`, `reddit` |
 | `metaAds.countries` | `["IN"]` | Ad Library country codes, e.g. `["US", "IN"]` |
 | `metaAds.keywords` | `[]` | Searches run per country |
 | `metaAds.maxAdsPerKeyword` | `100` | Stop scrolling a keyword once this many ads have loaded |
@@ -61,13 +66,37 @@ Anything left out falls back to the default in `scripts/collect/lib/config.mjs`.
 | `youtube.maxRepliesPerThread` | `5` | Replies kept per comment thread |
 | `youtube.commentSort` | `"top"` | `"top"` or `"new"` |
 | `youtube.minViews` | `0` | Skip videos below this view count |
+| `googleSearch.hl` / `gl` | `en` / `in` | Language and country for Google |
+| `googleSearch.seeds` | `[]` | Short phrases the group types ("tattoo booking"); each is expanded with a–z and question words |
+| `googleSearch.expandAlphabet` | `true` | Also query "<seed> a" … "<seed> z" |
+| `googleSearch.questionPrefixes` | how, why, what, best, is, can, which, where | Also query "<word> <seed>" |
+| `googleSearch.resultsQueries` | `[]` (= first 5 seeds) | Result pages opened for "People also ask" and related searches (signed-in browser) |
+| `googleSearch.maxResultsPages` | `10` | Cap on result pages per run |
+| `googleSearch.expandPeopleAlsoAsk` | `3` | Questions clicked to load more of them |
+| `googleTrends.geo` | `IN` | `""` = worldwide, or a country code |
+| `googleTrends.timeframe` | `today 5-y` | `today 12-m`, `today 5-y`, `all` |
+| `googleTrends.keywords` | `[]` | Compared in batches of 5; the first keyword anchors every batch, so make it the broadest term |
+| `googleTrends.regionsResolution` | `REGION` | `COUNTRY`, `REGION` (state), `CITY` |
+| `reddit.subreddits` | `[]` | Communities to search, without "r/" |
+| `reddit.searchQueries` | `[]` | Searched inside each subreddit (and across Reddit) |
+| `reddit.searchAllReddit` | `true` | Also search all of Reddit for each query |
+| `reddit.discoverSubreddits` | `true` | Find communities matching the queries, with member counts |
+| `reddit.postsPerSearch` | `25` | Posts kept per search |
+| `reddit.topPostsPerSub` | `25` | Each subreddit's top posts in `topTimeframe` |
+| `reddit.topTimeframe` | `year` | hour, day, week, month, year, all |
+| `reddit.maxThreads` | `60` | Threads opened to read comments (most-commented first) |
+| `reddit.commentsPerThread` | `200` | Comments read per thread |
+| `reddit.minPostScore` | `0` | Skip posts below this score |
 
 ### Choosing good inputs
 
 - **Meta keywords:** what a seller would write to *reach* this group: the group's own words ("tattoo artist", "lab owners"), the products sold to them ("tattoo booking", "pathology lab software", "school ERP"), franchise/equipment terms. 15–30 keywords is typical. Use the group's real markets: for global groups add `US`.
 - **Play Store search terms:** the software this group (or its customers) uses: "<group> management app", "<group> booking", competitor brand names. Add known competitor package ids to `appIds`.
 - **YouTube queries:** how owners talk: "how to start a …", "… business problems", "… profit", "best … software", plus Hindi phrasing for Indian groups ("… kaise khole").
-- **Limits:** quick look = defaults. Deep run = `maxAdsPerKeyword` 200, `reviewsPerApp` 1500, `maxCommentsPerVideo` 1000. Mention roughly how long it will take: Meta ~30–60 s per keyword per country, YouTube ~10–40 s per video.
+- **Google search seeds:** 3–8 short phrases in the group's words about their problems and tools ("tattoo deposit", "pathology lab software"). `resultsQueries`: a few full questions ("how to stop no shows tattoo").
+- **Google Trends keywords:** broad anchor first ("tattoo artist"), then 4–12 topic terms; use the group's main country as `geo`.
+- **Reddit:** 2–6 subreddits where the group talks shop (r/TattooArtists, r/medicallaboratory, r/Teachers); leave `discoverSubreddits` on to find more. Queries are problem phrases ("no show", "deposit", "booking app", "software", "pricing").
+- **Limits:** quick look = defaults. Deep run = `maxAdsPerKeyword` 200, `reviewsPerApp` 1500, `maxCommentsPerVideo` 1000. Mention roughly how long it will take: Meta ~30–60 s per keyword per country, YouTube ~10–40 s per video, Google search ~25 s per seed plus ~10 s per result page, Trends ~10 s per keyword, Reddit ~5 s per page (searches + threads).
 
 ## 3. Collect
 
@@ -95,6 +124,14 @@ For each platform file, replace the placeholder under `## Insights` with your an
 - **youtube.md**
   - Recurring pains and questions in the owners' own words, with counts where meaningful and real quotes.
   - Which topics draw the most views (interest), and anything about cost, setup or tools they mention.
+- **google-search.md**
+  - Group autocomplete and "People also ask" questions into themes (problems, price questions, tool comparisons, how-to); list the exact phrasings worth reusing in ads and landing pages.
+  - Note commercial intent ("best … app", "… software price") vs informational ("how to …").
+- **google-trends.md**
+  - Is interest growing or shrinking (12-month comparison), which regions lead, and rising related searches. Weekly values are noisy for niche terms; say so rather than over-reading them.
+- **reddit.md**
+  - Recurring pains with counts and real quotes (comments are often the richest source), tools people name and their complaints about them, prices mentioned, and which communities matter most (members, activity).
+  - Reddit skews US/global; say so for India-focused groups.
 
 Then write **README.md** for the group:
 
@@ -117,7 +154,10 @@ The pplab group page (`/groups/<id>`) reads `app/_components/ad-research/researc
 | Meta Ad Library | `meta-ads.mjs` | Ready |
 | Google Play Store (app details + reviews) | `play-store.mjs` | Ready (page fallback when `google-play-scraper` can't parse an app) |
 | YouTube (all comments via yt-dlp) | `youtube.mjs` | Ready |
-| Google Maps, Reddit, LinkedIn, Google autocomplete, Apple App Store | — | Planned (see docs/platform.md). If config lists one, skip it and note it under Data gaps. |
+| Google search (autocomplete + People also ask + related) | `google-search.mjs` | Ready (autocomplete via plain HTTP; result pages via signed-in Brave, stops on captcha) |
+| Google Trends | `google-trends.mjs` | Ready (`google-trends-api`) |
+| Reddit | `reddit.mjs` | Ready (signed-in Brave on old.reddit.com; needs `node login.mjs` once) |
+| Google Maps, LinkedIn | — | Planned (see docs/platform.md). If config lists one, skip it and note it under Data gaps. |
 
 ## Rules
 
