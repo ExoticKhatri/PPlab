@@ -1,0 +1,231 @@
+{
+  "group": "LSAT aspirants (US/Canada law school applicants)",
+  "platforms": "all",
+  "metaAds": {
+    "countries": [
+      "US",
+      "CA"
+    ],
+    "keywords": [
+      "LSAT",
+      "LSAT prep",
+      "LSAT tutor",
+      "LSAT course",
+      "LSAT practice test",
+      "LSAT score",
+      "law school admissions",
+      "law school application",
+      "pre-law",
+      "law school personal statement",
+      "LSAT logical reasoning",
+      "LSAT reading comprehension",
+      "LawHub",
+      "7Sage",
+      "Kaplan LSAT",
+      "Princeton Review LSAT",
+      "PowerScore",
+      "LSAT Demon",
+      "Blueprint LSAT",
+      "law school scholarship",
+      "admissions consultant law school",
+      "JD program"
+    ],
+    "maxAdsPerKeyword": 150,
+    "maxScrollRounds": 30,
+    "activeOnly": true,
+    "sellerTerms": [
+      "lsat",
+      "law school",
+      "pre-law",
+      "prelaw",
+      "your score",
+      "admissions",
+      "personal statement",
+      "logical reasoning",
+      "reading comprehension",
+      "practice test",
+      "tutor",
+      "prep"
+    ],
+    "selfTerms": [
+      "juris doctor",
+      "jd program",
+      "apply now",
+      "our law school",
+      "school of law",
+      "college of law",
+      "open house"
+    ],
+    "concurrency": 2
+  },
+  "playStore": {
+    "country": "us",
+    "lang": "en",
+    "searchTerms": [
+      "LSAT prep",
+      "LSAT practice",
+      "LSAT logical reasoning",
+      "law school admissions",
+      "LSAT flashcards",
+      "LawHub"
+    ],
+    "appIds": [],
+    "maxApps": 30,
+    "minReviews": 10,
+    "reviewsPerApp": 1500,
+    "complaintMaxStars": 3,
+    "excludeGames": true,
+    "excludeTitles": [
+      "bar exam",
+      "bar prep",
+      "mbe",
+      "gre ",
+      "gre vocab",
+      "gmat",
+      "mcat",
+      "nclex",
+      "toefl",
+      "pte ",
+      "linus",
+      "sat flashcards",
+      "act flashcards",
+      "practice by magoosh",
+      "flashgreek"
+    ],
+    "concurrency": 4
+  },
+  "youtube": {
+    "queries": [
+      "LSAT study plan",
+      "how I got a 170 on the LSAT",
+      "LSAT prep tips",
+      "LSAT logical reasoning tips",
+      "LSAT reading comprehension strategy",
+      "LSAT score increase",
+      "best LSAT prep course",
+      "LSAT retake",
+      "law school admissions advice",
+      "is law school worth it"
+    ],
+    "videosPerQuery": 8,
+    "maxCommentsPerVideo": 1000,
+    "maxRepliesPerThread": 5,
+    "commentSort": "top",
+    "minViews": 1000,
+    "titleMustMatch": false,
+    "concurrency": 3
+  },
+  "googleSearch": {
+    "hl": "en",
+    "gl": "us",
+    "seeds": [
+      "lsat prep",
+      "lsat study",
+      "lsat score",
+      "lsat logical reasoning",
+      "lsat tutor",
+      "lsat practice test",
+      "law school admissions"
+    ],
+    "expandAlphabet": true,
+    "resultsQueries": [
+      "best lsat prep course",
+      "how long to study for the lsat",
+      "how to improve lsat score",
+      "is 7sage worth it",
+      "lsat tutor cost",
+      "how to self study for the lsat"
+    ],
+    "maxResultsPages": 6,
+    "expandPeopleAlsoAsk": 3,
+    "captchaWaitSeconds": 180,
+    "bingFallback": true,
+    "pageGapSeconds": [
+      15,
+      40
+    ]
+  },
+  "googleTrends": {
+    "geo": "US",
+    "timeframe": "today 5-y",
+    "keywords": [
+      "lsat",
+      "lsat prep",
+      "law school",
+      "7sage",
+      "lawhub",
+      "lsat tutor",
+      "lsat practice test",
+      "law school admissions"
+    ],
+    "regionsResolution": "REGION"
+  },
+  "reddit": {
+    "subreddits": [
+      "LSAT",
+      "lawschooladmissions",
+      "LawSchool",
+      "LSATprep",
+      "OntarioLawSchools"
+    ],
+    "searchQueries": [
+      "study plan",
+      "plateau",
+      "logical reasoning",
+      "reading comprehension",
+      "7Sage",
+      "LawHub",
+      "tutor",
+      "retake",
+      "test anxiety",
+      "LSAT Demon",
+      "best prep",
+      "burnout"
+    ],
+    "searchAllReddit": true,
+    "searchSort": "relevance",
+    "searchTimeframe": "year",
+    "discoverSubreddits": true,
+    "discoveryQueries": [
+      "lsat",
+      "law school admissions",
+      "pre law"
+    ],
+    "groupTerms": [
+      "lsat",
+      "law school",
+      "prelaw",
+      "pre-law",
+      "lawhub",
+      "7sage",
+      "admissions",
+      "logical reasoning",
+      "reading comprehension"
+    ],
+    "postsPerSearch": 25,
+    "topPostsPerSub": 40,
+    "topTimeframe": "year",
+    "maxThreads": 100,
+    "commentsPerThread": 200,
+    "minPostScore": 0,
+    "relevanceFilter": true
+  },
+  "googleMaps": {
+    "hl": "en",
+    "queries": [
+      "LSAT prep"
+    ],
+    "locations": [
+      "New York",
+      "Los Angeles",
+      "Chicago",
+      "Washington DC",
+      "Boston",
+      "Toronto"
+    ],
+    "maxPlacesPerSearch": 20,
+    "reviewsPerPlace": 10,
+    "reviewSort": "lowest",
+    "maxReviewsPerBrand": 30
+  }
+}

@@ -106,7 +106,7 @@ Anything left out falls back to the default in `scripts/collect/lib/config.mjs`.
 | `reddit.commentsPerThread` | `200` | Comments read per thread |
 | `reddit.minPostScore` | `0` | Skip posts below this score |
 | `reddit.relevanceFilter` | `true` | Discovered communities and all-of-Reddit posts must mention a group term; the rest are listed as off-topic |
-| `reddit.groupTerms` | `[]` (= words of `discoveryQueries`) | Words that mark a post or community as on-topic ("school", "principal") |
+| `reddit.groupTerms` | `[]` (= words of `discoveryQueries`) | Words or phrases that mark a post or community as on-topic ("lsat", "law school"); each matches as a whole phrase, so avoid generic single words like "school" |
 | `googleMaps.hl` | `en` | Maps language |
 | `googleMaps.queries` | `[]` | Place types ("tattoo studio", "pathology lab") |
 | `googleMaps.locations` | `[]` | Cities/areas; each query runs as "<query> in <location>" |

@@ -194,7 +194,8 @@ async function main() {
   let subs = [];
   let stopped = null;
   let user = null;
-  const groupTerms = terms(c.groupTerms.length ? c.groupTerms : c.discoveryQueries);
+  // Configured groupTerms match as whole phrases ("law school" must not match every "school"); without them, fall back to the words of discoveryQueries.
+  const groupTerms = c.groupTerms.length ? [...new Set(c.groupTerms.map((t) => t.toLowerCase().replace(/[^a-z0-9 '-]/g, "").trim()).filter(Boolean))] : terms(c.discoveryQueries);
   const queryTerms = terms(c.searchQueries);
   const filtering = c.relevanceFilter && groupTerms.length > 0;
   const configured = new Set(c.subreddits.map((s) => s.toLowerCase()));
