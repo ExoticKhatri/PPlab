@@ -1,0 +1,57 @@
+
+Lane A (parallel): play-store
+Lane B (signed-in browser, one at a time): —
+
+[play-store] started
+[play-store] search "hospital management system": 14 apps
+[play-store] search "hospital management software": 15 apps
+[play-store] search "HMIS": 30 apps
+[play-store] search "nursing home software": 30 apps
+[play-store] search "hospital EMR": 30 apps
+[play-store] search "hospital software india": 30 apps
+[play-store] search "IPD management": 28 apps
+[play-store] search "Ayushman": 24 apps
+[play-store] 166 candidate apps
+[play-store] 63 apps need the page fallback
+[play-store] kept 35 apps, dropped 34 irrelevant
+[play-store] [1/35, ~2 min left] AarogyaSetu 2.0: 1000 reviews
+[play-store] [2/35, <1 min left] NoiseFit: Health & Fitness: 1000 reviews
+[play-store] [3/35, <1 min left] Where is my Train: 1000 reviews
+[play-store] [4/35, <1 min left] Samsung Health: 1000 reviews
+[play-store] [5/35, <1 min left] Netmeds - India Ki Pharmacy: 1000 reviews
+[play-store] [6/35, <1 min left] Healthify: AI Diet & Fitness: 1000 reviews
+[play-store] [7/35, <1 min left] Truemeds Pharmacy & Diagnostic: 1000 reviews
+[play-store] [8/35, <1 min left] ABHA: 1000 reviews
+[play-store] [9/35, <1 min left] Insight Timer - Meditation App: 1000 reviews
+[play-store] [10/35, <1 min left] Mahavitaran: 1000 reviews
+[play-store] [11/35, <1 min left] greytHR - the one-stop HR App: 1000 reviews
+[play-store] [12/35, <1 min left] RCM World: 1000 reviews
+[play-store] [13/35, <1 min left] Health-e ABHA PHR Health Lockr: 1000 reviews
+[play-store] [14/35, <1 min left] Ayushman App: 1000 reviews
+[play-store] [15/35, <1 min left] XCIPTV PLAYER: 1000 reviews
+[play-store] [16/35, <1 min left] Railway-HMIS: 1000 reviews
+[play-store] [17/35, <1 min left] MeasureOn: 398 reviews
+[play-store] [18/35, <1 min left] myUpchar - Digital Hospital: 1000 reviews
+[play-store] [19/35, <1 min left] Grameen MAHI by GrameenKoota: 1000 reviews
+[play-store] [20/35, <1 min left] Nursing Central: 240 reviews
+[play-store] [21/35, <1 min left] Max MyHealth -by Max Hospitals: 1000 reviews
+[play-store] [22/35, <1 min left] Nursing: 12 reviews
+[play-store] [23/35, <1 min left] IPinfo: 286 reviews
+[play-store] [24/35, <1 min left] HROne: 1000 reviews
+[play-store] [25/35, <1 min left] eNalam: 238 reviews
+[play-store] [26/35, <1 min left] EkaDoc: EMR/EHR, EkaScribe, AI: 176 reviews
+[play-store] [27/35, <1 min left] EMR-TMH and ACTREC: 352 reviews
+[play-store] [28/35, <1 min left] EasyHealths: 1000 reviews
+[play-store] [29/35, <1 min left] HMIS Empower: 229 reviews
+[play-store] [30/35, <1 min left] HealthPlix EMR (Doctors Only): 262 reviews
+[play-store] [31/35, <1 min left] IPDC Library: 263 reviews
+[play-store] [32/35, <1 min left] NIMS HMIS: 243 reviews
+[play-store] [33/35, <1 min left] SimpleNursing RN & NCLEX Prep: 320 reviews
+[play-store] [34/35, <1 min left] RelianceFoundationHospital-RFH: 201 reviews
+[play-store] [35/35, done] Ayushman CAPF: 203 reviews
+[play-store] wrote C:\mislenious\personal\pplab\analyses\small-hospitals\play-store.md
+[play-store] finished in 10m 7s
+
+=== summary (10m 7s total) ===
+OK   play-store (10m 7s)
+     Collected 2026-10-26 · store: IN / en · 35 apps (34 dropped) · 24423 reviews fetched · 8330 complaints (≤3★)

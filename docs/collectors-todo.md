@@ -67,7 +67,13 @@ Time per platform in that run: Meta 21 min · Play 7 min · YouTube 38 min · Go
 - [x] Config: `concurrency` per platform (default conservative), and `run.mjs` parallel by default / `--serial`.
 - [x] Interleaved output must stay readable: prefix every line with the platform (already done) and write per-platform logs.
 
-## 3. Later
+## 3. Found in later runs (LSAT, small hospitals)
+
+- [ ] **Play Store discovery for B2B groups:** keeping the most-reviewed apps lets consumer apps (banks, Samsung Health, train apps) push out niche business tools with a few hundred ratings. Rank candidates by title/description relevance to the search terms first, then by reviews.
+- [ ] **Meta:** 8 of 22 US keywords failed in the LSAT run (likely rate limiting with 2 tabs). Retry failed keywords at the end of the run in a single tab.
+- [ ] **Reddit:** retry after a 429 with a long pause instead of stopping (LSAT run stopped at 67/100 threads).
+
+## 4. Later
 
 - [ ] LinkedIn collector (see docs/platform.md — account risk).
 - [ ] pplab group pages read `analyses/<group>/README.md` instead of the hand-written research files.

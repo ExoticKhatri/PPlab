@@ -1,0 +1,240 @@
+{
+  "group": "Small hospitals & nursing homes (India)",
+  "groupId": "hospitals",
+  "platforms": "all",
+  "metaAds": {
+    "countries": [
+      "IN"
+    ],
+    "keywords": [
+      "hospital management software",
+      "hospital software",
+      "HMS software",
+      "nursing home",
+      "hospital billing software",
+      "hospital ERP",
+      "EMR software",
+      "OPD software",
+      "NABH accreditation",
+      "NABH consultant",
+      "Ayushman Bharat empanelment",
+      "TPA claims",
+      "cashless claim hospital",
+      "hospital insurance claims",
+      "medical billing",
+      "hospital marketing",
+      "healthcare marketing",
+      "hospital setup",
+      "hospital consultant",
+      "hospital equipment",
+      "hospital owners",
+      "multispeciality hospital",
+      "hospital staff",
+      "ABDM",
+      "hospital pharmacy software"
+    ],
+    "maxAdsPerKeyword": 150,
+    "maxScrollRounds": 30,
+    "activeOnly": true,
+    "sellerTerms": [
+      "your hospital",
+      "for hospitals",
+      "hospital management",
+      "hospital software",
+      "nursing homes",
+      "hospital owners",
+      "healthcare providers",
+      "nabh",
+      "tpa",
+      "empanelment",
+      "his software",
+      "emr",
+      "hospital billing",
+      "doctors and hospitals"
+    ],
+    "selfTerms": [
+      "book appointment",
+      "book an appointment",
+      "best hospital",
+      "our doctors",
+      "free consultation",
+      "health checkup",
+      "opd timings",
+      "cashless facility",
+      "visit us",
+      "24x7 emergency",
+      "call now"
+    ],
+    "concurrency": 2
+  },
+  "playStore": {
+    "country": "in",
+    "lang": "en",
+    "searchTerms": [
+      "hospital management system",
+      "hospital management software",
+      "HMIS",
+      "nursing home software",
+      "hospital EMR",
+      "hospital software india",
+      "IPD management",
+      "Ayushman"
+    ],
+    "appIds": [],
+    "maxApps": 35,
+    "minReviews": 5,
+    "reviewsPerApp": 1000,
+    "complaintMaxStars": 3,
+    "excludeGames": true,
+    "excludeTitles": [
+      "simulator",
+      "hospital game",
+      "dream hospital",
+      "doctor game",
+      "surgery game",
+      "bank",
+      "upi",
+      "recharge",
+      "credit card",
+      "shopping",
+      "electricity",
+      "aadhaar",
+      "digilocker",
+      "umang",
+      "mygov"
+    ],
+    "concurrency": 4
+  },
+  "youtube": {
+    "queries": [
+      "how to start a hospital in india",
+      "nursing home business in india",
+      "hospital kaise khole",
+      "small hospital management problems",
+      "NABH accreditation process",
+      "hospital management software demo",
+      "TPA claim rejection hospital",
+      "Ayushman Bharat empanelment hospital",
+      "small hospital profit india",
+      "hospital marketing ideas"
+    ],
+    "videosPerQuery": 8,
+    "maxCommentsPerVideo": 1000,
+    "maxRepliesPerThread": 5,
+    "commentSort": "top",
+    "minViews": 0,
+    "titleMustMatch": false,
+    "concurrency": 3
+  },
+  "googleSearch": {
+    "hl": "en",
+    "gl": "in",
+    "seeds": [
+      "hospital management software",
+      "nursing home",
+      "nabh accreditation",
+      "hospital billing software",
+      "tpa claim",
+      "ayushman bharat empanelment",
+      "opd software"
+    ],
+    "expandAlphabet": true,
+    "resultsQueries": [
+      "best hospital management software in india",
+      "hospital management software price",
+      "how to get nabh accreditation for small hospital",
+      "how to reduce tpa claim rejection",
+      "how to start a nursing home in india",
+      "problems faced by small hospitals in india"
+    ],
+    "maxResultsPages": 6,
+    "expandPeopleAlsoAsk": 3,
+    "captchaWaitSeconds": 180,
+    "bingFallback": true,
+    "pageGapSeconds": [
+      15,
+      40
+    ]
+  },
+  "googleTrends": {
+    "geo": "IN",
+    "timeframe": "today 5-y",
+    "keywords": [
+      "hospital management system",
+      "nabh",
+      "ayushman bharat",
+      "tpa",
+      "hospital software",
+      "nursing home",
+      "abha",
+      "emr software"
+    ],
+    "regionsResolution": "REGION"
+  },
+  "reddit": {
+    "subreddits": [
+      "IndianMedschool",
+      "healthIT",
+      "HealthInsuranceIndia",
+      "india",
+      "medicine"
+    ],
+    "searchQueries": [
+      "hospital billing",
+      "TPA",
+      "cashless claim",
+      "Ayushman Bharat",
+      "hospital management software",
+      "nursing home",
+      "NABH",
+      "hospital bill"
+    ],
+    "searchAllReddit": true,
+    "searchSort": "relevance",
+    "searchTimeframe": "all",
+    "discoverSubreddits": true,
+    "discoveryQueries": [
+      "hospital india",
+      "nursing home",
+      "health insurance india",
+      "doctors india"
+    ],
+    "groupTerms": [
+      "hospital",
+      "nursing home",
+      "nabh",
+      "tpa",
+      "ayushman",
+      "cashless",
+      "hms",
+      "his software",
+      "opd",
+      "ipd"
+    ],
+    "postsPerSearch": 25,
+    "topPostsPerSub": 15,
+    "topTimeframe": "year",
+    "maxThreads": 60,
+    "commentsPerThread": 200,
+    "minPostScore": 0,
+    "relevanceFilter": true
+  },
+  "googleMaps": {
+    "hl": "en",
+    "queries": [
+      "nursing home",
+      "multispeciality hospital"
+    ],
+    "locations": [
+      "Lucknow",
+      "Jaipur",
+      "Indore",
+      "Nagpur",
+      "Patna"
+    ],
+    "maxPlacesPerSearch": 20,
+    "reviewsPerPlace": 10,
+    "reviewSort": "lowest",
+    "maxReviewsPerBrand": 30
+  }
+}
