@@ -1,0 +1,97 @@
+{
+  "group": "MCAT aspirants — focus on CARS (verbal) (US/Canada)",
+  "platforms": "all",
+  "metaAds": {
+    "countries": ["US", "CA"],
+    "keywords": [
+      "MCAT", "MCAT prep", "MCAT CARS", "CARS practice", "MCAT verbal", "MCAT reading comprehension",
+      "MCAT tutor", "MCAT course", "MCAT practice test", "MCAT score", "Jack Westin", "UWorld MCAT",
+      "Blueprint MCAT", "Kaplan MCAT", "Princeton Review MCAT", "AAMC", "premed", "medical school admissions",
+      "medical school application", "critical reasoning", "reading speed", "MCAT 520"
+    ],
+    "maxAdsPerKeyword": 150,
+    "maxScrollRounds": 30,
+    "activeOnly": true,
+    "sellerTerms": [
+      "mcat", "cars", "premed", "pre-med", "medical school", "med school", "your score", "practice test",
+      "tutor", "reading comprehension", "critical analysis", "passages", "aamc"
+    ],
+    "selfTerms": ["md program", "school of medicine", "college of medicine", "apply now", "open house", "our medical school"],
+    "concurrency": 2
+  },
+  "playStore": {
+    "country": "us",
+    "lang": "en",
+    "searchTerms": ["MCAT prep", "MCAT CARS", "MCAT practice", "MCAT flashcards", "premed", "reading comprehension practice"],
+    "appIds": [],
+    "maxApps": 30,
+    "minReviews": 10,
+    "reviewsPerApp": 1500,
+    "complaintMaxStars": 3,
+    "excludeGames": true,
+    "excludeTitles": ["lsat", "gmat", "gre vocab", "gre prep", "nclex", "usmle", "bar exam", "nursing", "toefl", "ielts"],
+    "concurrency": 4
+  },
+  "youtube": {
+    "queries": [
+      "MCAT CARS strategy", "how to improve MCAT CARS score", "MCAT CARS tips", "MCAT CARS passage walkthrough",
+      "Jack Westin CARS", "MCAT CARS timing", "how I got 132 on CARS", "MCAT study plan",
+      "how I scored 520 on the MCAT", "MCAT reading comprehension practice"
+    ],
+    "videosPerQuery": 8,
+    "maxCommentsPerVideo": 1000,
+    "maxRepliesPerThread": 5,
+    "commentSort": "top",
+    "minViews": 1000,
+    "titleMustMatch": false,
+    "concurrency": 3
+  },
+  "googleSearch": {
+    "hl": "en",
+    "gl": "us",
+    "seeds": ["mcat cars", "cars mcat strategy", "mcat cars practice", "jack westin", "mcat prep", "mcat tutor", "mcat score"],
+    "expandAlphabet": true,
+    "resultsQueries": [
+      "how to improve mcat cars score", "best mcat cars practice", "is jack westin worth it",
+      "mcat cars tutor cost", "how to read faster for mcat cars", "best mcat prep course"
+    ],
+    "maxResultsPages": 6,
+    "expandPeopleAlsoAsk": 3,
+    "captchaWaitSeconds": 180,
+    "bingFallback": true,
+    "pageGapSeconds": [15, 40]
+  },
+  "googleTrends": {
+    "geo": "US",
+    "timeframe": "today 5-y",
+    "keywords": ["mcat", "mcat cars", "jack westin", "uworld mcat", "blueprint mcat", "mcat prep", "mcat tutor", "aamc"],
+    "regionsResolution": "REGION"
+  },
+  "reddit": {
+    "subreddits": ["Mcat", "premed", "MCATprep", "premedcanada", "medicalschool"],
+    "searchQueries": ["CARS", "CARS strategy", "Jack Westin", "UWorld CARS", "AAMC CARS", "CARS timing", "CARS plateau", "MCAT tutor"],
+    "searchAllReddit": true,
+    "searchSort": "relevance",
+    "searchTimeframe": "year",
+    "discoverSubreddits": true,
+    "discoveryQueries": ["mcat", "premed", "mcat cars"],
+    "groupTerms": ["mcat", "mcat cars", "cars section", "cars passage", "jack westin", "uworld", "aamc", "premed", "pre-med", "med school", "medical school"],
+    "postsPerSearch": 25,
+    "topPostsPerSub": 25,
+    "topTimeframe": "year",
+    "maxThreads": 70,
+    "commentsPerThread": 200,
+    "minPostScore": 0,
+    "relevanceFilter": true
+  },
+  "googleMaps": {
+    "hl": "en",
+    "queries": ["MCAT prep"],
+    "locations": ["New York", "Los Angeles", "Chicago", "Boston", "Houston", "Toronto"],
+    "maxPlacesPerSearch": 20,
+    "reviewsPerPlace": 10,
+    "reviewSort": "lowest",
+    "maxReviewsPerBrand": 30,
+    "concurrency": 3
+  }
+}

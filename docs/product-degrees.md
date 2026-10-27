@@ -81,3 +81,4 @@ Patterns that held across 5 groups (K-12 schools, CA firms, LSAT aspirants, smal
 Add a dated line whenever a learning changes how we decide.
 
 - **2026-10-27** — Defined the three degrees (system / one job / fix) and the two build options (new idea vs rebuild). Agreed on the wedge path, follow-the-money and first-rupee-before-biggest-rupee. Mapped 5 groups: the strongest wedges so far are the hospital insurance/TPA desk, MSME receivables (45-day rule) and school fee collection.
+- **2026-10-27** — MCAT (CARS focus): the clearest consumer pain so far. CARS plateaus at ~124–127, AAMC logic is opaque, official passages are scarce, and tutoring costs ~$350/hour. Candidate wedge: a CARS mistake-pattern coach that sits beside official AAMC material (browser-extension style, like Jack Westin's fast-rising extension). New competitor CARSBooster started Meta ads the same week. Also: the resilient Reddit collector finished with no cool-downs.
