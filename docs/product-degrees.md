@@ -73,6 +73,7 @@ Every idea found inside a group falls into one of three degrees.
 **Approach C is preferred.** It avoids A's "not worth paying for" risk, because the pain is severe and cash-linked, and B's switching risk, because nothing is replaced on day one. Many large vertical-software companies grew this way: Toast (payments → full restaurant software), ServiceTitan (dispatch → full trades software), Veeva (pharma CRM → industry cloud).
 
 A good wedge has three properties:
+
 1. **Severe, frequent pain**, ideally tied to cash or compliance.
 2. **No switching:** it works alongside the current system and data.
 3. **An expand path:** the data it holds naturally leads toward the full system.
