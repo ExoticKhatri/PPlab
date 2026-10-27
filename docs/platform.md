@@ -89,7 +89,8 @@ How we keep it safe:
 - **Data per place:** name, category, rating (from the place's own panel only), review count, whether reviews are switched off (no Reviews tab — common for schools), address, phone, website, open/closed.
 - **Data per review:** stars, the reviewer's own text (never the owner's reply), relative date, owner reply.
 - **Output:** per-city places / with reviews / reviews off / reviews read, and chains (3+ places with the same first words) with their share of low reviews. `maxReviewsPerBrand` caps how many reviews one chain contributes.
-- **Limits:** Maps lists up to ~120 places per search, so search per city or area; ~10–20 s per place with reviews.
+- **Speed:** search lists are read in one tab (most captcha-prone); places and reviews in 3 tabs at once (`concurrency`), ~5–7 s per place with reviews.
+- **Limits:** Maps lists up to ~120 places per search, so search per city or area.
 - **Cost:** free (no Places API).
 
 ## Reddit

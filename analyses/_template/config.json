@@ -120,6 +120,7 @@
     "maxPlacesPerSearch": 40,
     "reviewsPerPlace": 20,
     "reviewSort": "lowest",
-    "maxReviewsPerBrand": 0
+    "maxReviewsPerBrand": 0,
+    "concurrency": 3
   }
 }

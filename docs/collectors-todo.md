@@ -62,7 +62,7 @@ Time per platform in that run: Meta 21 min · Play 7 min · YouTube 38 min · Go
 - [x] **YouTube:** fetch 3–4 videos' comments at once (parallel `yt-dlp` processes) — biggest single saving.
 - [x] **Play Store:** fetch reviews for several apps at once (3–5 concurrent).
 - [x] **Meta ads:** 2–3 browser tabs scraping different keywords at once (watch for rate limits).
-- [ ] (optional) **Google Maps:** read place details in 2 tabs of the same signed-in browser; keep reviews sequential and human-paced (captcha risk).
+- [x] **Google Maps:** read place details in 2 tabs of the same signed-in browser; keep reviews sequential and human-paced (captcha risk).
 - [ ] (optional) **Reddit:** 2–3 concurrent JSON requests within Reddit's rate limit (~60/min signed in).
 - [x] Config: `concurrency` per platform (default conservative), and `run.mjs` parallel by default / `--serial`.
 - [x] Interleaved output must stay readable: prefix every line with the platform (already done) and write per-platform logs.

@@ -62,7 +62,8 @@ export async function openProfileBrowser() {
       executablePath,
       viewport: { width: 1280, height: 900 },
       locale: "en-US",
-      args: ["--disable-blink-features=AutomationControlled", "--no-first-run", "--no-default-browser-check", "--hide-crash-restore-bubble"],
+      // The throttling flags keep background tabs working when a collector reads several pages at once.
+      args: ["--disable-blink-features=AutomationControlled", "--no-first-run", "--no-default-browser-check", "--hide-crash-restore-bubble", "--disable-background-timer-throttling", "--disable-backgrounding-occluded-windows", "--disable-renderer-backgrounding"],
     });
   } catch (error) {
     if (/ProcessSingleton|already in use|profile.*lock/i.test(error.message)) {

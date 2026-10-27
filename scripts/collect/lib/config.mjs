@@ -97,7 +97,8 @@ export const DEFAULTS = {
     maxPlacesPerSearch: 40, // Maps lists up to ~120 per search
     reviewsPerPlace: 20, // 0 = details only (faster)
     reviewSort: "lowest", // lowest, newest, highest, relevant
-    maxReviewsPerBrand: 0, // cap reviews read per brand/chain (first word of the name); 0 = no cap
+    maxReviewsPerBrand: 0, // cap reviews read per brand/chain (first two words of the name); 0 = no cap
+    concurrency: 3, // browser tabs reading places + reviews at once (search lists stay in one tab)
   },
 };
 

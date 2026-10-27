@@ -11,10 +11,11 @@
 //   3. open Reviews, sort (lowest first by default), read reviewsPerPlace
 //      (places with no Reviews tab are marked reviewsDisabled — Google turns
 //      reviews off for many schools; maxReviewsPerBrand caps chains)
-// Human-paced; stops at the first captcha/block.
+// Search lists are read in one tab; places and reviews in `concurrency` tabs
+// at once (default 3). Human-paced; stops at the first captcha/block.
 
 import { closeProfileBrowser, isBlocked, openProfileBrowser } from "./lib/browser.mjs";
-import { loadConfig, log, mdTable, pause, progress, quote, rawDir, retry, today, writeJson, writeMarkdown } from "./lib/config.mjs";
+import { loadConfig, log, mapLimit, mdTable, pause, progress, quote, rawDir, retry, today, writeJson, writeMarkdown } from "./lib/config.mjs";
 
 const P = "google-maps";
 const SORT_LABELS = { relevant: /most relevant/i, newest: /newest/i, highest: /highest/i, lowest: /lowest/i };
@@ -239,56 +240,78 @@ async function main() {
   const searches = [];
   const places = new Map();
   const reviews = [];
-  const perBrand = new Map(); // brand → reviews read
-  const bar = progress(searchesToRun.length * c.maxPlacesPerSearch); // upper bound: most searches hit the cap
+  const perBrand = new Map(); // brand → reviews read (or reserved by a tab that is reading them)
   let stopped = null;
+  const checkpoint = () => {
+    writeJson(`${dir}/places.json`, [...places.values()]);
+    writeJson(`${dir}/reviews.json`, reviews);
+  };
 
   try {
+    // Phase 1: result lists, one search at a time in one tab (search pages are the most captcha-prone).
+    const queue = [];
+    const queued = new Set();
     for (const search of searchesToRun) {
-      let links;
       try {
-        links = await retry(() => collectPlaceLinks(page, search, c.maxPlacesPerSearch, c.hl), { label: `search "${search}"`, platform: P });
+        const links = await retry(() => collectPlaceLinks(page, search, c.maxPlacesPerSearch, c.hl), { label: `search "${search}"`, platform: P });
+        searches.push({ search, count: links.length });
+        for (const link of links) {
+          const id = placeId(link.href);
+          if (queued.has(id)) continue;
+          queued.add(id);
+          queue.push({ link, id, search });
+        }
+        log(P, `"${search}": ${links.length} places`);
       } catch (error) {
         if (error instanceof StopError) throw error;
         log(P, `search "${search}" failed, skipped: ${error.message}`);
         searches.push({ search, count: 0, failed: true });
-        continue;
-      }
-      searches.push({ search, count: links.length });
-      log(P, `"${search}": ${links.length} places`);
-      for (const link of links) {
-        const id = placeId(link.href);
-        if (places.has(id)) continue;
-        try {
-          const place = { ...(await retry(() => readPlace(page, link, c.hl), { label: `place "${link.name}"`, platform: P })), search };
-          places.set(id, place);
-          let got = [];
-          const brand = brandOf(place.name);
-          if (c.maxReviewsPerBrand > 0 && (perBrand.get(brand) ?? 0) >= c.maxReviewsPerBrand) place.reviewsSkipped = "maxReviewsPerBrand";
-          else if (c.reviewsPerPlace > 0 && place.reviewCount > 0) {
-            try {
-              got = await retry(() => readReviews(page, place, c.reviewsPerPlace, c.reviewSort), { tries: 2, label: `reviews "${place.name}"`, platform: P });
-              reviews.push(...got);
-              perBrand.set(brand, (perBrand.get(brand) ?? 0) + got.length);
-            } catch (error) {
-              if (error instanceof StopError) throw error;
-              log(P, `  reviews failed for ${place.name}: ${error.message}`);
-            }
-          }
-          log(P, `  [${bar.tick()}] ${quote(place.name, 40)}: ${place.reviewsDisabled ? "reviews off" : `${place.rating ?? "—"}★ (${place.reviewCount})`}${place.reviewsSkipped ? " · brand cap reached" : c.reviewsPerPlace > 0 && !place.reviewsDisabled ? ` · ${got.length} reviews read` : ""}`);
-        } catch (error) {
-          if (error instanceof StopError) throw error;
-          log(P, `  place "${link.name}" failed, skipped: ${error.message}`);
-        }
-        // Checkpoint: a crash or captcha later still leaves usable raw data.
-        if (places.size % 5 === 0) {
-          writeJson(`${dir}/places.json`, [...places.values()]);
-          writeJson(`${dir}/reviews.json`, reviews);
-        }
-        await pause(1500, 3500);
       }
       await pause(3000, 6000);
     }
+
+    // Phase 2: place details + reviews in several tabs of the same signed-in browser.
+    const tabs = Math.max(1, Math.min(c.concurrency, queue.length));
+    const pool = [page, ...(await Promise.all(Array.from({ length: tabs - 1 }, () => context.newPage())))];
+    const bar = progress(queue.length);
+    log(P, `reading ${queue.length} places in ${tabs} tab${tabs > 1 ? "s" : ""}`);
+
+    await mapLimit(queue, tabs, async ({ link, id, search }) => {
+      if (stopped) return;
+      const tab = pool.pop();
+      try {
+        const place = { ...(await retry(() => readPlace(tab, link, c.hl), { label: `place "${link.name}"`, platform: P })), search };
+        places.set(id, place);
+        let got = [];
+        const brand = brandOf(place.name);
+        if (c.maxReviewsPerBrand > 0 && (perBrand.get(brand) ?? 0) >= c.maxReviewsPerBrand) place.reviewsSkipped = "maxReviewsPerBrand";
+        else if (c.reviewsPerPlace > 0 && place.reviewCount > 0) {
+          perBrand.set(brand, (perBrand.get(brand) ?? 0) + c.reviewsPerPlace); // reserve, so parallel tabs respect the cap
+          try {
+            got = await retry(() => readReviews(tab, place, c.reviewsPerPlace, c.reviewSort), { tries: 2, label: `reviews "${place.name}"`, platform: P });
+            reviews.push(...got);
+          } catch (error) {
+            if (error instanceof StopError) throw error;
+            log(P, `  reviews failed for ${place.name}: ${error.message}`);
+          } finally {
+            perBrand.set(brand, perBrand.get(brand) - c.reviewsPerPlace + got.length);
+          }
+        }
+        log(P, `  [${bar.tick()}] ${quote(place.name, 40)}: ${place.reviewsDisabled ? "reviews off" : `${place.rating ?? "—"}★ (${place.reviewCount})`}${place.reviewsSkipped ? " · brand cap reached" : c.reviewsPerPlace > 0 && !place.reviewsDisabled ? ` · ${got.length} reviews read` : ""}`);
+      } catch (error) {
+        if (error instanceof StopError) {
+          stopped ??= error.message; // the other tabs finish their current place and stop
+          log(P, stopped);
+          return;
+        }
+        log(P, `  [${bar.tick()}] place "${link.name}" failed, skipped: ${error.message}`);
+      } finally {
+        pool.push(tab);
+      }
+      // Checkpoint: a crash or captcha later still leaves usable raw data.
+      if (places.size % 5 === 0) checkpoint();
+      await pause(1500, 3500);
+    });
   } catch (error) {
     if (!(error instanceof StopError)) throw error;
     stopped = error.message;
@@ -297,8 +320,7 @@ async function main() {
     await closeProfileBrowser(context);
   }
 
-  writeJson(`${dir}/places.json`, [...places.values()]);
-  writeJson(`${dir}/reviews.json`, reviews);
+  checkpoint();
   const file = writeMarkdown(config.slug, P, buildMarkdown(config, searches, [...places.values()], reviews, stopped));
   log(P, `wrote ${file}`);
   if (stopped && places.size === 0) process.exit(1);

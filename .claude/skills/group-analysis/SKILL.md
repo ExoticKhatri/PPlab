@@ -114,6 +114,7 @@ Anything left out falls back to the default in `scripts/collect/lib/config.mjs`.
 | `googleMaps.reviewsPerPlace` | `20` | Reviews read per place; `0` = details only (much faster) |
 | `googleMaps.reviewSort` | `lowest` | `lowest`, `newest`, `highest`, `relevant` |
 | `googleMaps.maxReviewsPerBrand` | `0` (no cap) | Max reviews read per chain (same first two words of the name), so one chain can't dominate the themes |
+| `googleMaps.concurrency` | `3` | Tabs reading places and reviews at once (search lists stay in one tab); 3 is about 3× faster than one tab — raise carefully, Maps can show captchas |
 
 ### Choosing good inputs
 
@@ -125,7 +126,7 @@ Anything left out falls back to the default in `scripts/collect/lib/config.mjs`.
 - **Google Trends keywords:** broad anchor first ("tattoo artist"), then 4–12 topic terms; use the group's main country as `geo`.
 - **Reddit:** for Indian groups add Indian communities (r/india, r/StartUpIndia, city subreddits) and set `groupTerms`. 2–6 subreddits where the group talks shop (r/TattooArtists, r/medicallaboratory, r/Teachers); set `discoveryQueries` to group terms to find more communities. Queries are problem phrases ("no show", "deposit", "booking app", "software", "pricing").
 - **Google Maps:** the place type as people search it ("tattoo studio", "pathology lab", "CBSE school") and 3–10 cities where the group lives (big metros + a few tier-2 cities for India). For group size only, set `reviewsPerPlace: 0` and raise `maxPlacesPerSearch` to 120.
-- **Limits:** quick look = defaults. Deep run = `maxAdsPerKeyword` 200, `reviewsPerApp` 1500, `maxCommentsPerVideo` 1000. Mention roughly how long it will take: Meta ~30–60 s per keyword per country, YouTube ~10–40 s per video, Google search ~25 s per seed plus ~10 s per result page, Trends ~10 s per keyword, Reddit ~5 s per page (searches + threads), Google Maps ~10–20 s per place with reviews (~4 s without).
+- **Limits:** quick look = defaults. Deep run = `maxAdsPerKeyword` 200, `reviewsPerApp` 1500, `maxCommentsPerVideo` 1000. Mention roughly how long it will take: Meta ~30–60 s per keyword per country, YouTube ~10–40 s per video, Google search ~25 s per seed plus ~10 s per result page, Trends ~10 s per keyword, Reddit ~5 s per page (searches + threads), Google Maps ~5–7 s per place with reviews using 3 tabs (~2 s without).
 
 ## 3. Collect
 
@@ -190,7 +191,7 @@ The pplab group page (`/groups/<id>`) reads `app/_components/ad-research/researc
 | Google search (autocomplete + People also ask + related) | `google-search.mjs` | Ready (autocomplete via plain HTTP; result pages typed into Google in signed-in Brave; waits for a person on captcha, then Bing fallback) |
 | Google Trends | `google-trends.mjs` | Ready (`google-trends-api`) |
 | Reddit | `reddit.mjs` | Ready (Reddit JSON through the signed-in Brave session; needs `node login.mjs` once) |
-| Google Maps | `google-maps.mjs` | Ready (signed-in Brave; place details + sorted reviews; checkpoints every 5 places) |
+| Google Maps | `google-maps.mjs` | Ready (signed-in Brave; search lists in one tab, places + sorted reviews in 3 tabs; checkpoints every 5 places) |
 | LinkedIn | — | Planned (see docs/platform.md). If config lists it, skip it and note it under Data gaps. |
 
 ## Reliability built in
