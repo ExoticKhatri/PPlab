@@ -1,6 +1,14 @@
-# Product degrees — how ideas form inside a group
+# Main learnings — choosing what to build
 
-Our goal is to earn money as fast as possible. The research picks the industry well, but turning that research into one product idea is where we get stuck. This note records the framework we've arrived at, so every group analysis ends with a decision instead of a list.
+Our goal is to earn money as fast as possible. The research picks the industry well, but turning that research into one product idea is where we get stuck. This file is the single place for our main learnings: the principles we've agreed on, the framework behind them, what the research has taught us, and a dated log. Add to it whenever we learn something that changes how we decide.
+
+## Agreed principles (27 Oct 2026)
+
+1. **Enter through a wedge, not the full system.** Build a 2nd-degree product with severe pain that runs *beside* the system the group already uses (no switching), then expand toward the 1st-degree system from inside.
+2. **Follow the money.** Prefer pains tied directly to cash coming in (claims, receivables, fees) or to forced compliance. Willingness to pay follows money, not feature count or degree.
+3. **First rupee before biggest rupee.** A cash-linked wedge gets paid sooner. The 1st-degree system is where the biggest revenue comes later, once we're inside.
+4. **Don't fight the crowded 1st degree head-on.** In every business group we've studied, the 1st degree already has dozens of vendors competing on price.
+5. **No build without buyer conversations.** Before building, talk to 5 buyers about what the pain costs them today (staff hours, consultants, money lost).
 
 ## The three degrees
 
@@ -47,6 +55,18 @@ Every idea we find inside a group falls into one of three degrees.
 
 **The pattern across groups:** the 1st degree is crowded in every B2B group, and the strongest 2nd-degree pain is usually **about money coming in** (claims, receivables, fees). That is also where willingness to pay is highest.
 
+## What the research has taught us
+
+Patterns that held across 5 groups (K-12 schools, CA firms, LSAT aspirants, small hospitals, MSME manufacturers):
+
+- **Demo videos get views but no discussion.** Practice-management, HMS and ERP demos have thousands to lakhs of views and almost no comments. Buyers watch quietly; their pains show up elsewhere (reviews, Reddit, search).
+- **"Free download", "price" and "cheapest" searches signal a price-sensitive, crowded 1st degree.** We saw them for school ERP, CA software, hospital software and manufacturing ERP.
+- **Paperwork that blocks cash is the recurring hidden pain.** Fees (schools), TPA/Ayushman claims (hospitals), 45-day receivables (MSMEs), GST reconciliation (CAs).
+- **Government schemes and rules create sudden demand.** Ayushman/ABHA growth (+114% / +41% YoY), the MSME 45-day payment rule (Breakout), NABH and ABDM mandates. Trends picks these up early; watch the "rising" lists.
+- **Reviews mostly show the group's customers, not the owner.** Maps and patient/parent apps show where the business fails *its* customers (communication, waiting, status updates). That often points at the owner's operational gap.
+- **Owners rarely post on Reddit in India.** Reddit is strong for consumer groups (LSAT) and for the customer's view of Indian businesses. Owners' voices come from YouTube comments, Meta ad copy and search queries.
+- **Meta ad copy is a cheap map of what sellers think hurts.** Long-running ads (200+ days) show what pays off; dozens of new, near-identical advertisers show a crowded category.
+
 ## How to decide, per group
 
 1. Find the 1st-degree system the group already runs on (it exists in every group we've studied).
@@ -55,3 +75,9 @@ Every idea we find inside a group falls into one of three degrees.
 4. Prefer pains the current system handles badly *and* that can be solved beside it (no switching).
 5. Check that the data we'd hold leads naturally toward the 1st-degree system (the expand path).
 6. Before building: talk to 5 buyers and ask what they pay today to handle it (staff hours, consultants, losses).
+
+## Log
+
+Add a dated line whenever a learning changes how we decide.
+
+- **2026-10-27** — Defined the three degrees (system / one job / fix) and the two build options (new idea vs rebuild). Agreed on the wedge path, follow-the-money and first-rupee-before-biggest-rupee. Mapped 5 groups: the strongest wedges so far are the hospital insurance/TPA desk, MSME receivables (45-day rule) and school fee collection.
