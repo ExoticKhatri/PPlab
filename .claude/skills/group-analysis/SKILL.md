@@ -106,6 +106,8 @@ Anything left out falls back to the default in `scripts/collect/lib/config.mjs`.
 | `reddit.commentsPerThread` | `200` | Comments read per thread |
 | `reddit.minPostScore` | `0` | Skip posts below this score |
 | `reddit.relevanceFilter` | `true` | Discovered communities and all-of-Reddit posts must mention a group term; the rest are listed as off-topic |
+| `reddit.requestGapSeconds` / `searchPageGapSeconds` | `[2, 4]` / `[6, 10]` | Pacing between JSON requests / search pages |
+| `reddit.cooldownMinutes` / `maxWaitMinutes` | `[3, 8, 15]` / `45` | Cool-down steps when Reddit rate-limits, and the total budget before stopping (progress saved) |
 | `reddit.groupTerms` | `[]` (= words of `discoveryQueries`) | Words or phrases that mark a post or community as on-topic ("lsat", "law school"); each matches as a whole phrase, so avoid generic single words like "school" |
 | `googleMaps.hl` | `en` | Maps language |
 | `googleMaps.queries` | `[]` | Place types ("tattoo studio", "pathology lab") |
@@ -190,7 +192,7 @@ The pplab group page (`/groups/<id>`) reads `app/_components/ad-research/researc
 | YouTube (all comments via yt-dlp) | `youtube.mjs` | Ready |
 | Google search (autocomplete + People also ask + related) | `google-search.mjs` | Ready (autocomplete via plain HTTP; result pages typed into Google in signed-in Brave; waits for a person on captcha, then Bing fallback) |
 | Google Trends | `google-trends.mjs` | Ready (`google-trends-api`) |
-| Reddit | `reddit.mjs` | Ready (Reddit JSON through the signed-in Brave session; needs `node login.mjs` once). Reddit now forbids search JSON for scripted sessions, so searches fall back to the normal search pages in a second tab (slower, short previews). If it stops with 403/429 or threads fail with "Failed to fetch", Reddit is rate-limiting: wait 20–30 min and re-run `node run.mjs <slug> reddit` with fewer `searchQueries`. |
+| Reddit | `reddit.mjs` | Ready and resilient: signed-in Brave session (needs `node login.mjs` once); searches use the normal search pages when Reddit forbids search JSON; every request is paced; rate limits/blocks trigger automatic cool-downs (3 → 8 → 15 min, up to 45 min) and retries; progress is checkpointed after every step and a re-run of the same config resumes (`--fresh` to start over) |
 | Google Maps | `google-maps.mjs` | Ready (signed-in Brave; search lists in one tab, places + sorted reviews in 3 tabs; checkpoints every 5 places) |
 | LinkedIn | — | Planned (see docs/platform.md). If config lists it, skip it and note it under Data gaps. |
 

@@ -106,7 +106,21 @@
     "commentsPerThread": 200,
     "minPostScore": 0,
     "relevanceFilter": true,
-    "groupTerms": []
+    "groupTerms": [],
+    "requestGapSeconds": [
+      2,
+      4
+    ],
+    "searchPageGapSeconds": [
+      6,
+      10
+    ],
+    "cooldownMinutes": [
+      3,
+      8,
+      15
+    ],
+    "maxWaitMinutes": 45
   },
   "googleMaps": {
     "hl": "en",

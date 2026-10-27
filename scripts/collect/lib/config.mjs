@@ -88,7 +88,11 @@ export const DEFAULTS = {
     commentsPerThread: 200,
     minPostScore: 0,
     relevanceFilter: true, // keep only on-topic subreddits/posts (match query or group terms); off-topic ones are listed separately
-    groupTerms: [], // extra words that mark a post or subreddit as on-topic, e.g. "school", "principal"
+    groupTerms: [], // words or phrases that mark a post or subreddit as on-topic, e.g. "school", "law school"
+    requestGapSeconds: [2, 4], // wait between Reddit JSON requests
+    searchPageGapSeconds: [6, 10], // wait between Reddit search pages (heavier; used when search JSON is forbidden)
+    cooldownMinutes: [3, 8, 15], // when Reddit rate-limits or blocks: wait, reset tabs, retry (escalating)
+    maxWaitMinutes: 45, // total cool-down budget before stopping (progress is saved; re-run resumes)
   },
   googleMaps: {
     hl: "en",

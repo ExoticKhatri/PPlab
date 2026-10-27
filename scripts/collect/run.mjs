@@ -4,6 +4,7 @@
 //   node run.mjs <group-slug> youtube reddit  # just these platforms
 //   node run.mjs <group-slug> --serial        # one platform at a time
 //   node run.mjs <group-slug> --skip-doctor   # skip the pre-flight check
+//   node run.mjs <group-slug> reddit --fresh  # ignore saved progress (Reddit resumes by default)
 //
 // Lanes (default): platforms that don't need the signed-in browser all run at
 // once; the signed-in ones (Google result pages, Reddit, Maps) share one Brave
@@ -22,6 +23,7 @@ const here = path.dirname(fileURLToPath(import.meta.url));
 const args = process.argv.slice(2);
 const skipDoctor = args.includes("--skip-doctor");
 const serial = args.includes("--serial");
+const passThrough = args.filter((a) => a === "--fresh"); // collectors that resume (Reddit) start over
 const [slug, ...only] = args.filter((a) => !a.startsWith("--"));
 const config = loadConfig(slug);
 
@@ -53,7 +55,7 @@ function runPlatform(platform) {
     const logFile = fs.createWriteStream(path.join(rawDir(slug, platform), "run.log"));
     const tag = `[${platform}]`;
     console.log(`${tag} started`);
-    const child = spawn(process.execPath, [path.join(here, `${platform}.mjs`), slug], { stdio: ["ignore", "pipe", "pipe"] });
+    const child = spawn(process.execPath, [path.join(here, `${platform}.mjs`), slug, ...passThrough], { stdio: ["ignore", "pipe", "pipe"] });
     const pipeLines = (stream, write) => {
       let rest = "";
       stream.setEncoding("utf8");
