@@ -190,7 +190,7 @@ The pplab group page (`/groups/<id>`) reads `app/_components/ad-research/researc
 | YouTube (all comments via yt-dlp) | `youtube.mjs` | Ready |
 | Google search (autocomplete + People also ask + related) | `google-search.mjs` | Ready (autocomplete via plain HTTP; result pages typed into Google in signed-in Brave; waits for a person on captcha, then Bing fallback) |
 | Google Trends | `google-trends.mjs` | Ready (`google-trends-api`) |
-| Reddit | `reddit.mjs` | Ready (Reddit JSON through the signed-in Brave session; needs `node login.mjs` once) |
+| Reddit | `reddit.mjs` | Ready (Reddit JSON through the signed-in Brave session; needs `node login.mjs` once). Reddit now forbids search JSON for scripted sessions, so searches fall back to the normal search pages in a second tab (slower, short previews). If it stops with 403/429 or threads fail with "Failed to fetch", Reddit is rate-limiting: wait 20–30 min and re-run `node run.mjs <slug> reddit` with fewer `searchQueries`. |
 | Google Maps | `google-maps.mjs` | Ready (signed-in Brave; search lists in one tab, places + sorted reviews in 3 tabs; checkpoints every 5 places) |
 | LinkedIn | — | Planned (see docs/platform.md). If config lists it, skip it and note it under Data gaps. |
 

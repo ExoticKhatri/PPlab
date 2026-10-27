@@ -90,14 +90,16 @@ async function googleSearch(page, query, c) {
     await page.goto(`https://www.google.com/?hl=${c.hl}&gl=${c.gl}`, { waitUntil: "domcontentloaded" });
     await page.waitForTimeout(1500 + Math.random() * 2000);
   }
-  if (await box.isVisible().catch(() => false)) {
-    await box.click();
+  // The box can be covered (suggestion dropdown, consent or sign-in popups); then load the URL instead.
+  const typed = (await box.isVisible().catch(() => false)) && (await box.click({ timeout: 5000 }).then(() => true, () => false));
+  if (typed) {
     await page.keyboard.press("Control+A");
     await page.keyboard.press("Backspace");
     await box.pressSequentially(query, { delay: 60 + Math.random() * 90 });
     await page.waitForTimeout(400 + Math.random() * 600);
     await Promise.all([page.waitForLoadState("domcontentloaded"), page.keyboard.press("Enter")]);
   } else {
+    await page.keyboard.press("Escape").catch(() => {});
     await page.goto(`https://www.google.com/search?q=${encodeURIComponent(query)}&hl=${c.hl}&gl=${c.gl}`, { waitUntil: "domcontentloaded" });
   }
   await page.waitForTimeout(2500);

@@ -1,0 +1,227 @@
+{
+  "group": "Small manufacturers / MSME factories (India)",
+  "groupId": "manufacturers",
+  "platforms": "all",
+  "metaAds": {
+    "countries": [
+      "IN"
+    ],
+    "keywords": [
+      "manufacturing ERP",
+      "ERP for manufacturers",
+      "production planning software",
+      "inventory management software",
+      "factory management software",
+      "MSME",
+      "MSME loan",
+      "Udyam registration",
+      "small manufacturers",
+      "factory owners",
+      "job work",
+      "BOM software",
+      "Tally for manufacturing",
+      "GST e-invoicing",
+      "IndiaMART",
+      "B2B leads",
+      "ISO certification",
+      "ZED certification",
+      "factory automation",
+      "machine maintenance software",
+      "factory attendance",
+      "payroll for factory",
+      "quality control software",
+      "export business",
+      "industrial machinery"
+    ],
+    "maxAdsPerKeyword": 150,
+    "maxScrollRounds": 30,
+    "activeOnly": true,
+    "sellerTerms": [
+      "for manufacturers",
+      "manufacturing business",
+      "manufacturing businesses",
+      "your factory",
+      "factory owners",
+      "msme",
+      "production planning",
+      "shop floor",
+      "job work",
+      "erp",
+      "bom",
+      "manufacturing units",
+      "plant"
+    ],
+    "selfTerms": [
+      "manufacturer of",
+      "we manufacture",
+      "factory price",
+      "bulk orders",
+      "dealers wanted",
+      "distributors wanted",
+      "wholesale price",
+      "direct from factory",
+      "order now"
+    ],
+    "concurrency": 2
+  },
+  "playStore": {
+    "country": "in",
+    "lang": "en",
+    "searchTerms": [
+      "manufacturing ERP",
+      "factory management",
+      "production management",
+      "inventory management India",
+      "job work management",
+      "B2B marketplace India",
+      "GST billing manufacturer",
+      "factory attendance"
+    ],
+    "appIds": [
+      "com.indiamart.m"
+    ],
+    "maxApps": 35,
+    "minReviews": 10,
+    "reviewsPerApp": 1000,
+    "complaintMaxStars": 3,
+    "excludeGames": true,
+    "excludeTitles": [
+      "factory game",
+      "tycoon",
+      "idle ",
+      "simulator",
+      "craft"
+    ],
+    "concurrency": 4
+  },
+  "youtube": {
+    "queries": [
+      "how to start manufacturing business in india",
+      "small factory business ideas india",
+      "factory kaise shuru kare",
+      "manufacturing business problems india",
+      "MSME factory owner challenges",
+      "ERP software for manufacturing india",
+      "job work business india",
+      "MSME loan for factory",
+      "production planning small factory",
+      "factory labour problem india"
+    ],
+    "videosPerQuery": 8,
+    "maxCommentsPerVideo": 1000,
+    "maxRepliesPerThread": 5,
+    "commentSort": "top",
+    "minViews": 0,
+    "titleMustMatch": false,
+    "concurrency": 3
+  },
+  "googleSearch": {
+    "hl": "en",
+    "gl": "in",
+    "seeds": [
+      "manufacturing erp",
+      "production planning software",
+      "inventory management software",
+      "factory management software",
+      "msme loan",
+      "job work",
+      "bom software"
+    ],
+    "expandAlphabet": true,
+    "resultsQueries": [
+      "best erp for small manufacturing company in india",
+      "erp software price for small business india",
+      "how to manage inventory in small factory",
+      "problems faced by msme manufacturers in india",
+      "how to get orders for manufacturing business",
+      "tally vs erp for manufacturing"
+    ],
+    "maxResultsPages": 6,
+    "expandPeopleAlsoAsk": 3,
+    "captchaWaitSeconds": 180,
+    "bingFallback": true,
+    "pageGapSeconds": [
+      15,
+      40
+    ]
+  },
+  "googleTrends": {
+    "geo": "IN",
+    "timeframe": "today 5-y",
+    "keywords": [
+      "erp software",
+      "tally prime",
+      "msme",
+      "udyam registration",
+      "inventory management software",
+      "production planning",
+      "indiamart",
+      "job work"
+    ],
+    "regionsResolution": "REGION"
+  },
+  "reddit": {
+    "subreddits": [
+      "IndiaBusiness",
+      "StartUpIndia",
+      "IndianEntrepreneur",
+      "manufacturing",
+      "Entrepreneur"
+    ],
+    "searchQueries": [
+      "manufacturing business India",
+      "factory",
+      "MSME",
+      "ERP",
+      "job work",
+      "payment delay"
+    ],
+    "searchAllReddit": true,
+    "searchSort": "relevance",
+    "searchTimeframe": "all",
+    "discoverSubreddits": true,
+    "discoveryQueries": [
+      "manufacturing india",
+      "msme",
+      "factory owner"
+    ],
+    "groupTerms": [
+      "manufacturing",
+      "manufacturer",
+      "factory",
+      "msme",
+      "job work",
+      "erp",
+      "tally",
+      "udyam",
+      "shop floor",
+      "indiamart"
+    ],
+    "postsPerSearch": 25,
+    "topPostsPerSub": 15,
+    "topTimeframe": "year",
+    "maxThreads": 50,
+    "commentsPerThread": 200,
+    "minPostScore": 0,
+    "relevanceFilter": true
+  },
+  "googleMaps": {
+    "hl": "en",
+    "queries": [
+      "manufacturing company"
+    ],
+    "locations": [
+      "Ludhiana",
+      "Rajkot",
+      "Coimbatore",
+      "Pune",
+      "Faridabad",
+      "Surat"
+    ],
+    "maxPlacesPerSearch": 25,
+    "reviewsPerPlace": 10,
+    "reviewSort": "lowest",
+    "maxReviewsPerBrand": 30,
+    "concurrency": 3
+  }
+}

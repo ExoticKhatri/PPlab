@@ -72,6 +72,8 @@ Time per platform in that run: Meta 21 min · Play 7 min · YouTube 38 min · Go
 - [ ] **Play Store discovery for B2B groups:** keeping the most-reviewed apps lets consumer apps (banks, Samsung Health, train apps) push out niche business tools with a few hundred ratings. Rank candidates by title/description relevance to the search terms first, then by reviews.
 - [ ] **Meta:** 8 of 22 US keywords failed in the LSAT run (likely rate limiting with 2 tabs). Retry failed keywords at the end of the run in a single tab.
 - [ ] **Reddit:** retry after a 429 with a long pause instead of stopping (LSAT run stopped at 67/100 threads).
+- [x] **Reddit search JSON blocked (403):** fall back to the normal search pages in a second tab (MSME run).
+- [x] **Google result pages:** when the search box can't be clicked, load the search URL instead (MSME run lost 2 pages before the fix).
 
 ## 4. Later
 

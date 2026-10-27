@@ -97,14 +97,116 @@ function listing(json) {
   return (json?.data?.children ?? []).filter((c) => c.kind === "t3").map((c) => toPost(c.data));
 }
 
+// Reddit now forbids its search JSON (search.json, subreddits/search.json) for scripted
+// sessions while listings and thread JSON still work. Search falls back to the normal
+// search page: post cards ([data-testid="sdui-post-unit"]) and community cards.
+let searchViaHtml = false;
+// Search pages load in their own tab: after visiting them, JSON fetches from that tab fail,
+// so the main tab stays on reddit.com for listings and threads.
+let searchTab = null;
+async function searchPage(page) {
+  if (!searchTab || searchTab.isClosed()) searchTab = await page.context().newPage();
+  return searchTab;
+}
+
+const count = (s) => {
+  const m = String(s ?? "").match(/([\d.]+)\s*([km]?)/i);
+  if (!m) return 0;
+  return Math.round(Number(m[1]) * ({ k: 1_000, m: 1_000_000 }[m[2].toLowerCase()] ?? 1));
+};
+
+async function htmlSearchPosts(mainPage, url, limit) {
+  const page = await searchPage(mainPage);
+  await page.goto(`${BASE}${url}`, { waitUntil: "domcontentloaded" });
+  await page.waitForTimeout(3000);
+  let last = -1;
+  for (let i = 0; i < 12; i++) {
+    const n = await page.locator('[data-testid="sdui-post-unit"]').count();
+    if (n >= limit || n === last) break;
+    last = n;
+    await page.mouse.wheel(0, 4000);
+    await page.waitForTimeout(1500);
+  }
+  const cards = await page.$$eval('[data-testid="sdui-post-unit"]', (units) =>
+    units.map((u) => ({
+      href: u.querySelector('a[href*="/comments/"]')?.getAttribute("href") ?? "",
+      title: (u.querySelector('[data-testid="post-title-text"]') ?? u.querySelector('a[href*="/comments/"]'))?.innerText?.trim() ?? "",
+      counters: u.querySelector('[data-testid="search-counter-row"]')?.innerText ?? u.innerText.match(/[\d.]+[KkMm]?\s*votes?.*comments?/)?.[0] ?? "",
+      text: u.innerText.replace(/\s+/g, " ").trim(),
+    })),
+  );
+  const seen = new Set();
+  const posts = [];
+  for (const c of cards) {
+    const m = c.href.match(/\/r\/([^/]+)\/comments\/([a-z0-9]+)/i);
+    if (!m || seen.has(m[2])) continue;
+    seen.add(m[2]);
+    const votes = c.counters.match(/([\d.]+\s*[KkMm]?)\s*votes?/)?.[1];
+    const comments = c.counters.match(/([\d.]+\s*[KkMm]?)\s*comments?/)?.[1];
+    posts.push({
+      id: `t3_${m[2]}`,
+      subreddit: m[1],
+      title: c.title,
+      body: c.text.replace(c.title, "").replace(/^r\/\S+\s*·\s*/, "").replace(/[\d.]+\s*[KkMm]?\s*votes?.*$/, "").trim().slice(0, 1000),
+      score: count(votes),
+      comments: count(comments),
+      permalink: c.href.split("?")[0],
+      created: null, // filled in when the thread is read
+      flair: null,
+      nsfw: false,
+    });
+    if (posts.length >= limit) break;
+  }
+  return posts;
+}
+
+async function htmlCommunities(mainPage, query) {
+  const page = await searchPage(mainPage);
+  await page.goto(`${BASE}/search/?q=${encodeURIComponent(query)}&type=communities`, { waitUntil: "domcontentloaded" });
+  await page.waitForTimeout(3000);
+  return page.$$eval('[data-testid="search-community"]', (units) =>
+    units.map((u) => {
+      const name = u.querySelector('a[href^="/r/"]')?.getAttribute("href")?.split("/")[2] ?? "";
+      const text = u.innerText.replace(/\s+/g, " ");
+      return { name, members: text.match(/([\d.]+\s*[KkMm]?)\s*(members|weekly)/)?.[1] ?? null, description: (u.querySelector('[data-testid="search-subreddit-desc-text"]')?.innerText ?? "").slice(0, 300) };
+    }).filter((s) => s.name),
+  );
+}
+
+// Search through JSON while it works; after the first 403 on search, use the search page.
+async function searchPosts(page, jsonPath, htmlPath, limit) {
+  if (!searchViaHtml) {
+    try {
+      return listing(await getJson(page, jsonPath));
+    } catch (error) {
+      if (!(error instanceof StopError) || !/ 403 /.test(error.message)) throw error;
+      searchViaHtml = true;
+      log(P, "Reddit forbids search JSON for this session — reading search pages instead");
+    }
+  }
+  const posts = await htmlSearchPosts(page, htmlPath, limit);
+  await pause(4000, 8000); // search pages are heavier than JSON; go slower to avoid Reddit rate limits
+  return posts;
+}
+
 async function discoverSubreddits(page, queries) {
   const subs = new Map();
   for (const q of queries) {
-    const json = await getJson(page, `/subreddits/search.json?q=${encodeURIComponent(q)}&limit=25`);
-    const found = (json?.data?.children ?? []).map((c) => c.data).filter((d) => !d.over18);
+    let found;
+    if (!searchViaHtml) {
+      try {
+        const json = await getJson(page, `/subreddits/search.json?q=${encodeURIComponent(q)}&limit=25`);
+        found = (json?.data?.children ?? []).map((c) => c.data).filter((d) => !d.over18).map((d) => ({ name: d.display_name, members: d.subscribers ?? null, description: (d.public_description ?? "").slice(0, 300) }));
+      } catch (error) {
+        if (!(error instanceof StopError) || !/ 403 /.test(error.message)) throw error;
+        searchViaHtml = true;
+        log(P, "Reddit forbids search JSON for this session — reading search pages instead");
+      }
+    }
+    if (searchViaHtml) found = (await htmlCommunities(page, q)).map((d) => ({ ...d, members: d.members ? count(d.members) : null }));
     for (const d of found) {
-      const key = d.display_name.toLowerCase();
-      if (!subs.has(key)) subs.set(key, { name: d.display_name, members: d.subscribers ?? null, description: (d.public_description ?? "").slice(0, 300), query: q });
+      const key = d.name.toLowerCase();
+      if (!subs.has(key)) subs.set(key, { ...d, query: q });
     }
     log(P, `subreddits for "${q}": ${found.length}`);
     await pause(1500, 3500);
@@ -129,7 +231,8 @@ async function readThread(page, post, max) {
   const json = await getJson(page, `${post.permalink.replace(/\/$/, "")}.json?sort=top&limit=${Math.min(500, max)}`);
   const comments = [];
   flattenComments(json?.[1]?.data?.children, comments, max);
-  return comments;
+  const d = json?.[0]?.data?.children?.[0]?.data;
+  return { comments, post: d ? toPost(d) : null };
 }
 
 function buildMarkdown(config, { subs, subStatus, posts, offTopicPosts, groupTerms, threads, stopped, user }) {
@@ -217,7 +320,15 @@ async function main() {
     log(P, user ? `signed in as u/${user}` : "not signed in — Reddit may refuse requests (run node login.mjs)");
 
     if (c.discoverSubreddits) {
-      if (c.discoveryQueries.length) subs = await discoverSubreddits(page, c.discoveryQueries);
+      // Reddit sometimes forbids subreddit search for an account while everything else works; discovery is optional.
+      if (c.discoveryQueries.length) {
+        try {
+          subs = await discoverSubreddits(page, c.discoveryQueries);
+        } catch (error) {
+          if (!(error instanceof StopError) || /429/.test(error.message)) throw error;
+          log(P, `subreddit discovery blocked (${error.message.split(".")[0]}) — continuing with configured subreddits and searches`);
+        }
+      }
       else log(P, "discoverSubreddits is on but discoveryQueries is empty — skipped");
       if (filtering) {
         // "IndianTeachers" → "Indian Teachers" so camel-case names match too.
@@ -241,7 +352,8 @@ async function main() {
     for (const sub of subStatus.filter((s) => s.ok).map((s) => s.name)) {
       for (const q of c.searchQueries) {
         try {
-          const rows = listing(await getJson(page, `/r/${sub}/search.json?q=${encodeURIComponent(q)}&restrict_sr=1&sort=${c.searchSort}&t=${c.searchTimeframe}&limit=${c.postsPerSearch}`));
+          const qs = `q=${encodeURIComponent(q)}&restrict_sr=1&sort=${c.searchSort}&t=${c.searchTimeframe}`;
+          const rows = await searchPosts(page, `/r/${sub}/search.json?${qs}&limit=${c.postsPerSearch}`, `/r/${sub}/search/?${qs}`, c.postsPerSearch);
           addPosts(rows, true);
           log(P, `r/${sub} "${q}": ${rows.length} posts`);
         } catch (error) {
@@ -266,7 +378,8 @@ async function main() {
     if (c.searchAllReddit) {
       for (const q of c.searchQueries) {
         try {
-          const rows = listing(await getJson(page, `/search.json?q=${encodeURIComponent(q)}&sort=${c.searchSort}&t=${c.searchTimeframe}&limit=${c.postsPerSearch}`));
+          const qs = `q=${encodeURIComponent(q)}&sort=${c.searchSort}&t=${c.searchTimeframe}`;
+          const rows = await searchPosts(page, `/search.json?${qs}&limit=${c.postsPerSearch}`, `/search/?${qs}`, c.postsPerSearch);
           const before = offTopic.size;
           addPosts(rows, false);
           log(P, `all of Reddit "${q}": ${rows.length} posts${offTopic.size > before ? ` (${offTopic.size - before} off-topic set aside)` : ""}`);
@@ -283,8 +396,9 @@ async function main() {
     const toRead = [...posts.values()].filter((p) => p.comments > 0).sort((a, b) => rank(b) - rank(a)).slice(0, c.maxThreads);
     for (const [i, post] of toRead.entries()) {
       try {
-        const comments = await readThread(page, post, c.commentsPerThread);
-        threads.push({ ...post, comments });
+        const { comments, post: full } = await readThread(page, post, c.commentsPerThread);
+        threads.push({ ...post, ...(full ?? {}), comments });
+        if (full) posts.set(post.id, { ...post, ...full });
         log(P, `[${i + 1}/${toRead.length}] thread "${quote(post.title, 50)}": ${comments.length} comments`);
       } catch (error) {
         if (error instanceof StopError) throw error;
