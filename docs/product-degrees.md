@@ -155,8 +155,9 @@ Prices are estimates until buyer conversations confirm them. "Share needed" = cu
 | CA firms (India) | Practice management (Zoho, ICAI entering) | Client status and document collection | 2 | Indirect (client retention) | ₹2,500/mo | 1,667 | 1.7% of ~1L | Communication the top Maps complaint; reconciliation the top search cluster | Research more |
 | MCAT aspirants, CARS (global) | Full prep platforms | CARS mistake-pattern coach beside official AAMC material | 3 | Score → admission; replaces ~$350/hr tutoring | $30/mo | 1,667 active | — (seasonal, 3–6 month use) | 124–127 plateau; tutoring regret; extension trend +800%; new competitor CARSBooster | Research more |
 | LSAT aspirants (global) | Prep platforms (7Sage, Demon, Blueprint) | Automatic mistake review on top of LawHub | 3 | Score → scholarships | $30/mo | 1,667 active | — (seasonal) | Plateau the top pain; ⬆151 post with "thousands" of DMs | Research more |
+| GMAT aspirants (Singapore) | Prep platforms (TTP, e-GMAT, Manhattan, Magoosh) | GMAT Focus plateau-breaker / mistake-pattern coach (verbal as a module) | 3 | Score → MBA admission and scholarships; replaces ~S$7,000 bundles | $40/mo | 1,250 active | — (Singapore alone too small; sell regionally) | Multi-attempt plateaus; Meta prep market in SG nearly empty; "mba" +44% YoY in SG | Research more |
 
-**Pattern across groups:** the 1st degree is crowded in every business group, and the strongest wedge is almost always the step where **money comes in**: claims, receivables, fees. In consumer test-prep groups, the strongest wedge is **turning practice mistakes into score gains**, the job tutors charge most for.
+**Pattern across groups:** the 1st degree is crowded in every business group, and the strongest wedge is almost always the step where **money comes in**: claims, receivables, fees. In consumer test-prep groups (LSAT, MCAT, GMAT), the strongest wedge is the same in all three: **turning practice mistakes into score gains**, the job tutors charge most for. One reasoning-coach engine could serve all three exams.
 
 **Next steps:** score the three shortlisted B2B wedges (section 5), then run 5 buyer conversations for the top two.
 
@@ -169,3 +170,4 @@ Prices are estimates until buyer conversations confirm them. "Share needed" = cu
 | 2026-10-27 | Guide created: product degrees, entry approaches, selection rules, scoring, signal guide, process |
 | 2026-10-27 | Candidates added from 5 groups: small hospitals, MSME manufacturers, K-12 schools, CA firms, LSAT |
 | 2026-10-27 | MCAT (CARS) added: the clearest consumer pain so far; new CARS competitor seen on Meta the same week |
+| 2026-10-28 | GMAT (Singapore) added: same mistake-pattern wedge as LSAT/MCAT; Singapore's Meta prep market nearly empty while business schools advertise heavily |

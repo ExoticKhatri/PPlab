@@ -1,0 +1,100 @@
+{
+  "group": "GMAT aspirants (Singapore)",
+  "platforms": "all",
+  "metaAds": {
+    "countries": ["SG"],
+    "keywords": [
+      "GMAT", "GMAT prep", "GMAT Focus", "GMAT tutor", "GMAT course", "GMAT class", "GMAT Singapore",
+      "MBA Singapore", "MBA", "INSEAD", "NUS MBA", "NTU MBA", "SMU MBA", "Executive MBA", "MBA admissions",
+      "MBA application", "MBA consultant", "MBA scholarship", "e-GMAT", "Target Test Prep", "Manhattan Prep",
+      "Kaplan GMAT", "GRE", "data insights"
+    ],
+    "maxAdsPerKeyword": 150,
+    "maxScrollRounds": 30,
+    "activeOnly": true,
+    "sellerTerms": [
+      "gmat", "gmat focus", "mba application", "mba admissions", "your score", "practice test", "tutor",
+      "data insights", "critical reasoning", "quant", "verbal", "admissions consult", "mba consult"
+    ],
+    "selfTerms": ["our mba", "mba programme", "mba program", "apply now", "info session", "open house", "business school", "school of business"],
+    "concurrency": 2
+  },
+  "playStore": {
+    "country": "sg",
+    "lang": "en",
+    "searchTerms": ["GMAT prep", "GMAT Focus", "GMAT practice", "GMAT verbal", "GMAT quant", "MBA admissions"],
+    "appIds": [],
+    "maxApps": 30,
+    "minReviews": 10,
+    "reviewsPerApp": 1500,
+    "complaintMaxStars": 3,
+    "excludeGames": true,
+    "excludeTitles": ["lsat", "mcat", "nclex", "usmle", "bar exam", "toefl", "ielts", "pte "],
+    "concurrency": 4
+  },
+  "youtube": {
+    "queries": [
+      "GMAT Focus study plan", "how I scored 705 GMAT Focus", "GMAT data insights strategy", "GMAT critical reasoning tips",
+      "GMAT quant tips", "GMAT score plateau", "best GMAT prep course", "GMAT while working full time",
+      "MBA in Singapore", "INSEAD vs NUS MBA"
+    ],
+    "videosPerQuery": 8,
+    "maxCommentsPerVideo": 1000,
+    "maxRepliesPerThread": 5,
+    "commentSort": "top",
+    "minViews": 1000,
+    "titleMustMatch": false,
+    "concurrency": 3
+  },
+  "googleSearch": {
+    "hl": "en",
+    "gl": "sg",
+    "seeds": ["gmat singapore", "gmat prep", "gmat tutor", "gmat focus", "mba singapore", "gmat course", "gmat test centre singapore"],
+    "expandAlphabet": true,
+    "resultsQueries": [
+      "best gmat prep course singapore", "gmat tutor singapore price", "gmat focus score for insead",
+      "how long to study for gmat focus", "nus mba gmat requirement", "gmat classes singapore"
+    ],
+    "maxResultsPages": 6,
+    "expandPeopleAlsoAsk": 3,
+    "captchaWaitSeconds": 180,
+    "bingFallback": true,
+    "pageGapSeconds": [15, 40]
+  },
+  "googleTrends": {
+    "geo": "SG",
+    "timeframe": "today 5-y",
+    "keywords": ["mba", "gmat", "gmat focus", "insead", "gre", "nus mba", "gmat prep", "executive mba"],
+    "regionsResolution": "CITY"
+  },
+  "reddit": {
+    "subreddits": ["GMAT", "MBA", "SGExams", "askSingapore", "singapore"],
+    "searchQueries": [
+      "GMAT Singapore", "GMAT", "INSEAD", "NUS MBA", "MBA Singapore", "GMAT Focus plateau",
+      "data insights", "GMAT tutor", "Target Test Prep", "e-GMAT"
+    ],
+    "searchAllReddit": true,
+    "searchSort": "relevance",
+    "searchTimeframe": "year",
+    "discoverSubreddits": true,
+    "discoveryQueries": ["gmat", "mba singapore", "insead"],
+    "groupTerms": ["gmat", "gmat focus", "mba", "insead", "nus mba", "ntu mba", "smu", "e-gmat", "target test prep", "manhattan prep", "data insights", "business school"],
+    "postsPerSearch": 25,
+    "topPostsPerSub": 25,
+    "topTimeframe": "year",
+    "maxThreads": 70,
+    "commentsPerThread": 200,
+    "minPostScore": 0,
+    "relevanceFilter": true
+  },
+  "googleMaps": {
+    "hl": "en",
+    "queries": ["GMAT prep", "GMAT tutor", "MBA admissions consultant"],
+    "locations": ["Singapore"],
+    "maxPlacesPerSearch": 40,
+    "reviewsPerPlace": 10,
+    "reviewSort": "lowest",
+    "maxReviewsPerBrand": 30,
+    "concurrency": 3
+  }
+}
