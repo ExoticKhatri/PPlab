@@ -35,7 +35,7 @@ This is the central reference for idea selection in pplab. Group research lives 
 | ₹8,000 | 521 |
 | ₹15,000 | 278 |
 
-Global (consumer or B2B): $30/month → 1,667 paying at any time; $100/month → 500.
+Global B2B: $50/month → 1,000 paying customers; $100/month → 500.
 
 **Speed matters as much as size.** An idea that reaches its first ₹1 lakh/month in 3 months beats one with a higher ceiling that needs 18 months to sell. Every candidate is judged on both: *can it reach the target*, and *how soon does it earn its first revenue*.
 
@@ -113,7 +113,7 @@ Score each criterion 1–5. Weight × score, summed; maximum 100.
 
 ## 6. Reading the research signals
 
-What each source reliably shows, based on six group analyses.
+What each source reliably shows, based on four business-group analyses (K-12 schools, CA firms, small hospitals, MSME manufacturers).
 
 | Signal | What it means |
 | --- | --- |
@@ -124,9 +124,8 @@ What each source reliably shows, based on six group analyses.
 | Paperwork that blocks cash (fees, claims, receivables, reconciliation) | The recurring hidden pain in Indian B2B groups; usually the best wedge |
 | Government schemes or rules rising in Trends | Sudden demand (Ayushman/ABHA, the MSME 45-day rule, NABH, ABDM); watch the "rising" lists |
 | Maps and customer-app reviews | Where the business fails *its* customers (communication, waiting, status), which points at the owner's operational gap |
-| Reddit | Strong for consumer groups and for the customer's view of Indian businesses; Indian owners rarely post there |
+| Reddit | Useful for the customer's view of Indian businesses; Indian owners rarely post there |
 | YouTube comments, Meta ad copy, search queries | The best sources of the Indian business owner's voice |
-| Third-party tools that sit inside an official tool, rising in Trends | Demand for a 3rd-degree helper (e.g. Jack Westin's AAMC extension, +800%) |
 
 ---
 
@@ -153,11 +152,8 @@ Prices are estimates until buyer conversations confirm them. "Share needed" = cu
 | MSME manufacturers (India) | Manufacturing ERP (~45 vendors) | Receivables and 45-day-rule collections | 2 | Dues collected | ₹5,000/mo | 834 | 0.3% of ~3L | 45-day rule Breakout; "₹6.5 Cr payment stuck" (⬆1,400); no software competitor seen | Shortlist |
 | Private K-12 schools (India) | School ERP (~85 advertisers) | Fee collection autopilot | 2 | Fees collected | ₹4,000/mo | 1,042 | 0.3% of ~3.4L | Fee collection the #1 pain on 4 platforms | Shortlist (WhatsApp dependency) |
 | CA firms (India) | Practice management (Zoho, ICAI entering) | Client status and document collection | 2 | Indirect (client retention) | ₹2,500/mo | 1,667 | 1.7% of ~1L | Communication the top Maps complaint; reconciliation the top search cluster | Research more |
-| MCAT aspirants, CARS (global) | Full prep platforms | CARS mistake-pattern coach beside official AAMC material | 3 | Score → admission; replaces ~$350/hr tutoring | $30/mo | 1,667 active | — (seasonal, 3–6 month use) | 124–127 plateau; tutoring regret; extension trend +800%; new competitor CARSBooster | Research more |
-| LSAT aspirants (global) | Prep platforms (7Sage, Demon, Blueprint) | Automatic mistake review on top of LawHub | 3 | Score → scholarships | $30/mo | 1,667 active | — (seasonal) | Plateau the top pain; ⬆151 post with "thousands" of DMs | Research more |
-| GMAT aspirants (Singapore) | Prep platforms (TTP, e-GMAT, Manhattan, Magoosh) | GMAT Focus plateau-breaker / mistake-pattern coach (verbal as a module) | 3 | Score → MBA admission and scholarships; replaces ~S$7,000 bundles | $40/mo | 1,250 active | — (Singapore alone too small; sell regionally) | Multi-attempt plateaus; Meta prep market in SG nearly empty; "mba" +44% YoY in SG | Research more |
 
-**Pattern across groups:** the 1st degree is crowded in every business group, and the strongest wedge is almost always the step where **money comes in**: claims, receivables, fees. In consumer test-prep groups (LSAT, MCAT, GMAT), the strongest wedge is the same in all three: **turning practice mistakes into score gains**, the job tutors charge most for. One reasoning-coach engine could serve all three exams.
+**Pattern across groups:** the 1st degree is crowded in every business group, and the strongest wedge is almost always the step where **money comes in**: claims, receivables, fees.
 
 **Next steps:** score the three shortlisted B2B wedges (section 5), then run 5 buyer conversations for the top two.
 
@@ -168,6 +164,5 @@ Prices are estimates until buyer conversations confirm them. "Share needed" = cu
 | Date | Change |
 | --- | --- |
 | 2026-10-27 | Guide created: product degrees, entry approaches, selection rules, scoring, signal guide, process |
-| 2026-10-27 | Candidates added from 5 groups: small hospitals, MSME manufacturers, K-12 schools, CA firms, LSAT |
-| 2026-10-27 | MCAT (CARS) added: the clearest consumer pain so far; new CARS competitor seen on Meta the same week |
-| 2026-10-28 | GMAT (Singapore) added: same mistake-pattern wedge as LSAT/MCAT; Singapore's Meta prep market nearly empty while business schools advertise heavily |
+| 2026-10-27 | Candidates added from 4 business groups: small hospitals, MSME manufacturers, K-12 schools, CA firms |
+| 2026-10-29 | Exam-aspirant groups (LSAT, MCAT, GMAT) removed: they were collector test runs, not target groups |
