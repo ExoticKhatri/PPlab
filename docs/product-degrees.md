@@ -142,7 +142,7 @@ Score each criterion 1–5. Weight × score, summed; maximum 100.
 
 ## 6. Reading the research signals
 
-What each source reliably shows, based on four business-group analyses (K-12 schools, CA firms, small hospitals, MSME manufacturers).
+What each source reliably shows, based on five business-group analyses (K-12 schools, CA firms, small hospitals, MSME manufacturers, auto dealerships).
 
 | Signal | What it means |
 | --- | --- |
@@ -180,13 +180,14 @@ Customer counts are for **₹50 Cr/year**. "Wedge only" uses the entry price; "a
 | MSME manufacturers (India) | Manufacturing ERP (~45 vendors) | Receivables and 45-day-rule collections | 2 | Dues collected | ₹5,000/mo | 8,334 (2.8%) | ₹12,000/mo (+ production, labour) | 3,473 | 1.2% of ~3L | 45-day rule Breakout; "₹6.5 Cr payment stuck" (⬆1,400); no software competitor seen | Shortlist |
 | Private K-12 schools (India) | School ERP (~85 advertisers) | Fee collection autopilot | 2 | Fees collected | ₹4,000/mo | 10,417 (3.1%) | ₹10,000/mo (+ admissions, parent app) | 4,167 | 1.2% of ~3.4L | Fee collection the #1 pain on 4 platforms | Shortlist (WhatsApp dependency) |
 | Small hospitals (India) | HMS/HIS (~25 vendors on Meta) | Insurance/TPA/Ayushman desk | 2 | Claims paid faster and in full | ₹8,000/mo | 5,209 (8.7%) | ₹20,000/mo (+ HMS modules) | 2,084 | 3.5% of ~60K | Top pain on 5 platforms; 2–3 sellers; Ayushman +114% YoY | Shortlist (needs expansion to reach ₹50 Cr) |
+| Car & two-wheeler dealerships (India) | OEM-mandated DMS (locked in) | Service-desk communication and follow-up (status, estimates, bills, reminders) | 2 | Service revenue retained (the dealer's recurring profit) | ₹10,000/mo | 4,167 (6.9%) | ₹25,000/mo (+ sales lead follow-up, used-car module) | 1,667 | 2.8% of ~60K | Service = 68% of low two-wheeler and 41% of car-showroom reviews; owners reply to 55% of reviews; dealer software barely advertised | Research more (OEM lock-in; PSF CRMs exist) |
 | CA firms (India) | Practice management (Zoho, ICAI entering) | Client status and document collection | 2 | Indirect (client retention) | ₹2,500/mo | 16,667 (16.7%) | ₹6,000/mo | 6,945 | 6.9% of ~1L | Communication the top Maps complaint; reconciliation the top search cluster | Below target math: group too small at this price |
 
 Prices and group sizes are estimates until buyer conversations and sourced counts confirm them.
 
 **Pattern across groups:** the 1st degree is crowded in every business group, and the strongest wedge is almost always the step where **money comes in**: claims, receivables, fees.
 
-**What the ₹50 Cr target changes:** no wedge reaches ₹50 Cr on its entry price alone at a realistic share. Every shortlisted path depends on **expanding revenue per customer** (wedge → more of the full system), so the expand path (section 3) is a requirement, not a bonus. Large groups (MSME manufacturers, schools) clear the target math most easily. Small hospitals work only with a strong expansion into HMS. CA firms fall short at current price assumptions.
+**What the ₹50 Cr target changes:** no wedge reaches ₹50 Cr on its entry price alone at a realistic share. Every shortlisted path depends on **expanding revenue per customer** (wedge → more of the full system), so the expand path (section 3) is a requirement, not a bonus. Large groups (MSME manufacturers, schools) clear the target math most easily. Small hospitals work only with a strong expansion into HMS. Dealerships pass the math only at a high price (₹25,000/month after expansion), which their size can support. CA firms fall short at current price assumptions.
 
 **Next steps:** score the three shortlisted wedges (section 5) including their expansion price, then run 5 buyer conversations for the top two.
 
@@ -200,3 +201,4 @@ Prices and group sizes are estimates until buyer conversations and sourced count
 | 2026-10-27 | Candidates added from 4 business groups: small hospitals, MSME manufacturers, K-12 schools, CA firms |
 | 2026-10-29 | Exam-aspirant groups (LSAT, MCAT, GMAT) removed: they were collector test runs, not target groups |
 | 2026-10-29 | Target changed from a ₹50 Cr valuation to **₹50 Cr revenue per year** (≈ ₹4.17 Cr/month). Customer math, milestones, rule 6, scoring thresholds and candidate counts updated; expansion pricing added to the candidates |
+| 2026-10-29 | Car & two-wheeler dealerships added: best wedge is service-desk communication and follow-up; passes the ₹50 Cr math only at ~₹25,000/month after expansion; status research more |

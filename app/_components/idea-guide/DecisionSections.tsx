@@ -70,7 +70,7 @@ export function ScoringSection({ index }: { index: number }) {
 
 export function SignalsSection({ index }: { index: number }) {
   return (
-    <Section id="signals" index={index} title="Reading the research signals" lead="What each source reliably shows, based on four business-group analyses.">
+    <Section id="signals" index={index} title="Reading the research signals" lead="What each source reliably shows, based on five business-group analyses.">
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {SIGNALS.map((s) => (
           <article key={s.signal} className={`rounded-2xl border p-4 ${SIGNAL_TONE[s.kind]}`}>

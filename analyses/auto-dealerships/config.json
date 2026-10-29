@@ -1,0 +1,110 @@
+{
+  "group": "Car & two-wheeler dealerships (India)",
+  "groupId": "dealers",
+  "platforms": "all",
+  "metaAds": {
+    "countries": ["IN"],
+    "keywords": [
+      "dealer management system", "DMS software", "car dealership software", "two wheeler dealer software", "used car dealer",
+      "used car dealer software", "automobile dealer", "dealership CRM", "dealer lead management", "service reminder software",
+      "showroom management software", "car dealer leads", "CarDekho dealer", "Cars24 partner", "Spinny", "OLX autos",
+      "vehicle finance dealer", "two wheeler dealership", "car dealership", "EV dealership", "dealership franchise",
+      "dealership marketing", "test drive booking", "vehicle insurance renewal", "workshop management software"
+    ],
+    "maxAdsPerKeyword": 150,
+    "maxScrollRounds": 30,
+    "activeOnly": true,
+    "sellerTerms": [
+      "for dealers", "dealers", "dealership", "dealer management", "showroom owners", "used car dealers", "automobile dealers",
+      "dms", "dealer partners", "become a partner", "your showroom", "your dealership"
+    ],
+    "selfTerms": [
+      "test drive", "book now", "on-road price", "exchange offer", "festive offer", "emi starting", "visit our showroom",
+      "book your", "lowest down payment", "certified pre-owned"
+    ],
+    "concurrency": 2
+  },
+  "playStore": {
+    "country": "in",
+    "lang": "en",
+    "searchTerms": [
+      "car dealer app", "used car dealer", "dealer management system", "two wheeler dealer", "dealership CRM",
+      "used car buy sell dealer", "showroom management", "garage management"
+    ],
+    "appIds": [],
+    "maxApps": 35,
+    "minReviews": 10,
+    "reviewsPerApp": 1000,
+    "complaintMaxStars": 3,
+    "excludeGames": true,
+    "excludeTitles": ["simulator", "tycoon", "racing", "parking", "driving school", "car game", "bike game", "drift"],
+    "concurrency": 4
+  },
+  "youtube": {
+    "queries": [
+      "car dealership business india", "car showroom kaise khole", "two wheeler dealership profit india", "used car business india",
+      "car dealer problems india", "automobile dealership margin india", "bike showroom business", "dealer management software demo",
+      "used car dealer tips india", "EV dealership india"
+    ],
+    "videosPerQuery": 8,
+    "maxCommentsPerVideo": 1000,
+    "maxRepliesPerThread": 5,
+    "commentSort": "top",
+    "minViews": 0,
+    "titleMustMatch": false,
+    "concurrency": 3
+  },
+  "googleSearch": {
+    "hl": "en",
+    "gl": "in",
+    "seeds": [
+      "dealer management system", "car dealership software", "used car dealer software", "two wheeler dealership",
+      "car showroom", "used car business", "dealership crm"
+    ],
+    "expandAlphabet": true,
+    "resultsQueries": [
+      "best dealer management software india", "car dealership software price", "how to get two wheeler dealership",
+      "used car dealer business problems", "how to increase car showroom sales", "dealership lead management"
+    ],
+    "maxResultsPages": 6,
+    "expandPeopleAlsoAsk": 3,
+    "captchaWaitSeconds": 180,
+    "bingFallback": true,
+    "pageGapSeconds": [15, 40]
+  },
+  "googleTrends": {
+    "geo": "IN",
+    "timeframe": "today 5-y",
+    "keywords": ["used car", "car showroom", "two wheeler dealership", "dealer management system", "cardekho", "cars24", "ev dealership", "car dealership"],
+    "regionsResolution": "REGION"
+  },
+  "reddit": {
+    "subreddits": ["CarsIndia", "IndianBikes", "IndiaBusiness", "askcarsales", "Dealership"],
+    "searchQueries": [
+      "dealership", "dealer experience", "used car dealer", "showroom", "service center", "dealer software", "car sales", "booking delay"
+    ],
+    "searchAllReddit": true,
+    "searchSort": "relevance",
+    "searchTimeframe": "year",
+    "discoverSubreddits": true,
+    "discoveryQueries": ["car dealership india", "used cars india", "two wheeler india"],
+    "groupTerms": ["dealer", "dealership", "showroom", "used car", "service center", "service centre", "sales advisor", "test drive", "dms"],
+    "postsPerSearch": 25,
+    "topPostsPerSub": 20,
+    "topTimeframe": "year",
+    "maxThreads": 60,
+    "commentsPerThread": 200,
+    "minPostScore": 0,
+    "relevanceFilter": true
+  },
+  "googleMaps": {
+    "hl": "en",
+    "queries": ["car showroom", "two wheeler showroom", "used car dealer"],
+    "locations": ["Pune", "Jaipur", "Lucknow", "Indore", "Coimbatore"],
+    "maxPlacesPerSearch": 12,
+    "reviewsPerPlace": 10,
+    "reviewSort": "lowest",
+    "maxReviewsPerBrand": 30,
+    "concurrency": 3
+  }
+}

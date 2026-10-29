@@ -209,6 +209,21 @@ export const CANDIDATES: Candidate[] = [
     statusNote: "Shortlist (needs expansion)",
   },
   {
+    group: "Car & two-wheeler dealerships",
+    firstDegree: "OEM-mandated DMS (locked in)",
+    wedge: "Service-desk communication and follow-up",
+    degree: 2,
+    cashLink: "Service revenue retained",
+    wedgePrice: 10_000,
+    expandedPrice: 25_000,
+    expansion: "+ lead follow-up, used-car module",
+    groupSize: 60_000,
+    groupSizeLabel: "~60K",
+    evidence: ["Service = 68% of low two-wheeler reviews, 41% of car showrooms", "Owners reply to 55% of reviews", "Dealer software barely advertised on Meta"],
+    status: "conditional",
+    statusNote: "Research more (OEM lock-in)",
+  },
+  {
     group: "CA firms",
     firstDegree: "Practice management (Zoho, ICAI entering)",
     wedge: "Client status and document collection",
@@ -230,4 +245,5 @@ export const CHANGELOG = [
   { date: "2026-10-27", text: "Candidates added from 4 business groups: small hospitals, MSME manufacturers, K-12 schools, CA firms" },
   { date: "2026-10-29", text: "Exam-aspirant groups removed: they were collector test runs, not target groups" },
   { date: "2026-10-29", text: "Target changed to ₹50 Cr revenue per year (≈ ₹4.17 Cr/month); customer math and expansion pricing updated" },
+  { date: "2026-10-29", text: "Car & two-wheeler dealerships added: service-desk follow-up wedge; passes the math only at ~₹25,000/month after expansion" },
 ];
