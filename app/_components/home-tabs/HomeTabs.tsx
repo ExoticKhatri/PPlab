@@ -4,13 +4,15 @@ import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import BrainstormBoard from "../brainstorm-board/BrainstormBoard";
 import GroupFinder from "../group-finder/GroupFinder";
+import IdeaGuide from "../idea-guide/IdeaGuide";
 import NetworkMindmap from "../network-mindmap/NetworkMindmap";
 
-type TabId = "industries" | "groups";
+type TabId = "industries" | "groups" | "guide";
 
 const TABS: { id: TabId; label: string }[] = [
   { id: "industries", label: "Industries" },
   { id: "groups", label: "Group finder" },
+  { id: "guide", label: "Idea guide" },
 ];
 
 export default function HomeTabs() {
@@ -28,6 +30,7 @@ export default function HomeTabs() {
         </>
       )}
       {active === "groups" && <GroupFinder />}
+      {active === "guide" && <IdeaGuide />}
 
       <nav
         aria-label="Workspace tabs"
