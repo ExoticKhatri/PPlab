@@ -24,22 +24,47 @@ Owner-run distributors, stockists, super stockists and wholesalers who buy from 
 | 4 | **Salesman order taking on clunky apps** | Play: FieldAssist and Bizom (3.5★) complaints about slowness, crashes and offline failures (229), GPS (190), login (324) in 2,127 complaints. |
 | 5 | **Cash leakage through salesmen and staff** | YouTube: workers pocketing collected cash. Play: collection apps are small or lender-owned. |
 
-## 4. Competitors and prices
+## 4. Competitors and pricing
 
-- **Sales-force automation (sold mostly to brands):** FieldAssist, Bizom, FieldSense, SalesOn, many tracking apps.
-- **Distributor billing and ordering:** Marg (eOrder, eRetail: 100K+ each), Tally/Busy, Vyapar/myBillBook/Khatabook (generic).
-- **Collections:** Credflow (receivables automation), a few small collection apps. **No dominant collections product for distributors.**
-- **B2B platforms competing for retailer orders:** Udaan, JioMart (Campa's distribution push), Flipkart Wholesale, ElasticRun, quick commerce.
-- Prices are not public in the data (demo-led); generic billing apps are cheap or free.
+Prices were checked on 30 Oct 2026. "Published" means the vendor's own page. "Listing" means a third-party software directory; these often disagree, so treat them as approximate. All prices exclude 18% GST.
+
+| Product | What it does | Plan and price | Source |
+| --- | --- | --- | --- |
+| **Marg eOrder / eOwner** | Salesman and retailer order app on top of Marg ERP | ₹4,000/yr (1 owner), ₹5,400/yr (2), ₹10,000/yr (5), so **~₹330–830/mo** | Published ([Marg](https://margcompusoft.com/eorder_salesman_order_app.html)) |
+| **Marg ERP 9+** (distribution) | Billing, stock and accounts | ~₹8,100 one-time (single user) + ~₹2,000–5,000/yr maintenance; cloud ~₹999/user/mo | Listing |
+| **TallyPrime** | Accounts and billing | Silver ₹22,500 one-time + ₹4,500/yr support; Gold ₹67,500 + ₹13,500/yr | Listing ([Tally cost guide](https://tallysolutions.com/business-guides/tallyprime-total-cost-of-ownership-india/)) |
+| **Vyapar** | GST billing for small businesses | ~₹3,400–4,000/yr (**~₹300/mo**); mobile plan free | Listing |
+| **myBillBook** | GST billing | ~₹3,490–3,990/yr (**~₹300/mo**) | Listing |
+| **Bizom** | Sales-force automation and DMS, sold mainly to brands | ~$14–20/user/mo (**~₹1,200–1,700 per salesman**); custom quotes | Listing |
+| **FieldAssist** | Sales-force automation, sold mainly to brands | Quote only; listings estimate $30–150/user/mo | Listing (estimate) |
+| **Credflow** | Receivables reminders and collections | Listings conflict (~$11–28/mo, or ₹47,999 for 4 years, so **~₹1,000/mo**) | Listing (unverified) |
+| **Udaan, JioMart, Flipkart Wholesale** | B2B ordering platforms | Free to retailers; they earn on the goods margin | Their own model |
+
+**What this means:** billing and ordering tools for distributors cost **₹300–850/month** and are close to commodities. Field-sales apps charge **per salesman** (₹1,200+ each) and are bought by brands, not by distributors. The only collections tool, Credflow, costs about **₹1,000/month** and is generic, not built for distributors and retailers. Nothing is priced to the money it recovers.
 
 ## 5. Opportunities spotted in the data
 
-1. **Retailer credit and collections for distributors.** It would show live outstanding per retailer and ageing, send automatic WhatsApp reminders with UPI pay links, let salesmen collect with instant digital receipts (stopping cash leakage), set credit limits and hold supply, and sync with Tally/Marg. Later it could add an opt-in **retailer payment-behaviour score** shared across distributors. Evidence: pains #1, #2 and #5; nearly no competitor advertising; tied directly to cash.
-   - Risk: relationship-driven collection (distributors fear losing retailers); low digital maturity; a shared credit score needs scale and careful legal design.
+Customers needed are for **₹50 Cr/year** (₹50 Cr ÷ (price × 12)), as a share of the ~6 lakh estimated distributors.
+
+1. **Retailer credit and collections for distributors.** It would show live outstanding per retailer and how old each due is, send automatic WhatsApp reminders with UPI pay links, let salesmen collect with instant digital receipts (stopping cash leakage), set credit limits and hold supply, and sync with Tally/Marg. Later it could add an opt-in **retailer payment-behaviour score** shared across distributors. Evidence: pains #1, #2 and #5; nearly no competitor advertising; tied directly to cash.
+   - **Suggested price: ₹3,000/month to start; ₹8,000/month after expansion** (+ offline order taking and the shared retailer credit score).
+     - **Customers needed:** 13,889 (2.3%) at the entry price; 5,209 (0.9%) after expansion.
+     - **Why this price:** it is 3–4× billing tools, which is justified because it brings in cash instead of recording it. It is still below a Bizom setup for 5 salesmen (~₹6,000–8,500/month).
+     - **Value (estimate):** a distributor with ₹10 lakh outstanding who collects 15 days sooner frees about ₹5 lakh of working capital. At ~1.5%/month credit cost, that saves ~₹7,500/month, more than the ₹3,000 price, before counting bad debts avoided.
+     - Offer 1–2 free months, so the tool proves the money it collects before the buyer pays.
+   - Risk: collecting is relationship-driven (distributors fear losing retailers); low digital maturity; a shared credit score needs scale and careful legal design.
 2. **Lightweight order taking that works offline,** beside brand apps, for multi-brand distributors. Evidence: pain #4.
+   - **Suggested price: ₹1,500/month to start (up to 5 salesmen); ₹3,000/month after expansion** (+ stock and schemes).
+     - **Customers needed:** 27,778 (4.6%) at the entry price; 13,889 (2.3%) after expansion.
+     - **Why this price:** Marg eOrder is ₹330–830/month and brands give their apps free, so this only works as an add-on to opportunity 1.
    - Risk: crowded SFA market; brands mandate their own apps.
 3. **Stock and expiry management with brand settlement tracking.** Evidence: pain #3.
+   - **Suggested price: ₹1,500/month to start; ₹3,000/month after expansion** (+ scheme and claim reconciliation with brands).
+     - **Customers needed:** 27,778 (4.6%) at the entry price; 13,889 (2.3%) after expansion.
+     - **Why this price:** Marg and Tally already cover stock at a low cost; the extra value is brand claim recovery.
    - Risk: narrower pain; billing ERPs partly cover it.
+
+Only opportunity 1 clears the target math on its own. Opportunities 2 and 3 are better used as the expansion modules that take it from ₹3,000 to ₹8,000.
 
 ## 6. Data gaps
 

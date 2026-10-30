@@ -175,8 +175,8 @@ Then write **README.md** for the group:
 1. Group in one paragraph, and its size if known (cite `group-data.ts` or sources).
 2. Reachability verdict (mainly Meta) with the evidence.
 3. Top pain points ranked, each with evidence from at least one platform and the count behind it.
-4. Competitors and what they charge.
-5. Opportunities spotted in the data (gaps where pain is high and supply is thin) — each with its evidence and its main risk.
+4. Competitors and their pricing — required. A table with columns: product, what it does, plan and price (per month or per year, per user or per business, in the group's currency), and source. Take prices from the collected data first (Play in-app price ranges, prices in ad text, prices people mention on Reddit/YouTube). Then look up the main competitors' public pricing pages on the web. Mark each price as "published", "from ads/reviews" or "estimate". Write "not public (demo-led)" only after checking.
+5. Opportunities spotted in the data (gaps where pain is high and supply is thin) — each with its evidence, its main risk and a **suggested price**. Give an entry price and a price after expansion, per business per month. Justify both against the competitor prices above and against the money the pain costs the buyer. Add the customers needed for the revenue target in `docs/product-degrees.md` (₹50 Cr/year ÷ (price × 12)), and that number as a share of the group.
 6. Data gaps: platforms skipped or failed, and what to collect next.
 7. Collection date and the config used (link `config.json`).
 
