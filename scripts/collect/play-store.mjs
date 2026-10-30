@@ -278,8 +278,18 @@ async function main() {
     else return true;
     return false;
   });
+  // Relevance first (search-term words in the title count double, in the summary once), then size.
+  // Ranking by reviews alone lets big consumer apps push out niche business tools.
+  const FILLER = new Set(["app", "apps", "the", "for", "and", "india", "best", "free", "with"]);
+  const queryWords = [...new Set(c.searchTerms.flatMap((t) => t.toLowerCase().match(/[a-z]{3,}/g) ?? []).filter((w) => !FILLER.has(w)))];
+  const relevance = (a) => {
+    const title = (a.title ?? "").toLowerCase();
+    const summary = (a.summary ?? "").toLowerCase();
+    return queryWords.reduce((s, w) => s + (title.includes(w) ? 2 : 0) + (summary.includes(w) ? 1 : 0), 0);
+  };
+  const size = (a) => Math.max(a.reviews, a.ratings);
   const apps = excluded
-    .sort((a, b) => Math.max(b.reviews, b.ratings) - Math.max(a.reviews, a.ratings))
+    .sort((a, b) => (c.rankBy === "reviews" ? 0 : relevance(b) - relevance(a)) || size(b) - size(a))
     .slice(0, Math.max(c.maxApps, forced.size));
   writeJson(`${dir}/apps.json`, apps);
   writeJson(`${dir}/dropped-apps.json`, dropped.map((d) => ({ appId: d.app.appId, title: d.app.title, genre: d.app.genre, reason: d.reason })));

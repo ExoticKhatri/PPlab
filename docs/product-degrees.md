@@ -142,7 +142,7 @@ Score each criterion 1–5. Weight × score, summed; maximum 100.
 
 ## 6. Reading the research signals
 
-What each source reliably shows, based on five business-group analyses (K-12 schools, CA firms, small hospitals, MSME manufacturers, auto dealerships).
+What each source reliably shows, based on six business-group analyses (K-12 schools, CA firms, small hospitals, MSME manufacturers, auto dealerships, distributors).
 
 | Signal | What it means |
 | --- | --- |
@@ -177,6 +177,7 @@ Customer counts are for **₹50 Cr/year**. "Wedge only" uses the entry price; "a
 
 | Group | 1st degree (crowded) | Best wedge | Degree | Cash / compliance link | Wedge price | Customers needed (wedge only) | Price after expansion | Customers needed (after expansion) | Share of group (after expansion) | Key evidence | Status |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Distributors & wholesalers (India) | Billing ERP (Tally/Marg) + brand SFA apps | Retailer credit and collections (outstanding, WhatsApp reminders, salesman receipts, credit limits) | 2 | Money owed by retailers collected | ₹3,000/mo | 13,889 (2.3%) | ₹8,000/mo (+ order taking, retailer credit score) | 5,209 | 0.9% of ~6L | "Don't start without bouncers and extra capital" (⬆527); ₹1.4 Cr outstanding stuck (⬆88); 64 payment-reminder searches; collections tools barely advertised | Shortlist |
 | MSME manufacturers (India) | Manufacturing ERP (~45 vendors) | Receivables and 45-day-rule collections | 2 | Dues collected | ₹5,000/mo | 8,334 (2.8%) | ₹12,000/mo (+ production, labour) | 3,473 | 1.2% of ~3L | 45-day rule Breakout; "₹6.5 Cr payment stuck" (⬆1,400); no software competitor seen | Shortlist |
 | Private K-12 schools (India) | School ERP (~85 advertisers) | Fee collection autopilot | 2 | Fees collected | ₹4,000/mo | 10,417 (3.1%) | ₹10,000/mo (+ admissions, parent app) | 4,167 | 1.2% of ~3.4L | Fee collection the #1 pain on 4 platforms | Shortlist (WhatsApp dependency) |
 | Small hospitals (India) | HMS/HIS (~25 vendors on Meta) | Insurance/TPA/Ayushman desk | 2 | Claims paid faster and in full | ₹8,000/mo | 5,209 (8.7%) | ₹20,000/mo (+ HMS modules) | 2,084 | 3.5% of ~60K | Top pain on 5 platforms; 2–3 sellers; Ayushman +114% YoY | Shortlist (needs expansion to reach ₹50 Cr) |
@@ -187,7 +188,7 @@ Prices and group sizes are estimates until buyer conversations and sourced count
 
 **Pattern across groups:** the 1st degree is crowded in every business group, and the strongest wedge is almost always the step where **money comes in**: claims, receivables, fees.
 
-**What the ₹50 Cr target changes:** no wedge reaches ₹50 Cr on its entry price alone at a realistic share. Every shortlisted path depends on **expanding revenue per customer** (wedge → more of the full system), so the expand path (section 3) is a requirement, not a bonus. Large groups (MSME manufacturers, schools) clear the target math most easily. Small hospitals work only with a strong expansion into HMS. Dealerships pass the math only at a high price (₹25,000/month after expansion), which their size can support. CA firms fall short at current price assumptions.
+**What the ₹50 Cr target changes:** no wedge reaches ₹50 Cr on its entry price alone at a realistic share. Every shortlisted path depends on **expanding revenue per customer** (wedge → more of the full system), so the expand path (section 3) is a requirement, not a bonus. Large groups (distributors, MSME manufacturers, schools) clear the target math most easily; distributors need the smallest share (0.9%). Small hospitals work only with a strong expansion into HMS. Dealerships pass the math only at a high price (₹25,000/month after expansion), which their size can support. CA firms fall short at current price assumptions.
 
 **Next steps:** score the three shortlisted wedges (section 5) including their expansion price, then run 5 buyer conversations for the top two.
 
@@ -202,3 +203,4 @@ Prices and group sizes are estimates until buyer conversations and sourced count
 | 2026-10-29 | Exam-aspirant groups (LSAT, MCAT, GMAT) removed: they were collector test runs, not target groups |
 | 2026-10-29 | Target changed from a ₹50 Cr valuation to **₹50 Cr revenue per year** (≈ ₹4.17 Cr/month). Customer math, milestones, rule 6, scoring thresholds and candidate counts updated; expansion pricing added to the candidates |
 | 2026-10-29 | Car & two-wheeler dealerships added: best wedge is service-desk communication and follow-up; passes the ₹50 Cr math only at ~₹25,000/month after expansion; status research more |
+| 2026-10-30 | Distributors & wholesalers added: retailer credit and collections wedge; smallest share needed (0.9% after expansion); shortlisted |

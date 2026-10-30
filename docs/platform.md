@@ -57,7 +57,7 @@ How we keep it safe:
 ## Google Play Store
 
 - **What it is:** the Android apps a group (or its customers) uses: who the competitors are, how big they are, and what users complain about.
-- **How we pull it:** [scripts/collect/play-store.mjs](../scripts/collect/play-store.mjs). Finds app IDs through the Play Store website (the library's own search is broken), drops games and `excludeTitles` matches (listed in the .md), then fetches reviews for 4 apps at a time (`concurrency`).
+- **How we pull it:** [scripts/collect/play-store.mjs](../scripts/collect/play-store.mjs). Finds app IDs through the Play Store website (the library's own search is broken), drops games and `excludeTitles` matches (listed in the .md), ranks the rest by relevance to the search terms (`rankBy`, so consumer apps don't push out niche business tools), then fetches reviews for 4 apps at a time (`concurrency`).
 - **Data per app** (`google-play-scraper`, or the app page itself when the library can't parse an app):
   - downloads (`minInstalls` / `maxInstalls`, e.g. "1M+")
   - free or paid, price, currency

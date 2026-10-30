@@ -1,0 +1,106 @@
+{
+  "group": "Distributors & wholesalers (India)",
+  "groupId": "distributors",
+  "platforms": "all",
+  "metaAds": {
+    "countries": ["IN"],
+    "keywords": [
+      "distributor management system", "DMS for distributors", "salesforce automation", "beat planning app", "order booking app",
+      "retailer ordering app", "outstanding payment reminder", "payment collection app", "B2B ordering", "wholesale billing software",
+      "distributor app", "FMCG distributor", "pharma distributor software", "stockist", "super stockist", "distributorship",
+      "van sales software", "field sales app", "salesman tracking", "inventory management for distributors", "GST billing wholesale",
+      "Bizom", "FieldAssist", "credit management", "wholesale business"
+    ],
+    "maxAdsPerKeyword": 150,
+    "maxScrollRounds": 30,
+    "activeOnly": true,
+    "sellerTerms": [
+      "for distributors", "distributors", "stockists", "wholesalers", "order booking", "salesman app", "field force", "beat plan",
+      "outstanding", "collection", "retailer app", "secondary sales", "distribution business"
+    ],
+    "selfTerms": ["wholesale price", "wholesale rates", "bulk order", "best rates", "contact for wholesale", "minimum order", "call now for wholesale"],
+    "concurrency": 2
+  },
+  "playStore": {
+    "country": "in",
+    "lang": "en",
+    "searchTerms": [
+      "order booking app", "distributor management", "salesman app", "field force tracking", "retailer ordering app",
+      "outstanding collection", "wholesale billing", "Bizom", "FieldAssist"
+    ],
+    "appIds": [],
+    "maxApps": 35,
+    "minReviews": 10,
+    "reviewsPerApp": 1000,
+    "complaintMaxStars": 3,
+    "excludeGames": true,
+    "excludeTitles": ["simulator", "tycoon", "game"],
+    "concurrency": 4
+  },
+  "youtube": {
+    "queries": [
+      "distribution business india", "fmcg distributor business profit", "distributorship kaise le", "wholesale business problems india",
+      "distributor credit problem retailers", "super stockist business", "pharma distribution business india",
+      "distributor management software demo", "field sales team management india", "wholesale business tips"
+    ],
+    "videosPerQuery": 8,
+    "maxCommentsPerVideo": 1000,
+    "maxRepliesPerThread": 5,
+    "commentSort": "top",
+    "minViews": 0,
+    "titleMustMatch": false,
+    "concurrency": 3
+  },
+  "googleSearch": {
+    "hl": "en",
+    "gl": "in",
+    "seeds": [
+      "distributor management system", "order booking app", "salesman tracking app", "outstanding payment reminder",
+      "wholesale billing software", "fmcg distributor", "distributorship"
+    ],
+    "expandAlphabet": true,
+    "resultsQueries": [
+      "best distributor management software india", "order booking app for distributors price",
+      "how to collect outstanding payment from retailers", "problems faced by fmcg distributors",
+      "how to manage salesman in distribution business", "best billing software for wholesale business"
+    ],
+    "maxResultsPages": 6,
+    "expandPeopleAlsoAsk": 3,
+    "captchaWaitSeconds": 180,
+    "bingFallback": true,
+    "pageGapSeconds": [15, 40]
+  },
+  "googleTrends": {
+    "geo": "IN",
+    "timeframe": "today 5-y",
+    "keywords": ["distributorship", "wholesale business", "fmcg distributor", "order booking app", "udaan", "field force management", "salesman tracking", "b2b app"],
+    "regionsResolution": "REGION"
+  },
+  "reddit": {
+    "subreddits": ["IndiaBusiness", "IndianEntrepreneur", "StartUpIndia", "sales", "smallbusiness"],
+    "searchQueries": ["distributor", "distributorship", "wholesale business", "FMCG distribution", "credit to retailers", "salesman", "stockist", "outstanding payments"],
+    "searchAllReddit": true,
+    "searchSort": "relevance",
+    "searchTimeframe": "all",
+    "discoverSubreddits": true,
+    "discoveryQueries": ["distribution business india", "wholesale india", "fmcg"],
+    "groupTerms": ["distributor", "distributorship", "wholesale", "wholesaler", "stockist", "fmcg", "super stockist", "retailers", "beat"],
+    "postsPerSearch": 25,
+    "topPostsPerSub": 15,
+    "topTimeframe": "year",
+    "maxThreads": 60,
+    "commentsPerThread": 200,
+    "minPostScore": 0,
+    "relevanceFilter": true
+  },
+  "googleMaps": {
+    "hl": "en",
+    "queries": ["FMCG distributor", "wholesale distributor"],
+    "locations": ["Indore", "Jaipur", "Lucknow", "Ahmedabad", "Nagpur"],
+    "maxPlacesPerSearch": 15,
+    "reviewsPerPlace": 10,
+    "reviewSort": "lowest",
+    "maxReviewsPerBrand": 30,
+    "concurrency": 3
+  }
+}

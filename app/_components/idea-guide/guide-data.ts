@@ -164,6 +164,21 @@ export interface Candidate {
 
 export const CANDIDATES: Candidate[] = [
   {
+    group: "Distributors & wholesalers",
+    firstDegree: "Billing ERP (Tally/Marg) + brand SFA apps",
+    wedge: "Retailer credit and collections",
+    degree: 2,
+    cashLink: "Money owed by retailers collected",
+    wedgePrice: 3_000,
+    expandedPrice: 8_000,
+    expansion: "+ order taking, retailer credit score",
+    groupSize: 6_00_000,
+    groupSizeLabel: "~6 lakh",
+    evidence: ["\"Don't start without bouncers and extra capital\" (⬆527 on Reddit)", "64 payment-reminder searches on Google", "Collections tools barely advertised on Meta"],
+    status: "shortlist",
+    statusNote: "Shortlist (smallest share needed)",
+  },
+  {
     group: "MSME manufacturers",
     firstDegree: "Manufacturing ERP (~45 vendors)",
     wedge: "Receivables and 45-day-rule collections",
@@ -246,4 +261,5 @@ export const CHANGELOG = [
   { date: "2026-10-29", text: "Exam-aspirant groups removed: they were collector test runs, not target groups" },
   { date: "2026-10-29", text: "Target changed to ₹50 Cr revenue per year (≈ ₹4.17 Cr/month); customer math and expansion pricing updated" },
   { date: "2026-10-29", text: "Car & two-wheeler dealerships added: service-desk follow-up wedge; passes the math only at ~₹25,000/month after expansion" },
+  { date: "2026-10-30", text: "Distributors & wholesalers added: retailer credit and collections wedge; smallest share needed (0.9% after expansion); shortlisted" },
 ];

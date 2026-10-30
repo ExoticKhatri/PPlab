@@ -63,7 +63,8 @@ Anything left out falls back to the default in `scripts/collect/lib/config.mjs`.
 | `playStore.country` / `lang` | `in` / `en` | Store to read (`us`, `in`, `gb`, …) |
 | `playStore.searchTerms` | `[]` | Play Store searches used to discover apps |
 | `playStore.appIds` | `[]` | Apps always included (e.g. known competitors) |
-| `playStore.maxApps` | `30` | Keep this many apps (most-reviewed first) |
+| `playStore.maxApps` | `30` | Keep this many apps (ordered by `rankBy`) |
+| `playStore.rankBy` | `relevance` | `relevance` (search-term words in title/summary, then size; keeps niche B2B tools) or `reviews` (biggest apps first) |
 | `playStore.minReviews` | `10` | Drop apps with fewer reviews/ratings (unless listed in `appIds`) |
 | `playStore.reviewsPerApp` | `500` | Newest reviews fetched per app |
 | `playStore.complaintMaxStars` | `3` | Reviews at or below this are complaints |

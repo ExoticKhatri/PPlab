@@ -29,6 +29,7 @@
     ],
     "appIds": [],
     "maxApps": 30,
+    "rankBy": "relevance",
     "minReviews": 10,
     "reviewsPerApp": 500,
     "complaintMaxStars": 3,

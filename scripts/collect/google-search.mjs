@@ -91,14 +91,19 @@ async function googleSearch(page, query, c) {
     await page.waitForTimeout(1500 + Math.random() * 2000);
   }
   // The box can be covered (suggestion dropdown, consent or sign-in popups); then load the URL instead.
-  const typed = (await box.isVisible().catch(() => false)) && (await box.click({ timeout: 5000 }).then(() => true, () => false));
-  if (typed) {
-    await page.keyboard.press("Control+A");
-    await page.keyboard.press("Backspace");
-    await box.pressSequentially(query, { delay: 60 + Math.random() * 90 });
-    await page.waitForTimeout(400 + Math.random() * 600);
-    await Promise.all([page.waitForLoadState("domcontentloaded"), page.keyboard.press("Enter")]);
-  } else {
+  const clicked = (await box.isVisible().catch(() => false)) && (await box.click({ timeout: 5000 }).then(() => true, () => false));
+  // Type into the focused box with the keyboard (a locator-based type can wait out its timeout when Google re-renders the box).
+  const typed =
+    clicked &&
+    (await (async () => {
+      await page.keyboard.press("Control+A");
+      await page.keyboard.press("Backspace");
+      await page.keyboard.type(query, { delay: 60 + Math.random() * 90 });
+      await page.waitForTimeout(400 + Math.random() * 600);
+      await Promise.all([page.waitForLoadState("domcontentloaded", { timeout: 20_000 }), page.keyboard.press("Enter")]);
+      return true;
+    })().catch(() => false));
+  if (!typed) {
     await page.keyboard.press("Escape").catch(() => {});
     await page.goto(`https://www.google.com/search?q=${encodeURIComponent(query)}&hl=${c.hl}&gl=${c.gl}`, { waitUntil: "domcontentloaded" });
   }

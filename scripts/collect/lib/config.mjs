@@ -36,13 +36,14 @@ export const DEFAULTS = {
     lang: "en",
     searchTerms: [], // Play Store website searches used to discover apps
     appIds: [], // apps to always include, e.g. "com.teachmint.teachmint"
-    maxApps: 30, // keep the N most-reviewed apps found
+    maxApps: 30, // keep the N best apps found (see rankBy)
     minReviews: 10, // skip apps with fewer total reviews than this
     reviewsPerApp: 500, // newest reviews fetched per app (pages of 200)
     complaintMaxStars: 3, // reviews at or below this count as complaints
     excludeGames: true, // drop apps in Play's game categories
     excludeTitles: [], // case-insensitive title fragments to drop, e.g. "simulator", "family link"
     concurrency: 4, // apps whose reviews are fetched at the same time
+    rankBy: "relevance", // "relevance" (search-term words in title/summary, then size) or "reviews" (biggest apps first)
   },
   youtube: {
     queries: [],
