@@ -1,0 +1,106 @@
+{
+  "group": "Jewellery stores (India)",
+  "groupId": "jewellers",
+  "platforms": "all",
+  "metaAds": {
+    "countries": ["IN"],
+    "keywords": [
+      "jewellery software", "jewellery billing software", "jewellery ERP", "jewellery shop software", "gold loan software",
+      "gold saving scheme software", "jewellery inventory management", "RFID jewellery", "HUID hallmarking", "hallmarking software",
+      "jewellery CRM", "jewellery shop app", "jewellery catalogue app", "karigar management", "jewellery stock tally",
+      "for jewellers", "jewellery retailers", "jewellery store owners", "jewellery shop marketing", "jewellery showroom",
+      "gold rate app", "jewellery manufacturer", "jewellery wholesale", "Omunim", "jewellery POS"
+    ],
+    "maxAdsPerKeyword": 150,
+    "maxScrollRounds": 30,
+    "activeOnly": true,
+    "sellerTerms": [
+      "for jewellers", "jewellers", "jewellery business", "jewellery shop owners", "jewellery retailers", "jewellery software",
+      "billing", "inventory", "hallmark", "HUID", "gold scheme", "RFID", "karigar", "showroom owners", "ERP"
+    ],
+    "selfTerms": ["shop now", "buy now", "new collection", "making charges", "off on", "bridal collection", "visit our showroom", "order now"],
+    "concurrency": 2
+  },
+  "playStore": {
+    "country": "in",
+    "lang": "en",
+    "searchTerms": [
+      "jewellery billing software", "jewellery shop management", "jewellery ERP", "gold saving scheme app", "jewellery inventory",
+      "jewellery catalogue app for retailers", "gold loan management", "karigar", "Omunim"
+    ],
+    "appIds": [],
+    "maxApps": 35,
+    "minReviews": 10,
+    "reviewsPerApp": 1000,
+    "complaintMaxStars": 3,
+    "excludeGames": true,
+    "excludeTitles": ["simulator", "tycoon", "game", "photo editor", "wallpaper"],
+    "concurrency": 4,
+    "rankBy": "relevance"
+  },
+  "youtube": {
+    "queries": [
+      "jewellery shop business india", "jewellery shop kaise khole", "jewellery business profit margin", "jewellery shop problems",
+      "HUID hallmarking jewellers problem", "gold saving scheme jewellers", "jewellery software demo", "jewellery shop marketing ideas",
+      "jeweller business tips", "jewellery showroom management"
+    ],
+    "videosPerQuery": 8,
+    "maxCommentsPerVideo": 1000,
+    "maxRepliesPerThread": 5,
+    "commentSort": "top",
+    "minViews": 0,
+    "titleMustMatch": false,
+    "concurrency": 3
+  },
+  "googleSearch": {
+    "hl": "en",
+    "gl": "in",
+    "seeds": [
+      "jewellery software", "jewellery billing software", "HUID hallmarking", "gold saving scheme", "jewellery shop",
+      "jewellery inventory", "karigar"
+    ],
+    "expandAlphabet": true,
+    "resultsQueries": [
+      "best jewellery software india price", "jewellery billing software price", "how to manage jewellery shop inventory",
+      "HUID hallmarking problems for jewellers", "gold saving scheme rules for jewellers", "how to increase sales in jewellery shop"
+    ],
+    "maxResultsPages": 6,
+    "expandPeopleAlsoAsk": 3,
+    "captchaWaitSeconds": 180,
+    "bingFallback": true,
+    "pageGapSeconds": [15, 40]
+  },
+  "googleTrends": {
+    "geo": "IN",
+    "timeframe": "today 5-y",
+    "keywords": ["jewellery shop", "jewellery software", "HUID", "gold saving scheme", "hallmark", "lab grown diamond", "gold rate today", "digital gold"],
+    "regionsResolution": "REGION"
+  },
+  "reddit": {
+    "subreddits": ["IndiaBusiness", "IndianEntrepreneur", "StartUpIndia", "jewelry", "IndiaInvestments"],
+    "searchQueries": ["jewellery shop", "jeweller", "jewellery business", "hallmark", "HUID", "gold scheme", "making charges", "karigar"],
+    "searchAllReddit": true,
+    "searchSort": "relevance",
+    "searchTimeframe": "all",
+    "discoverSubreddits": true,
+    "discoveryQueries": ["jewellery business india", "jeweller", "gold jewellery india"],
+    "groupTerms": ["jeweller", "jeweler", "jewellery shop", "jewelry store", "jewellery business", "hallmark", "huid", "karigar", "making charges", "gold scheme", "showroom"],
+    "postsPerSearch": 25,
+    "topPostsPerSub": 15,
+    "topTimeframe": "year",
+    "maxThreads": 60,
+    "commentsPerThread": 200,
+    "minPostScore": 0,
+    "relevanceFilter": true
+  },
+  "googleMaps": {
+    "hl": "en",
+    "queries": ["jewellery store", "jewellers"],
+    "locations": ["Indore", "Jaipur", "Lucknow", "Ahmedabad", "Nagpur"],
+    "maxPlacesPerSearch": 15,
+    "reviewsPerPlace": 10,
+    "reviewSort": "lowest",
+    "maxReviewsPerBrand": 30,
+    "concurrency": 3
+  }
+}

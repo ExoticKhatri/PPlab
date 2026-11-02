@@ -1,0 +1,239 @@
+{
+  "group": "CA / accounting firms (India)",
+  "groupId": "ca",
+  "platforms": "all",
+  "metaAds": {
+    "countries": [
+      "IN"
+    ],
+    "keywords": [
+      "chartered accountant",
+      "CA firm",
+      "CA practice",
+      "for CAs",
+      "tax professionals",
+      "GST software",
+      "GST return filing software",
+      "income tax software",
+      "ITR filing software",
+      "TDS software",
+      "audit software",
+      "practice management software",
+      "CA office software",
+      "accounting software",
+      "Tally",
+      "e-invoicing software",
+      "GST reconciliation",
+      "GSTR-2B reconciliation",
+      "client document collection",
+      "CA articleship",
+      "CA practice growth",
+      "CA marketing",
+      "ROC filing software",
+      "XBRL software",
+      "tax audit",
+      "bank statement to Excel"
+    ],
+    "maxAdsPerKeyword": 150,
+    "maxScrollRounds": 30,
+    "activeOnly": true,
+    "sellerTerms": [
+      "for cas",
+      "for ca ",
+      "chartered accountants",
+      "ca firm",
+      "ca firms",
+      "ca practice",
+      "tax professionals",
+      "tax practitioners",
+      "your clients",
+      "your practice",
+      "practice management",
+      "gst software",
+      "itr software",
+      "accountants",
+      "cpa"
+    ],
+    "selfTerms": [
+      "gst registration",
+      "company registration",
+      "itr filing starting",
+      "file your itr",
+      "file your gst",
+      "our ca",
+      "consult our",
+      "trademark registration",
+      "book a consultation",
+      "call us now",
+      "income tax return filing"
+    ],
+    "concurrency": 2
+  },
+  "playStore": {
+    "country": "in",
+    "lang": "en",
+    "searchTerms": [
+      "gst software for ca",
+      "income tax software",
+      "ca practice management",
+      "gst return filing",
+      "tds return software",
+      "accounting app india",
+      "tally",
+      "itr filing app",
+      "ca office management",
+      "gst billing"
+    ],
+    "appIds": [
+      "in.android.vyapar",
+      "com.zoho.books"
+    ],
+    "maxApps": 40,
+    "minReviews": 20,
+    "reviewsPerApp": 1000,
+    "complaintMaxStars": 3,
+    "excludeGames": true,
+    "excludeTitles": [
+      "calculator only",
+      "quiz",
+      "mcq",
+      "exam prep",
+      "coaching",
+      "classes"
+    ],
+    "concurrency": 4
+  },
+  "youtube": {
+    "queries": [
+      "how to start CA practice",
+      "CA practice kaise shuru kare",
+      "CA firm management problems",
+      "CA practice growth tips",
+      "best software for CA firm",
+      "GST return filing software review",
+      "CA office staff problem",
+      "how to get clients as a CA",
+      "CA practice income india",
+      "CA firm automation"
+    ],
+    "videosPerQuery": 8,
+    "maxCommentsPerVideo": 1000,
+    "maxRepliesPerThread": 5,
+    "commentSort": "top",
+    "minViews": 0,
+    "titleMustMatch": false,
+    "concurrency": 3
+  },
+  "googleSearch": {
+    "hl": "en",
+    "gl": "in",
+    "seeds": [
+      "ca practice management software",
+      "gst software for ca",
+      "ca firm",
+      "income tax software for ca",
+      "gst reconciliation",
+      "ca office",
+      "tds return software"
+    ],
+    "expandAlphabet": true,
+    "resultsQueries": [
+      "best practice management software for ca in india",
+      "how to manage ca firm clients",
+      "best gst software for ca",
+      "how to grow ca practice",
+      "problems faced by ca in practice",
+      "ca office management software price"
+    ],
+    "maxResultsPages": 6,
+    "expandPeopleAlsoAsk": 3,
+    "captchaWaitSeconds": 180,
+    "bingFallback": true,
+    "pageGapSeconds": [
+      15,
+      40
+    ]
+  },
+  "googleTrends": {
+    "geo": "IN",
+    "timeframe": "today 5-y",
+    "keywords": [
+      "gst software",
+      "income tax software",
+      "practice management software",
+      "tally prime",
+      "gst reconciliation",
+      "itr filing",
+      "ca firm",
+      "tds software"
+    ],
+    "regionsResolution": "REGION"
+  },
+  "reddit": {
+    "subreddits": [
+      "CAIndia",
+      "IndiaTax",
+      "Accounting",
+      "taxpros",
+      "StartUpIndia"
+    ],
+    "searchQueries": [
+      "practice management software",
+      "GST software",
+      "CA firm",
+      "client documents",
+      "staff retention",
+      "articleship",
+      "tax season workload",
+      "software for CA"
+    ],
+    "searchAllReddit": true,
+    "searchSort": "relevance",
+    "searchTimeframe": "all",
+    "discoverSubreddits": true,
+    "discoveryQueries": [
+      "chartered accountant",
+      "ca india",
+      "tax professional",
+      "accounting firm"
+    ],
+    "groupTerms": [
+      "chartered",
+      "accountant",
+      "ca firm",
+      "gst",
+      "itr",
+      "tax",
+      "audit",
+      "articleship",
+      "icai",
+      "tally",
+      "accounting"
+    ],
+    "postsPerSearch": 25,
+    "topPostsPerSub": 15,
+    "topTimeframe": "year",
+    "maxThreads": 60,
+    "commentsPerThread": 200,
+    "minPostScore": 0,
+    "relevanceFilter": true
+  },
+  "googleMaps": {
+    "hl": "en",
+    "queries": [
+      "chartered accountant"
+    ],
+    "locations": [
+      "Mumbai",
+      "Delhi",
+      "Bengaluru",
+      "Ahmedabad",
+      "Jaipur",
+      "Indore"
+    ],
+    "maxPlacesPerSearch": 30,
+    "reviewsPerPlace": 12,
+    "reviewSort": "lowest",
+    "maxReviewsPerBrand": 30
+  }
+}
