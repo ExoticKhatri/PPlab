@@ -1,0 +1,114 @@
+{
+  "group": "Government contractors (India)",
+  "platforms": "all",
+  "metaAds": {
+    "countries": ["IN"],
+    "keywords": [
+      "government tender", "tender consultant", "e tender", "GeM portal", "GeM registration", "GeM seller", "tender alert",
+      "bid management", "tender filing", "contractor registration", "PWD contractor", "civil contractor", "government contractor",
+      "bank guarantee", "EMD", "RA bill", "BOQ software", "contractor ERP", "construction billing software", "labour management software",
+      "contractor loan", "working capital for contractors", "tender documents", "class A contractor", "MSME tender"
+    ],
+    "maxAdsPerKeyword": 150,
+    "maxScrollRounds": 30,
+    "activeOnly": true,
+    "sellerTerms": [
+      "for contractors", "contractors", "tender", "GeM", "bid", "bank guarantee", "EMD", "RA bill", "BOQ", "billing",
+      "labour", "working capital", "registration", "e-procurement", "L1"
+    ],
+    "selfTerms": ["construction company", "we build", "our projects", "completed projects", "house construction", "build your dream home"],
+    "concurrency": 2
+  },
+  "playStore": {
+    "country": "in",
+    "lang": "en",
+    "searchTerms": [
+      "tender app", "GeM seller", "government tenders india", "contractor billing", "construction billing", "labour attendance contractor",
+      "BOQ estimate", "site management", "tender alert"
+    ],
+    "appIds": [],
+    "maxApps": 35,
+    "minReviews": 10,
+    "reviewsPerApp": 1000,
+    "complaintMaxStars": 3,
+    "excludeGames": true,
+    "excludeTitles": ["simulator", "tycoon", "game", "truck", "bus", "excavator"],
+    "concurrency": 4,
+    "rankBy": "relevance"
+  },
+  "youtube": {
+    "queries": [
+      "government contractor kaise bane", "tender kaise bhare", "government contractor payment problem", "GeM portal seller problems",
+      "RA bill kaise banaye", "bank guarantee for tender", "EMD refund problem tender", "civil contractor business problems",
+      "L1 tender rate analysis", "contractor GST on government work"
+    ],
+    "videosPerQuery": 8,
+    "maxCommentsPerVideo": 1000,
+    "maxRepliesPerThread": 5,
+    "commentSort": "top",
+    "minViews": 0,
+    "titleMustMatch": false,
+    "concurrency": 3
+  },
+  "googleSearch": {
+    "hl": "en",
+    "gl": "in",
+    "seeds": ["government tender", "GeM portal", "e tender", "RA bill", "bank guarantee", "EMD refund", "contractor registration"],
+    "expandAlphabet": true,
+    "resultsQueries": [
+      "government contractor payment delay what to do", "EMD refund not received tender", "GeM payment not received",
+      "best tender alert service india price", "RA bill format excel", "how to get bank guarantee for tender without collateral"
+    ],
+    "maxResultsPages": 6,
+    "expandPeopleAlsoAsk": 3,
+    "captchaWaitSeconds": 180,
+    "bingFallback": true,
+    "pageGapSeconds": [15, 40]
+  },
+  "googleTrends": {
+    "geo": "IN",
+    "timeframe": "today 5-y",
+    "keywords": ["tender", "GeM portal", "e tender", "contractor license", "bank guarantee", "RA bill", "EMD", "BOQ"],
+    "regionsResolution": "REGION"
+  },
+  "reddit": {
+    "subreddits": ["IndiaBusiness", "IndianEntrepreneur", "StartUpIndia", "IndiaTax", "civilengineering"],
+    "searchQueries": ["government tender", "GeM portal", "government contract", "contractor payment", "bank guarantee", "EMD", "PWD", "tender bribe"],
+    "searchAllReddit": true,
+    "searchSort": "relevance",
+    "searchTimeframe": "all",
+    "discoverSubreddits": true,
+    "discoveryQueries": ["government tenders india", "civil contractor india", "GeM portal"],
+    "groupTerms": ["tender", "gem portal", "contractor", "pwd", "cpwd", "bank guarantee", "emd", "ra bill", "government contract", "l1", "bid"],
+    "postsPerSearch": 25,
+    "topPostsPerSub": 15,
+    "topTimeframe": "year",
+    "maxThreads": 60,
+    "commentsPerThread": 200,
+    "minPostScore": 0,
+    "relevanceFilter": true
+  },
+  "googleMaps": {
+    "hl": "en",
+    "queries": ["civil contractor", "government contractor"],
+    "locations": ["Lucknow", "Patna", "Bhopal", "Jaipur", "Raipur"],
+    "maxPlacesPerSearch": 15,
+    "reviewsPerPlace": 10,
+    "reviewSort": "lowest",
+    "maxReviewsPerBrand": 30,
+    "concurrency": 3
+  },
+  "competitorPricing": {
+    "products": [
+      { "name": "TenderTiger", "website": "https://www.tendertiger.com" },
+      { "name": "Tender247", "website": "https://www.tender247.com" },
+      { "name": "BidAssist", "website": "https://bidassist.com" },
+      { "name": "TendersOnTime", "website": "https://www.tendersontime.com" },
+      { "name": "TenderDetail", "website": "https://www.tenderdetail.com" },
+      { "name": "Onsite", "website": "https://www.onsiteteams.com" },
+      { "name": "Powerplay", "website": "https://powerplay.in" },
+      { "name": "StrategicERP", "website": "https://strategicerp.com" },
+      "Highrise construction ERP"
+    ]
+  }
+}

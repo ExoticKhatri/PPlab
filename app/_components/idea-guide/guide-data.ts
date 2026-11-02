@@ -269,6 +269,21 @@ export const CANDIDATES: Candidate[] = [
     statusNote: "Research more (OEM lock-in)",
   },
   {
+    group: "Government contractors",
+    firstDegree: "Tender alerts, filing consultants, site apps",
+    wedge: "Contract money desk (EMD, BG, RA bills)",
+    degree: 2,
+    cashLink: "Deposits released and bills paid sooner",
+    wedgePrice: 3_000,
+    expandedPrice: 8_000,
+    expansion: "+ RA bill/MB generation, surety/BG referrals",
+    groupSize: 3_00_000,
+    groupSizeLabel: "~3 lakh (estimate)",
+    evidence: ["295 bank-guarantee + 122 EMD-refund searches on Google", "₹6.5 Cr government payment stuck (⬆1,400 on Reddit)", "Paid tools seen cost only ₹200–600/month"],
+    status: "conditional",
+    statusNote: "Research more (willingness to pay unproven)",
+  },
+  {
     group: "CA firms",
     firstDegree: "Practice management (Zoho, ICAI entering)",
     wedge: "Client status and document collection",
@@ -295,4 +310,5 @@ export const CHANGELOG = [
   { date: "2026-11-02", text: "Exporters added: export money-and-compliance desk (₹8,000 → ₹20,000/month); shortlisted. Distributors deprioritised for low ability to pay" },
   { date: "2026-11-02", text: "Small real estate developers added: project milestone desk (₹15,000 → ₹30,000/month); shortlisted" },
   { date: "2026-11-02", text: "Competitor prices confirmed from vendor pages: MSME ERPs up to ₹30,000/month and school ERPs up to ₹1 lakh/year support those price assumptions; distributors' tools cost ₹290–1,150/month" },
+  { date: "2026-11-02", text: "Government contractors added: contract money desk (₹3,000 → ₹8,000/month); research more, since paid tools seen cost only ₹200–600/month" },
 ];
