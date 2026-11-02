@@ -164,6 +164,21 @@ export interface Candidate {
 
 export const CANDIDATES: Candidate[] = [
   {
+    group: "Small real estate developers",
+    firstDegree: "Sales CRMs (~20), construction apps, ERPs",
+    wedge: "Project milestone desk (RERA + buyer demands)",
+    degree: 2,
+    cashLink: "Buyer instalments collected; RERA penalties avoided",
+    wedgePrice: 15_000,
+    expandedPrice: 30_000,
+    expansion: "+ channel-partner payouts, CRM sync, site progress",
+    groupSize: 50_000,
+    groupSizeLabel: "~50K (estimate)",
+    evidence: ["8,212 MahaRERA projects got show-cause notices for missed QPRs", "Payment disputes and possession delays top buyer complaints on Maps", "One post-sales competitor; no RERA software on Meta"],
+    status: "shortlist",
+    statusNote: "Shortlist (entry share 5.6%)",
+  },
+  {
     group: "Exporters",
     firstDegree: "Fragments: doc software, Skydo, refund consultants, bank desks",
     wedge: "Export money-and-compliance desk",
@@ -278,4 +293,5 @@ export const CHANGELOG = [
   { date: "2026-10-29", text: "Car & two-wheeler dealerships added: service-desk follow-up wedge; passes the math only at ~₹25,000/month after expansion" },
   { date: "2026-10-30", text: "Distributors & wholesalers added: retailer credit and collections wedge; smallest share needed (0.9% after expansion); shortlisted" },
   { date: "2026-11-02", text: "Exporters added: export money-and-compliance desk (₹8,000 → ₹20,000/month); shortlisted. Distributors deprioritised for low ability to pay" },
+  { date: "2026-11-02", text: "Small real estate developers added: project milestone desk (₹15,000 → ₹30,000/month); shortlisted" },
 ];
