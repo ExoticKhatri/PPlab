@@ -284,6 +284,21 @@ export const CANDIDATES: Candidate[] = [
     statusNote: "Research more (willingness to pay unproven)",
   },
   {
+    group: "Private colleges",
+    firstDegree: "College ERPs, admissions CRMs",
+    wedge: "Accreditation evidence desk (NAAC/NBA/NIRF)",
+    degree: 2,
+    cashLink: "Accreditation kept, so admissions are protected",
+    wedgePrice: 20_000,
+    expandedPrice: 40_000,
+    expansion: "+ fee ledger, review responses, ERP sync",
+    groupSize: 29_700,
+    groupSizeLabel: "~29.7K (AISHE)",
+    evidence: ["35 colleges advertise their NAAC grade on Meta", "NAAC targets 90%+ of institutions accredited in 5 years", "But NAAC searches fell 47% and staff voice is thin"],
+    status: "conditional",
+    statusNote: "Research more (staff evidence thin)",
+  },
+  {
     group: "CA firms",
     firstDegree: "Practice management (Zoho, ICAI entering)",
     wedge: "Client status and document collection",
@@ -311,4 +326,5 @@ export const CHANGELOG = [
   { date: "2026-11-02", text: "Small real estate developers added: project milestone desk (₹15,000 → ₹30,000/month); shortlisted" },
   { date: "2026-11-02", text: "Competitor prices confirmed from vendor pages: MSME ERPs up to ₹30,000/month and school ERPs up to ₹1 lakh/year support those price assumptions; distributors' tools cost ₹290–1,150/month" },
   { date: "2026-11-02", text: "Government contractors added: contract money desk (₹3,000 → ₹8,000/month); research more, since paid tools seen cost only ₹200–600/month" },
+  { date: "2026-11-02", text: "Private colleges added: accreditation evidence desk (₹20,000 → ₹40,000/month); research more, since staff evidence is thin and compliance interest is falling" },
 ];

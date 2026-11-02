@@ -1,0 +1,114 @@
+{
+  "group": "Private colleges (India)",
+  "platforms": "all",
+  "metaAds": {
+    "countries": ["IN"],
+    "keywords": [
+      "college ERP", "university ERP", "campus management system", "NAAC accreditation", "NAAC consultancy", "NAAC software",
+      "IQAC", "NIRF ranking", "AISHE", "NBA accreditation", "outcome based education software", "OBE software",
+      "admission CRM", "student leads for colleges", "college admissions marketing", "college fee management", "LMS for colleges",
+      "placement management software", "for colleges", "college management software", "APAAR ID", "NEP implementation",
+      "Camu", "MasterSoft ERP", "Meritto"
+    ],
+    "maxAdsPerKeyword": 150,
+    "maxScrollRounds": 30,
+    "activeOnly": true,
+    "sellerTerms": [
+      "for colleges", "for universities", "college ERP", "university", "NAAC", "IQAC", "NIRF", "NBA", "OBE", "accreditation",
+      "admission CRM", "student leads", "campus", "institutions", "principals"
+    ],
+    "selfTerms": ["admissions open", "apply now", "enroll now", "placement record", "top college", "scholarship", "B.Tech admission", "MBA admission", "counselling"],
+    "concurrency": 2
+  },
+  "playStore": {
+    "country": "in",
+    "lang": "en",
+    "searchTerms": [
+      "college ERP", "campus management", "university ERP", "college student app", "NAAC", "Camu", "MasterSoft", "Linways", "Edumarshal"
+    ],
+    "appIds": [],
+    "maxApps": 35,
+    "minReviews": 10,
+    "reviewsPerApp": 1000,
+    "complaintMaxStars": 3,
+    "excludeGames": true,
+    "excludeTitles": ["simulator", "game", "quiz", "neet", "jee", "exam prep", "mock test"],
+    "concurrency": 4,
+    "rankBy": "relevance"
+  },
+  "youtube": {
+    "queries": [
+      "NAAC accreditation process problems", "NAAC criteria documentation", "NAAC binary accreditation", "NIRF data submission",
+      "outcome based education attainment calculation", "college ERP demo", "college admission marketing strategy",
+      "college fee collection problem", "IQAC coordinator work", "private college business india"
+    ],
+    "videosPerQuery": 8,
+    "maxCommentsPerVideo": 1000,
+    "maxRepliesPerThread": 5,
+    "commentSort": "top",
+    "minViews": 0,
+    "titleMustMatch": false,
+    "concurrency": 3
+  },
+  "googleSearch": {
+    "hl": "en",
+    "gl": "in",
+    "seeds": ["NAAC", "college ERP", "NIRF", "IQAC", "AISHE", "NBA accreditation", "admission CRM"],
+    "expandAlphabet": true,
+    "resultsQueries": [
+      "best college ERP software india price", "NAAC accreditation cost for college", "NAAC binary accreditation new process",
+      "NBA attainment calculation excel", "how to increase admissions in private college", "NIRF data capturing system problems"
+    ],
+    "maxResultsPages": 6,
+    "expandPeopleAlsoAsk": 3,
+    "captchaWaitSeconds": 180,
+    "bingFallback": true,
+    "pageGapSeconds": [15, 40]
+  },
+  "googleTrends": {
+    "geo": "IN",
+    "timeframe": "today 5-y",
+    "keywords": ["NAAC", "college ERP", "NIRF", "AISHE", "NBA accreditation", "APAAR ID", "admission CRM", "IQAC"],
+    "regionsResolution": "REGION"
+  },
+  "reddit": {
+    "subreddits": ["Indian_Academia", "IndiaCareers", "Professors", "highereducation", "IndiaBusiness"],
+    "searchQueries": ["NAAC", "accreditation", "NIRF", "private college", "college ERP", "admissions", "IQAC", "college management"],
+    "searchAllReddit": true,
+    "searchSort": "relevance",
+    "searchTimeframe": "all",
+    "discoverSubreddits": true,
+    "discoveryQueries": ["indian college faculty", "higher education india", "private university india"],
+    "groupTerms": ["naac", "nirf", "iqac", "aishe", "nba", "accreditation", "private college", "university", "principal", "faculty", "admissions", "college management"],
+    "postsPerSearch": 25,
+    "topPostsPerSub": 15,
+    "topTimeframe": "year",
+    "maxThreads": 60,
+    "commentsPerThread": 200,
+    "minPostScore": 0,
+    "relevanceFilter": true
+  },
+  "googleMaps": {
+    "hl": "en",
+    "queries": ["engineering college", "degree college"],
+    "locations": ["Indore", "Jaipur", "Lucknow", "Nagpur", "Coimbatore"],
+    "maxPlacesPerSearch": 15,
+    "reviewsPerPlace": 10,
+    "reviewSort": "lowest",
+    "maxReviewsPerBrand": 30,
+    "concurrency": 3
+  },
+  "competitorPricing": {
+    "products": [
+      { "name": "Camu", "website": "https://www.camu.in" },
+      { "name": "MasterSoft", "website": "https://www.iitms.co.in" },
+      { "name": "Linways", "website": "https://linways.com" },
+      { "name": "Edumarshal", "website": "https://www.edumarshal.com" },
+      { "name": "Meritto", "website": "https://www.meritto.com" },
+      { "name": "Creatrix Campus", "website": "https://www.creatrixcampus.com" },
+      { "name": "Academia ERP", "website": "https://www.academiaerp.com" },
+      { "name": "Fedena", "website": "https://fedena.com" },
+      { "name": "LeadSquared", "website": "https://www.leadsquared.com" }
+    ]
+  }
+}

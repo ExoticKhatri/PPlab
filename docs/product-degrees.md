@@ -142,7 +142,7 @@ Score each criterion 1–5. Weight × score, summed; maximum 100.
 
 ## 6. Reading the research signals
 
-What each source reliably shows, based on nine business-group analyses (K-12 schools, CA firms, small hospitals, MSME manufacturers, auto dealerships, distributors, exporters, real estate developers, government contractors).
+What each source reliably shows, based on ten business-group analyses (K-12 schools, CA firms, small hospitals, MSME manufacturers, auto dealerships, distributors, exporters, real estate developers, government contractors, private colleges).
 
 | Signal | What it means |
 | --- | --- |
@@ -185,6 +185,7 @@ Customer counts are for **₹50 Cr/year**. "Wedge only" uses the entry price; "a
 | Small hospitals (India) | HMS/HIS (~25 vendors on Meta) | Insurance/TPA/Ayushman desk | 2 | Claims paid faster and in full | ₹8,000/mo | 5,209 (8.7%) | ₹20,000/mo (+ HMS modules) | 2,084 | 3.5% of ~60K | Top pain on 5 platforms; 2–3 sellers; Ayushman +114% YoY | Shortlist (needs expansion to reach ₹50 Cr) |
 | Car & two-wheeler dealerships (India) | OEM-mandated DMS (locked in) | Service-desk communication and follow-up (status, estimates, bills, reminders) | 2 | Service revenue retained (the dealer's recurring profit) | ₹10,000/mo | 4,167 (6.9%) | ₹25,000/mo (+ sales lead follow-up, used-car module) | 1,667 | 2.8% of ~60K | Service = 68% of low two-wheeler and 41% of car-showroom reviews; owners reply to 55% of reviews; dealer software barely advertised | Research more (OEM lock-in; PSF CRMs exist) |
 | Government contractors (India) | Tender alerts (BidAssist ₹200–600/mo), filing consultants, site apps (Onsite, Powerplay) | Contract money desk: EMD, security deposit, BG and RA-bill tracking, deductions reconciled | 2 | Deposits released and bills paid sooner | ₹3,000/mo | 13,889 (4.6%) | ₹8,000/mo (+ RA bill/MB generation, surety/BG referrals) | 5,209 | 1.7% of ~3L (estimate) | 295 bank-guarantee + 122 EMD-refund searches; 337 GST/TDS comments; ₹6.5 Cr payment stuck (⬆1,400); paid tools seen cost ₹200–600/mo | Research more (willingness to pay unproven; bribes dominate) |
+| Private colleges (India) | College ERPs (Camu, MasterSoft, Linways), admissions CRMs (LeadSquared, Meritto) | Accreditation evidence desk: year-round evidence, CO-PO attainment, NAAC/NBA/NIRF reports from one record | 2 | Accreditation kept or improved, so admissions are protected | ₹20,000/mo | 2,084 (7.0%) | ₹40,000/mo (+ fee ledger, review responses, ERP sync) | 1,042 | 3.5% of ~29.7K | 35 colleges advertise their NAAC grade; NAAC targets 90%+ accredited in 5 years; 243 IQAC searches; no accreditation tool advertised; but NAAC searches -47% and little staff voice | Research more (high ability to pay; staff evidence thin) |
 | CA firms (India) | Practice management (Zoho, ICAI entering) | Client status and document collection | 2 | Indirect (client retention) | ₹2,500/mo | 16,667 (16.7%) | ₹6,000/mo | 6,945 | 6.9% of ~1L | Communication the top Maps complaint; reconciliation the top search cluster | Below target math: group too small at this price |
 
 Prices and group sizes are estimates until buyer conversations and sourced counts confirm them.
@@ -211,3 +212,4 @@ Prices and group sizes are estimates until buyer conversations and sourced count
 | 2026-11-02 | Small real estate developers added: project milestone desk wedge (₹15,000 → ₹30,000/month); shortlisted |
 | 2026-11-02 | Competitor prices confirmed from vendors' own pages for all shortlisted groups (new competitor-pricing collector). TranZact charges MSMEs ₹8,333–30,000/month and Fedena charges schools ₹50,000–1,00,000/year, so the MSME and school price assumptions hold. Distributors' tools cost ₹290–1,150/month, which confirms they are deprioritised |
 | 2026-11-02 | Government contractors added: contract money desk wedge (₹3,000 → ₹8,000/month); research more: paid tools seen cost ₹200–600/month and the loudest pains (bribes, GST rules) are not software problems |
+| 2026-11-02 | Private colleges added: accreditation evidence desk wedge (₹20,000 → ₹40,000/month); research more: highest ability to pay, but staff voice is thin and compliance interest is falling |
