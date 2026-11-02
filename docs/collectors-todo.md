@@ -74,8 +74,13 @@ Time per platform in that run: Meta 21 min · Play 7 min · YouTube 38 min · Go
 - [x] **Reddit:** cool down and retry after a 429/block instead of stopping; checkpoint + resume (LSAT run stopped at 67/100 threads; MSME run got stuck on threads).
 - [x] **Reddit search JSON blocked (403):** fall back to the normal search pages in a second tab (MSME run).
 - [x] **Google result pages:** when the search box can't be clicked, load the search URL instead (MSME run lost 2 pages before the fix).
+- [x] **Competitor pricing collector:** vendor pricing pages (headless Chromium) + Techjockey listings; Capterra/G2/GetApp skipped (Cloudflare blocks). Bing for website discovery (DuckDuckGo throttles).
+- [x] **Reddit search pages:** slower default gap (10–18 s) after the developers run was rate-limited.
 
 ## 4. Later
 
+- [ ] Group-size registers: count businesses from public lists (RERA promoters, DGFT/EPC members, NABL labs, UDISE+ schools) to replace estimates. One small reader per register, added when a group needs it.
+- [ ] Job posts (Naukri/Indeed) for tools named in job ads. Both use strong bot protection; check before building.
+- [ ] Google Ads Keyword Planner volumes: needs a Google Ads account; import its CSV export rather than scraping.
 - [ ] LinkedIn collector (see docs/platform.md — account risk).
 - [ ] pplab group pages read `analyses/<group>/README.md` instead of the hand-written research files.

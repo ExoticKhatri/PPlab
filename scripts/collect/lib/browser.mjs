@@ -100,6 +100,8 @@ const BLOCK_PATTERNS = [
   /blocked by network security/i,
   /whoa there, pardner/i,
   /our systems have detected/i,
+  /sorry, you have been blocked/i,
+  /attention required!? \| cloudflare/i,
 ];
 
 // True when the page is a captcha / block wall. Collectors stop instead of

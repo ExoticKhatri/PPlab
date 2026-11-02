@@ -3,30 +3,83 @@
   "groupId": "developers",
   "platforms": "all",
   "metaAds": {
-    "countries": ["IN"],
+    "countries": [
+      "IN"
+    ],
     "keywords": [
-      "real estate CRM", "CRM for builders", "builder ERP", "real estate ERP", "construction ERP", "construction management software",
-      "RERA compliance", "RERA registration", "channel partner app", "channel partners real estate", "real estate lead generation",
-      "leads for builders", "site visit", "real estate marketing agency", "builders and developers", "for real estate developers",
-      "plotting software", "plot booking software", "customer payment collection builder", "demand letter", "Sell.Do", "Farvision",
-      "Powerplay construction", "project finance real estate", "real estate developers"
+      "real estate CRM",
+      "CRM for builders",
+      "builder ERP",
+      "real estate ERP",
+      "construction ERP",
+      "construction management software",
+      "RERA compliance",
+      "RERA registration",
+      "channel partner app",
+      "channel partners real estate",
+      "real estate lead generation",
+      "leads for builders",
+      "site visit",
+      "real estate marketing agency",
+      "builders and developers",
+      "for real estate developers",
+      "plotting software",
+      "plot booking software",
+      "customer payment collection builder",
+      "demand letter",
+      "Sell.Do",
+      "Farvision",
+      "Powerplay construction",
+      "project finance real estate",
+      "real estate developers"
     ],
     "maxAdsPerKeyword": 150,
     "maxScrollRounds": 30,
     "activeOnly": true,
     "sellerTerms": [
-      "for builders", "for developers", "builders and developers", "real estate developers", "real estate CRM", "ERP", "RERA",
-      "channel partner", "site visit", "leads for", "construction management", "plot booking", "inventory", "collections"
+      "for builders",
+      "for developers",
+      "builders and developers",
+      "real estate developers",
+      "real estate CRM",
+      "ERP",
+      "RERA",
+      "channel partner",
+      "site visit",
+      "leads for",
+      "construction management",
+      "plot booking",
+      "inventory",
+      "collections"
     ],
-    "selfTerms": ["2 BHK", "3 BHK", "BHK", "possession", "book your", "site visit today", "starting at", "price starts", "plots available", "luxury apartments", "ready to move"],
+    "selfTerms": [
+      "2 BHK",
+      "3 BHK",
+      "BHK",
+      "possession",
+      "book your",
+      "site visit today",
+      "starting at",
+      "price starts",
+      "plots available",
+      "luxury apartments",
+      "ready to move"
+    ],
     "concurrency": 2
   },
   "playStore": {
     "country": "in",
     "lang": "en",
     "searchTerms": [
-      "real estate CRM", "builder ERP", "construction management", "site management app", "channel partner app real estate",
-      "plot booking", "Sell.Do", "Powerplay", "RERA"
+      "real estate CRM",
+      "builder ERP",
+      "construction management",
+      "site management app",
+      "channel partner app real estate",
+      "plot booking",
+      "Sell.Do",
+      "Powerplay",
+      "RERA"
     ],
     "appIds": [],
     "maxApps": 35,
@@ -34,15 +87,29 @@
     "reviewsPerApp": 1000,
     "complaintMaxStars": 3,
     "excludeGames": true,
-    "excludeTitles": ["simulator", "tycoon", "game", "design", "3d", "home decor"],
+    "excludeTitles": [
+      "simulator",
+      "tycoon",
+      "game",
+      "design",
+      "3d",
+      "home decor"
+    ],
     "concurrency": 4,
     "rankBy": "relevance"
   },
   "youtube": {
     "queries": [
-      "real estate developer kaise bane", "builder business problems india", "RERA compliance for builders", "builder customer payment collection",
-      "construction project management india", "real estate CRM demo india", "plotting business profit", "channel partner real estate india",
-      "builder cash flow problems", "real estate developer business model india"
+      "real estate developer kaise bane",
+      "builder business problems india",
+      "RERA compliance for builders",
+      "builder customer payment collection",
+      "construction project management india",
+      "real estate CRM demo india",
+      "plotting business profit",
+      "channel partner real estate india",
+      "builder cash flow problems",
+      "real estate developer business model india"
     ],
     "videosPerQuery": 8,
     "maxCommentsPerVideo": 1000,
@@ -56,35 +123,87 @@
     "hl": "en",
     "gl": "in",
     "seeds": [
-      "real estate CRM", "builder ERP", "RERA compliance", "construction management software", "demand letter builder",
-      "channel partner real estate", "RERA quarterly"
+      "real estate CRM",
+      "builder ERP",
+      "RERA compliance",
+      "construction management software",
+      "demand letter builder",
+      "channel partner real estate",
+      "RERA quarterly"
     ],
     "expandAlphabet": true,
     "resultsQueries": [
-      "best real estate CRM india price", "builder ERP software price", "RERA quarterly progress report format",
-      "builder payment collection from customers", "construction cost overrun problems india", "how to get channel partners for real estate"
+      "best real estate CRM india price",
+      "builder ERP software price",
+      "RERA quarterly progress report format",
+      "builder payment collection from customers",
+      "construction cost overrun problems india",
+      "how to get channel partners for real estate"
     ],
     "maxResultsPages": 6,
     "expandPeopleAlsoAsk": 3,
     "captchaWaitSeconds": 180,
     "bingFallback": true,
-    "pageGapSeconds": [15, 40]
+    "pageGapSeconds": [
+      15,
+      40
+    ]
   },
   "googleTrends": {
     "geo": "IN",
     "timeframe": "today 5-y",
-    "keywords": ["real estate", "real estate CRM", "RERA", "builder", "construction management software", "channel partner", "plotting", "home loan"],
+    "keywords": [
+      "real estate",
+      "real estate CRM",
+      "RERA",
+      "builder",
+      "construction management software",
+      "channel partner",
+      "plotting",
+      "home loan"
+    ],
     "regionsResolution": "REGION"
   },
   "reddit": {
-    "subreddits": ["indianrealestate", "IndiaBusiness", "IndianEntrepreneur", "StartUpIndia", "RealEstate"],
-    "searchQueries": ["builder", "developer", "RERA", "construction delay", "payment schedule", "channel partner", "real estate CRM", "possession delay"],
+    "subreddits": [
+      "indianrealestate",
+      "IndiaBusiness",
+      "IndianEntrepreneur",
+      "StartUpIndia",
+      "RealEstate"
+    ],
+    "searchQueries": [
+      "builder",
+      "developer",
+      "RERA",
+      "construction delay",
+      "payment schedule",
+      "channel partner",
+      "real estate CRM",
+      "possession delay"
+    ],
     "searchAllReddit": true,
     "searchSort": "relevance",
     "searchTimeframe": "all",
     "discoverSubreddits": true,
-    "discoveryQueries": ["real estate india", "builders india", "construction india"],
-    "groupTerms": ["builder", "developer", "rera", "construction", "possession", "flat", "apartment", "plot", "channel partner", "demand letter", "real estate"],
+    "discoveryQueries": [
+      "real estate india",
+      "builders india",
+      "construction india"
+    ],
+    "groupTerms": [
+      "builder",
+      "developer",
+      "rera",
+      "construction",
+      "possession",
+      "flat",
+      "apartment",
+      "plot",
+      "channel partner",
+      "demand letter",
+      "real estate"
+    ],
     "postsPerSearch": 25,
     "topPostsPerSub": 15,
     "topTimeframe": "year",
@@ -95,12 +214,56 @@
   },
   "googleMaps": {
     "hl": "en",
-    "queries": ["real estate developer", "builders and developers"],
-    "locations": ["Indore", "Jaipur", "Lucknow", "Nagpur", "Surat"],
+    "queries": [
+      "real estate developer",
+      "builders and developers"
+    ],
+    "locations": [
+      "Indore",
+      "Jaipur",
+      "Lucknow",
+      "Nagpur",
+      "Surat"
+    ],
     "maxPlacesPerSearch": 15,
     "reviewsPerPlace": 10,
     "reviewSort": "lowest",
     "maxReviewsPerBrand": 30,
     "concurrency": 3
+  },
+  "competitorPricing": {
+    "products": [
+      {
+        "name": "Leadrat",
+        "website": "https://leadrat.com"
+      },
+      {
+        "name": "Sell.Do",
+        "website": "https://www.sell.do"
+      },
+      {
+        "name": "Buildesk",
+        "website": "https://www.buildesk.com"
+      },
+      {
+        "name": "Powerplay",
+        "website": "https://powerplay.in"
+      },
+      {
+        "name": "Onsite",
+        "website": "https://www.onsiteteams.com"
+      },
+      {
+        "name": "Paramantra",
+        "website": "https://www.paramantra.com"
+      },
+      "Farvision",
+      "StrategicERP",
+      {
+        "name": "Nway ERP",
+        "website": "https://www.nwayerp.com"
+      },
+      "RDash"
+    ]
   }
 }

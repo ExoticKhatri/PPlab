@@ -17,8 +17,9 @@ Updated 23 Oct 2026. All scrapers run locally with Node.js; raw data stays out o
 | LinkedIn | People counts by job title, posts | Owners, managers, decision makers | Playwright, signed-in profile | 🆕 Planned (account risk, see below) |
 | Google search (autocomplete, "People also ask", related) | What the group types into Google | Owners and would-be owners | HTTP + signed-in Brave profile | ✅ Working |
 | Google Trends | Search interest over time and by region | Everyone searching | `google-trends-api` | ✅ Working |
+| Competitor pricing | Prices and plans from competitors' own pricing pages + Techjockey listings | Vendors | Headless Chromium (not the signed-in profile) + HTTP | ✅ Working |
 
-**Removed:** software review sites (Capterra, SoftwareSuggest, TechJockey). Capterra blocks automation, and the rest have 5–10 mostly vendor-solicited reviews per product, so the volume is too low to be useful.
+**Review sites:** not used for reviews. Capterra, G2 and GetApp block automation (Cloudflare "you have been blocked"), and Techjockey has only a handful of mostly 5★ reviews per product. Techjockey *is* used for listed prices and plans (see Competitor pricing).
 
 **Not useful here:** Google Search Console only reports searches that reached *our own* website, so it can't show what a group searches for in general. Google autocomplete, "People also ask" and Trends answer that question instead.
 
@@ -93,6 +94,15 @@ How we keep it safe:
 - **Limits:** Maps lists up to ~120 places per search, so search per city or area.
 - **Cost:** free (no Places API).
 
+## Competitor pricing
+
+- **What it is:** what the tools this group already pays for cost. Required in every README.
+- **How we pull it:** [scripts/collect/competitor-pricing.mjs](../scripts/collect/competitor-pricing.mjs). For each product in `competitorPricing.products` it opens the vendor's site in Playwright's own headless Chromium (pricing pages are mostly built with JavaScript), follows a "pricing"/"plans" link or tries `/pricing`, and reads price mentions, demo-only signals ("book a demo", "contact sales") and customer-count claims. It also reads the product's Techjockey listing (`/detail/<slug>`, found by trying likely slugs): listed price, plans text, rating and reviews.
+- **Finding websites:** give `website` in config when known. Otherwise a paced Bing search is used and only a domain containing the product name is accepted (Bing often returns unrelated sites). DuckDuckGo's HTML search was dropped: it throttles (HTTP 202) after a few queries.
+- **Output:** a vendor table (page read, raw price snippets, signals, claims), a Techjockey table and the reviews Techjockey publishes. Snippets are raw text: the analyst turns them into clean plan/price rows.
+- **Run it second:** competitors are known only after Meta and Play, so add them to config and run `node run.mjs <slug> competitor-pricing`.
+- **Cost:** free.
+
 ## Reddit
 
 - **What it is:** communities of professionals (r/TattooArtists, r/medicallaboratory, r/Teachers). Staff and owners vent there in detail, mostly outside India.
@@ -143,7 +153,6 @@ How we keep it safe:
 | Trustpilot | Reviews of big competitors (Booksy, Vagaro, Fresha, Tattoodo) written by paying businesses | Signed out works; competitor-level, not per-group |
 | Job posts (Naukri, Indeed) | Which tasks businesses hire people for = manual work software could replace | Signed out works |
 | Public registries (NABL labs, UDISE+ schools) | Official counts to replace estimates | Downloadable lists, no scraping needed |
-| Competitor pricing pages | What competitors charge and how it changes | Signed out; snapshot monthly |
 
 ## Rules we follow
 

@@ -20,6 +20,7 @@ analyses/<group-slug>/
   google-trends.md   data summary (generated) + Insights (you write)
   reddit.md          data summary (generated) + Insights (you write)
   google-maps.md     data summary (generated) + Insights (you write)
+  competitor-pricing.md  vendor pricing pages + Techjockey listings (generated) + Insights (you write)
   raw/<platform>/    raw JSON (gitignored, never committed)
 ```
 
@@ -116,6 +117,11 @@ Anything left out falls back to the default in `scripts/collect/lib/config.mjs`.
 | `googleMaps.maxPlacesPerSearch` | `40` | Places per search (Maps lists up to ~120) |
 | `googleMaps.reviewsPerPlace` | `20` | Reviews read per place; `0` = details only (much faster) |
 | `googleMaps.reviewSort` | `lowest` | `lowest`, `newest`, `highest`, `relevant` |
+| `competitorPricing.products` | `[]` | Competitors to price: names, or `{ "name", "website", "techjockey" }` when URLs are known (giving the website avoids a wrong search match) |
+| `competitorPricing.findWebsites` | `true` | Find a missing website with a Bing search; the domain must contain the product name |
+| `competitorPricing.techjockey` | `true` | Also read the Techjockey listing (listed price, plans, rating, reviews) |
+| `competitorPricing.maxPricingPages` | `2` | Vendor pages read per product (stops at the first page with prices) |
+| `competitorPricing.searchGapSeconds` | `[8, 15]` | Wait between Bing searches |
 | `googleMaps.maxReviewsPerBrand` | `0` (no cap) | Max reviews read per chain (same first two words of the name), so one chain can't dominate the themes |
 | `googleMaps.concurrency` | `3` | Tabs reading places and reviews at once (search lists stay in one tab); 3 is about 3× faster than one tab — raise carefully, Maps can show captchas |
 
@@ -124,7 +130,8 @@ Anything left out falls back to the default in `scripts/collect/lib/config.mjs`.
 - **Meta tagging terms:** `sellerTerms` = how vendors address the group ("your school", "for principals", "school ERP"); `selfTerms` = the group's own ads ("admissions open", "book your session"). Then check samples in each tag.
 - **Meta keywords:** what a seller would write to *reach* this group: the group's own words ("tattoo artist", "lab owners"), the products sold to them ("tattoo booking", "pathology lab software", "school ERP"), franchise/equipment terms. 15–30 keywords is typical. Use the group's real markets: for global groups add `US`.
 - **Play Store search terms:** the software this group (or its customers) uses: "<group> management app", "<group> booking", competitor brand names. Add known competitor package ids to `appIds`.
-- **YouTube queries:** how owners talk: "how to start a …", "… business problems", "… profit", "best … software", plus Hindi phrasing for Indian groups ("… kaise khole").
+- **YouTube queries:** how *running* owners talk: the jobs and problems of the business ("… customer payment collection", "… compliance", "… staff problems", "… software demo"), in Hindi or the group's language for Indian groups. Keep at most 1–2 "how to start a …" or "… kaise khole" queries: they draw huge audiences of beginners and buyers, which drowns out owners (seen in the exporter and developer runs).
+- **Competitor pricing products:** after the first run, the real software sellers from Meta ads plus the business apps from Play Store, 8–15 products, with the website when it is known.
 - **Google search seeds:** 3–8 short phrases in the group's words about their problems and tools ("tattoo deposit", "pathology lab software"). `resultsQueries`: a few full questions ("how to stop no shows tattoo").
 - **Google Trends keywords:** broad anchor first ("tattoo artist"), then 4–12 topic terms; use the group's main country as `geo`.
 - **Reddit:** for Indian groups add Indian communities (r/india, r/StartUpIndia, city subreddits) and set `groupTerms`. 2–6 subreddits where the group talks shop (r/TattooArtists, r/medicallaboratory, r/Teachers); set `discoveryQueries` to group terms to find more communities. Queries are problem phrases ("no show", "deposit", "booking app", "software", "pricing").
@@ -166,16 +173,21 @@ For each platform file, replace the placeholder under `## Insights` with your an
 - **reddit.md**
   - Recurring pains with counts and real quotes (comments are often the richest source), tools people name and their complaints about them, prices mentioned, and which communities matter most (members, activity).
   - Reddit skews US/global; say so for India-focused groups. Mention configured subreddits that didn't exist or were private, and how many posts were set aside as off-topic. Scan the "discovered but off-topic" list: the filter is strict, so a useful community (e.g. r/education) can land there — add it to `subreddits` and re-run Reddit.
+- **competitor-pricing.md**
+  - Turn the raw price snippets into clean rows (plan, price, per month or year, per user or per business, GST) and copy them into the README pricing table with source "published". Products marked demo-led have no public price: say so.
+  - The price band the group already pays, and whether vendors charge per user, per project or per business.
 - **google-maps.md**
   - Group size and reach per city (places found; "hit the limit" means more exist), how digitally mature they are (website share, owner reply rate). "Reviews off" is Google's choice, not 0 reviews. Check the Chains table: if one chain owns a big share of low reviews, report it separately.
   - What their customers complain about in low-rated reviews, themed with counts — often what the owner struggles with (e.g. waiting, rescheduling, no-shows, pricing).
+
+**Competitor pricing is a second pass:** after the first run, add the competitors found on Meta ads and Play Store (with their websites when known) to `competitorPricing.products`, then run `node run.mjs <slug> competitor-pricing` (~30–60 s per product).
 
 Then write **README.md** for the group:
 
 1. Group in one paragraph, and its size if known (cite `group-data.ts` or sources).
 2. Reachability verdict (mainly Meta) with the evidence.
 3. Top pain points ranked, each with evidence from at least one platform and the count behind it.
-4. Competitors and their pricing — required. A table with columns: product, what it does, plan and price (per month or per year, per user or per business, in the group's currency), and source. Take prices from the collected data first (Play in-app price ranges, prices in ad text, prices people mention on Reddit/YouTube). Then look up the main competitors' public pricing pages on the web. Mark each price as "published", "from ads/reviews" or "estimate". Write "not public (demo-led)" only after checking.
+4. Competitors and their pricing — required. A table with columns: product, what it does, plan and price (per month or per year, per user or per business, in the group's currency), and source. Take prices from the collected data first (Play in-app price ranges, prices in ad text, prices people mention on Reddit/YouTube). Then use `competitor-pricing.md` (vendor pages and Techjockey), and search the web for any main competitor it missed. Mark each price as "published", "from ads/reviews" or "estimate". Write "not public (demo-led)" only after checking.
 5. Opportunities spotted in the data (gaps where pain is high and supply is thin) — each with its evidence, its main risk and a **suggested price**. Give an entry price and a price after expansion, per business per month. Justify both against the competitor prices above and against the money the pain costs the buyer. Add the customers needed for the revenue target in `docs/product-degrees.md` (₹50 Cr/year ÷ (price × 12)), and that number as a share of the group.
 6. Data gaps: platforms skipped or failed, and what to collect next.
 7. Collection date and the config used (link `config.json`).
@@ -195,6 +207,7 @@ The pplab group page (`/groups/<id>`) reads `app/_components/ad-research/researc
 | Google Trends | `google-trends.mjs` | Ready (`google-trends-api`) |
 | Reddit | `reddit.mjs` | Ready and resilient: signed-in Brave session (needs `node login.mjs` once); searches use the normal search pages when Reddit forbids search JSON; every request is paced; rate limits/blocks trigger automatic cool-downs (3 → 8 → 15 min, up to 45 min) and retries; progress is checkpointed after every step and a re-run of the same config resumes (`--fresh` to start over) |
 | Google Maps | `google-maps.mjs` | Ready (signed-in Brave; search lists in one tab, places + sorted reviews in 3 tabs; checkpoints every 5 places) |
+| Competitor pricing | `competitor-pricing.mjs` | Ready (vendor pricing pages rendered in headless Chromium, not the signed-in profile; Techjockey listings by plain HTTP; Capterra/G2/GetApp are not used because they block automation) |
 | LinkedIn | — | Planned (see docs/platform.md). If config lists it, skip it and note it under Data gaps. |
 
 ## Reliability built in

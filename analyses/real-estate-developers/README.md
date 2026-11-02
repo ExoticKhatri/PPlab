@@ -1,6 +1,6 @@
 # Small real estate developers (India): group analysis
 
-Collected 2 Nov 2026 across 6 of 7 platforms ([config.json](config.json)); Reddit was paused mid-run. Per-platform detail: [Meta ads](meta-ads.md) · [Play Store](play-store.md) · [YouTube](youtube.md) · [Google search](google-search.md) · [Google Trends](google-trends.md) · [Google Maps](google-maps.md).
+Collected 2 Nov 2026 across 6 of 7 platforms ([config.json](config.json)); Reddit was paused mid-run. Per-platform detail: [Meta ads](meta-ads.md) · [Play Store](play-store.md) · [YouTube](youtube.md) · [Google search](google-search.md) · [Google Trends](google-trends.md) · [Google Maps](google-maps.md) · [Competitor pricing](competitor-pricing.md).
 
 **Data collected:**
 - Meta: 1,858 ads from 997 advertisers
@@ -40,17 +40,17 @@ Small and mid-size builders who buy or joint-venture land, get approvals, regist
 
 ## 4. Competitors and pricing
 
-Prices were checked on 2 Nov 2026. "Published" means the vendor's own page; "listing" means a software directory (often out of date); "ads/reviews" means taken from the collected data. Prices exclude GST.
+Prices were checked on 2 Nov 2026; Leadrat, StrategicERP and Onsite were re-read from their own pricing pages by the competitor-pricing collector. "Published" means the vendor's own page; "listing" means a software directory (often out of date); "ads/reviews" means taken from the collected data. Prices exclude GST.
 
 | Product | What it does | Plan and price | Source |
 | --- | --- | --- | --- |
 | **Sell.Do** | Real estate sales CRM | ~$35/user/mo; India ~₹2,600–3,500/user/mo | Listing ([Capterra](https://www.capterra.com/p/151826/Sell-Do/), [Prospeo](https://prospeo.io/s/selldo-pricing-reviews-pros-and-cons)) |
-| **Leadrat** | Real estate sales CRM | $25/user/mo (10 users) down to $17 (100 users); ~₹2,300/user/mo via reseller | Listing ([GetApp](https://www.getapp.com/sales-software/a/leadrat/), [Techjockey](https://www.techjockey.com/us/detail/leadrat-crm)) |
+| **Leadrat** | Real estate sales CRM | **₹2,299/user/mo (10 users) down to ₹1,499 (100 users), billed yearly**: 10 users = ₹2,75,880/yr | Published ([Leadrat](https://leadrat.com/pricing/)) |
 | **Buildesk** | CRM + post-sales collections, demand letters, buyer app (450–550 developers) | ~₹1,000/user/mo (annual); quote-based | Listing ([SpotSaaS](https://www.spotsaas.com/product/builddesk-erp/pricing)) |
 | **Farvision** | Real estate ERP | From ~₹2,000/user/mo hosted; ~₹5,000/user/mo subscription | Listing |
-| **StrategicERP** | Real estate / construction ERP | ~₹48,000/user/yr (listings conflict) | Listing |
+| **StrategicERP** | Real estate / construction ERP | **₹4,000/user/mo, billed yearly** (Standard plan) | Published ([StrategicERP](https://strategicerp.com/pricing.php)) |
 | **Powerplay** | Site and material management | **Pro ₹71,999/yr; Pro+ ₹1,19,999/yr** (~₹6,000–10,000/mo) | Listing ([Capterra](https://www.capterra.com/p/268357/Powerplay/pricing/)) |
-| **Onsite** | Construction accounts and site management | ~₹35,000/yr (quoted by a user) | Play reviews |
+| **Onsite** | Construction accounts and site management | **₹12,000/user/yr (Business) and ₹15,000/user/yr (Professional), plus GST; minimum ₹60,000–75,000/yr for 5 users**; enterprise from ₹12 L/yr | Published ([Onsite](https://www.onsiteteams.com/pricing)) |
 | Generic CRMs (Unbreached Labs, Scriptlet) | CRM | ₹5,000/mo; ₹60,000/yr | Meta ads |
 | **CA firms (RERA + accounting)** | QPR certificates, RERA accounting | From **₹15,000/month per project** (one Mumbai firm) | Published ([Patron Accounting](https://www.patronaccounting.com/construction-and-real-estate-accounting-services/mumbai)) |
 | **ReraDesk** | RERA QPR platform for developers and CAs | Not public | Google results |

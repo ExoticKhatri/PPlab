@@ -14,7 +14,7 @@ const here = path.dirname(fileURLToPath(import.meta.url));
 export const REPO_ROOT = path.resolve(here, "../../..");
 export const ANALYSES_DIR = path.join(REPO_ROOT, "analyses");
 
-export const PLATFORMS = ["meta-ads", "play-store", "youtube", "google-search", "google-trends", "reddit", "google-maps"];
+export const PLATFORMS = ["meta-ads", "play-store", "youtube", "google-search", "google-trends", "reddit", "google-maps", "competitor-pricing"];
 
 export const DEFAULTS = {
   group: "",
@@ -91,7 +91,7 @@ export const DEFAULTS = {
     relevanceFilter: true, // keep only on-topic subreddits/posts (match query or group terms); off-topic ones are listed separately
     groupTerms: [], // words or phrases that mark a post or subreddit as on-topic, e.g. "school", "law school"
     requestGapSeconds: [2, 4], // wait between Reddit JSON requests
-    searchPageGapSeconds: [6, 10], // wait between Reddit search pages (heavier; used when search JSON is forbidden)
+    searchPageGapSeconds: [10, 18], // wait between Reddit search pages (heavier; used when search JSON is forbidden)
     cooldownMinutes: [3, 8, 15], // when Reddit rate-limits or blocks: wait, reset tabs, retry (escalating)
     maxWaitMinutes: 45, // total cool-down budget before stopping (progress is saved; re-run resumes)
   },
@@ -104,6 +104,15 @@ export const DEFAULTS = {
     reviewSort: "lowest", // lowest, newest, highest, relevant
     maxReviewsPerBrand: 0, // cap reviews read per brand/chain (first two words of the name); 0 = no cap
     concurrency: 3, // browser tabs reading places + reviews at once (search lists stay in one tab)
+  },
+  competitorPricing: {
+    // Competitors to price: names, or { name, website, techjockey } when the URLs are known.
+    // Fill from the sellers found on Meta ads and the apps on Play Store.
+    products: [],
+    findWebsites: true, // find a missing vendor website with a Bing search (domain must contain the product name)
+    techjockey: true, // also read each product's Techjockey listing (listed price, plans, rating, reviews)
+    maxPricingPages: 2, // vendor pages read per product (stops at the first page with prices)
+    searchGapSeconds: [8, 15], // wait between Bing searches
   },
 };
 
