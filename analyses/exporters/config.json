@@ -2,29 +2,79 @@
   "group": "Exporters (India)",
   "platforms": "all",
   "metaAds": {
-    "countries": ["IN"],
+    "countries": [
+      "IN"
+    ],
     "keywords": [
-      "export documentation software", "export software", "exporters", "for exporters", "export business", "export import software",
-      "RoDTEP", "duty drawback", "export incentive", "GST refund exporters", "e-BRC", "EDPMS", "IEC code", "export finance",
-      "invoice discounting exporters", "export factoring", "freight forwarding", "export compliance", "LUT filing", "export payment",
-      "foreign buyers", "international buyers leads", "export packing list", "customs clearance", "export CRM"
+      "export documentation software",
+      "export software",
+      "exporters",
+      "for exporters",
+      "export business",
+      "export import software",
+      "RoDTEP",
+      "duty drawback",
+      "export incentive",
+      "GST refund exporters",
+      "e-BRC",
+      "EDPMS",
+      "IEC code",
+      "export finance",
+      "invoice discounting exporters",
+      "export factoring",
+      "freight forwarding",
+      "export compliance",
+      "LUT filing",
+      "export payment",
+      "foreign buyers",
+      "international buyers leads",
+      "export packing list",
+      "customs clearance",
+      "export CRM"
     ],
     "maxAdsPerKeyword": 150,
     "maxScrollRounds": 30,
     "activeOnly": true,
     "sellerTerms": [
-      "for exporters", "exporters", "export business", "export documentation", "RoDTEP", "drawback", "e-BRC", "EDPMS", "IEC",
-      "export finance", "freight", "customs", "LUT", "foreign buyers", "export compliance"
+      "for exporters",
+      "exporters",
+      "export business",
+      "export documentation",
+      "RoDTEP",
+      "drawback",
+      "e-BRC",
+      "EDPMS",
+      "IEC",
+      "export finance",
+      "freight",
+      "customs",
+      "LUT",
+      "foreign buyers",
+      "export compliance"
     ],
-    "selfTerms": ["shop now", "buy now", "order now", "best price", "wholesale price", "bulk order"],
+    "selfTerms": [
+      "shop now",
+      "buy now",
+      "order now",
+      "best price",
+      "wholesale price",
+      "bulk order"
+    ],
     "concurrency": 2
   },
   "playStore": {
     "country": "in",
     "lang": "en",
     "searchTerms": [
-      "export import", "export documentation", "exporter app", "freight forwarding", "customs clearance", "export finance",
-      "foreign trade", "DGFT", "trade finance"
+      "export import",
+      "export documentation",
+      "exporter app",
+      "freight forwarding",
+      "customs clearance",
+      "export finance",
+      "foreign trade",
+      "DGFT",
+      "trade finance"
     ],
     "appIds": [],
     "maxApps": 35,
@@ -32,15 +82,29 @@
     "reviewsPerApp": 1000,
     "complaintMaxStars": 3,
     "excludeGames": true,
-    "excludeTitles": ["simulator", "tycoon", "game", "file manager", "share", "transfer"],
+    "excludeTitles": [
+      "simulator",
+      "tycoon",
+      "game",
+      "file manager",
+      "share",
+      "transfer"
+    ],
     "concurrency": 4,
     "rankBy": "relevance"
   },
   "youtube": {
     "queries": [
-      "export business kaise kare", "export business india problems", "RoDTEP claim process", "duty drawback claim process",
-      "export payment not received", "GST refund for exporters problem", "e-BRC EDPMS", "export documentation process india",
-      "how to find foreign buyers", "export business profit india"
+      "export business kaise kare",
+      "export business india problems",
+      "RoDTEP claim process",
+      "duty drawback claim process",
+      "export payment not received",
+      "GST refund for exporters problem",
+      "e-BRC EDPMS",
+      "export documentation process india",
+      "how to find foreign buyers",
+      "export business profit india"
     ],
     "videosPerQuery": 8,
     "maxCommentsPerVideo": 1000,
@@ -54,34 +118,90 @@
     "hl": "en",
     "gl": "in",
     "seeds": [
-      "export documentation", "RoDTEP", "duty drawback", "GST refund exporter", "export software", "export payment", "EDPMS"
+      "export documentation",
+      "RoDTEP",
+      "duty drawback",
+      "GST refund exporter",
+      "export software",
+      "export payment",
+      "EDPMS"
     ],
     "expandAlphabet": true,
     "resultsQueries": [
-      "best export documentation software india price", "RoDTEP claim not received", "GST refund for exporters delay",
-      "export payment not received from buyer what to do", "EDPMS outstanding shipping bill", "how to find buyers for export business"
+      "best export documentation software india price",
+      "RoDTEP claim not received",
+      "GST refund for exporters delay",
+      "export payment not received from buyer what to do",
+      "EDPMS outstanding shipping bill",
+      "how to find buyers for export business"
     ],
     "maxResultsPages": 6,
     "expandPeopleAlsoAsk": 3,
     "captchaWaitSeconds": 180,
     "bingFallback": true,
-    "pageGapSeconds": [15, 40]
+    "pageGapSeconds": [
+      15,
+      40
+    ]
   },
   "googleTrends": {
     "geo": "IN",
     "timeframe": "today 5-y",
-    "keywords": ["export business", "RoDTEP", "duty drawback", "IEC code", "export documentation", "EDPMS", "export finance", "tariff"],
+    "keywords": [
+      "export business",
+      "RoDTEP",
+      "duty drawback",
+      "IEC code",
+      "export documentation",
+      "EDPMS",
+      "export finance",
+      "tariff"
+    ],
     "regionsResolution": "REGION"
   },
   "reddit": {
-    "subreddits": ["IndiaBusiness", "IndianEntrepreneur", "StartUpIndia", "smallbusiness", "IndiaTax"],
-    "searchQueries": ["export business", "exporter", "RoDTEP", "drawback", "GST refund export", "export payment", "foreign buyer", "export documentation"],
+    "subreddits": [
+      "IndiaBusiness",
+      "IndianEntrepreneur",
+      "StartUpIndia",
+      "smallbusiness",
+      "IndiaTax"
+    ],
+    "searchQueries": [
+      "export business",
+      "exporter",
+      "RoDTEP",
+      "drawback",
+      "GST refund export",
+      "export payment",
+      "foreign buyer",
+      "export documentation"
+    ],
     "searchAllReddit": true,
     "searchSort": "relevance",
     "searchTimeframe": "all",
     "discoverSubreddits": true,
-    "discoveryQueries": ["export business india", "exporters", "international trade"],
-    "groupTerms": ["export", "exporter", "exporting", "rodtep", "drawback", "iec", "shipping bill", "foreign buyer", "lut", "edpms", "brc", "fob", "cif", "incoterm"],
+    "discoveryQueries": [
+      "export business india",
+      "exporters",
+      "international trade"
+    ],
+    "groupTerms": [
+      "export",
+      "exporter",
+      "exporting",
+      "rodtep",
+      "drawback",
+      "iec",
+      "shipping bill",
+      "foreign buyer",
+      "lut",
+      "edpms",
+      "brc",
+      "fob",
+      "cif",
+      "incoterm"
+    ],
     "postsPerSearch": 25,
     "topPostsPerSub": 15,
     "topTimeframe": "year",
@@ -92,12 +212,52 @@
   },
   "googleMaps": {
     "hl": "en",
-    "queries": ["exporter", "export company"],
-    "locations": ["Tiruppur", "Surat", "Moradabad", "Ludhiana", "Rajkot"],
+    "queries": [
+      "exporter",
+      "export company"
+    ],
+    "locations": [
+      "Tiruppur",
+      "Surat",
+      "Moradabad",
+      "Ludhiana",
+      "Rajkot"
+    ],
     "maxPlacesPerSearch": 15,
     "reviewsPerPlace": 10,
     "reviewSort": "lowest",
     "maxReviewsPerBrand": 30,
     "concurrency": 3
+  },
+  "competitorPricing": {
+    "products": [
+      "Axodian OneCompliance",
+      "Expodite",
+      "Shipzy",
+      {
+        "name": "Skydo",
+        "website": "https://www.skydo.com"
+      },
+      {
+        "name": "PayGlocal",
+        "website": "https://payglocal.in"
+      },
+      {
+        "name": "Credlix",
+        "website": "https://www.credlix.com"
+      },
+      {
+        "name": "Volza",
+        "website": "https://www.volza.com"
+      },
+      {
+        "name": "Export Genius",
+        "website": "https://www.exportgenius.in"
+      },
+      {
+        "name": "Razorpay International",
+        "website": "https://razorpay.com/pricing"
+      }
+    ]
   }
 }

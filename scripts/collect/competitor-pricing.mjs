@@ -66,13 +66,17 @@ async function searchLinks(query, gap) {
 }
 
 // The product's distinctive word ("buildesk" from "Buildesk CRM"), used to
-// reject unrelated search results.
+// reject unrelated search results. Generic words never count: "School ERP
+// India" once matched a state education department's site on "school".
+const GENERIC = new Set(["school", "erp", "crm", "india", "software", "app", "apps", "hospital", "the", "online", "cloud", "management", "system", "export", "business", "smart", "easy"]);
 function nameToken(name) {
-  return name.toLowerCase().replace(/\./g, "").match(/[a-z0-9]{3,}/)?.[0] ?? name.toLowerCase();
+  const tokens = name.toLowerCase().replace(/\./g, "").match(/[a-z0-9]{3,}/g) ?? [];
+  return tokens.find((t) => !GENERIC.has(t)) ?? null;
 }
 
 async function findWebsite(name, gap) {
   const token = nameToken(name);
+  if (!token) return null; // all-generic name: too risky to match by domain
   for (const query of [`${name} pricing`, `${name} software india`]) {
     const links = await searchLinks(query, gap);
     const vendor = links.find((u) => !NOT_VENDOR.test(u) && new URL(u).hostname.replace(/[.-]/g, "").includes(token));
@@ -85,8 +89,9 @@ async function findWebsite(name, gap) {
 // the first page whose product name matches.
 async function findTechjockey(name) {
   const base = name.toLowerCase().replace(/\./g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-  const token = nameToken(name);
-  for (const slug of [...new Set([base, token, `${token}-crm`, `${token}-erp`, `${token}-software`, `${token}-app`])]) {
+  const token = nameToken(name) ?? base.replace(/-/g, "");
+  const slugs = nameToken(name) ? [base, token, `${token}-crm`, `${token}-erp`, `${token}-software`, `${token}-app`] : [base];
+  for (const slug of [...new Set(slugs)]) {
     const url = `https://www.techjockey.com/detail/${slug}`;
     const html = await fetchText(url).catch(() => "");
     if (html && /SoftwareApplication/.test(html) && techjockeyListing(html, url).name?.toLowerCase().replace(/\./g, "").includes(token)) return url;

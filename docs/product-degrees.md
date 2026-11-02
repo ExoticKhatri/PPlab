@@ -208,3 +208,4 @@ Prices and group sizes are estimates until buyer conversations and sourced count
 | 2026-10-30 | Distributors & wholesalers added: retailer credit and collections wedge; smallest share needed (0.9% after expansion); shortlisted |
 | 2026-11-02 | Exporters added: export money-and-compliance desk wedge (₹8,000 → ₹20,000/month); shortlisted. Distributors deprioritised for low ability to pay |
 | 2026-11-02 | Small real estate developers added: project milestone desk wedge (₹15,000 → ₹30,000/month); shortlisted |
+| 2026-11-02 | Competitor prices confirmed from vendors' own pages for all shortlisted groups (new competitor-pricing collector). TranZact charges MSMEs ₹8,333–30,000/month and Fedena charges schools ₹50,000–1,00,000/year, so the MSME and school price assumptions hold. Distributors' tools cost ₹290–1,150/month, which confirms they are deprioritised |

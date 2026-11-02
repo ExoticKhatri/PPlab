@@ -1,6 +1,6 @@
 # Private K-12 schools (India) — group analysis
 
-Collected 23 Oct 2026 across 7 platforms ([config.json](config.json)). Per-platform detail: [Meta ads](meta-ads.md) · [Play Store](play-store.md) · [YouTube](youtube.md) · [Google search](google-search.md) · [Google Trends](google-trends.md) · [Reddit](reddit.md) · [Google Maps](google-maps.md).
+Collected 23 Oct 2026 across 7 platforms ([config.json](config.json)). Per-platform detail: [Meta ads](meta-ads.md) · [Play Store](play-store.md) · [YouTube](youtube.md) · [Google search](google-search.md) · [Google Trends](google-trends.md) · [Reddit](reddit.md) · [Google Maps](google-maps.md) · [Competitor pricing](competitor-pricing.md).
 
 **Data collected:** 3,060 Meta ads (1,554 advertisers) · 40 apps / 38,394 Play Store reviews · 56 videos / 6,045 YouTube comments · 1,468 Google autocomplete searches · 7 Trends terms · 640 Reddit posts / 9,080 comments · 180 schools / 672 Maps reviews.
 
@@ -32,6 +32,15 @@ Private, fee-charging K-12 schools in India (CBSE, ICSE, state board, internatio
 - **Prices (from ads and listings):** entry ERPs from ~₹5,000/year (Eduvecta, School ERP INDIA); some sell source code for ~₹10,000. Google shows heavy "free / free download" searching — price-sensitive.
 - **Fee fintechs:** Jodo (fee financing, ad running 120+ days), Varthana (school loans, 424 days), Collexo, MCB Finance, CoFee.
 - Parent apps are free to parents; the school pays the vendor.
+
+**Prices confirmed on 2 Nov 2026** from vendors' own pricing pages and Techjockey ([competitor-pricing.md](competitor-pricing.md)); where these differ from figures above, these win. Prices exclude GST unless stated.
+
+| Product | Plan and price | Source |
+| --- | --- | --- |
+| Fedena | Standard ₹50,000, Premium ₹75,000, Ultimate ₹1,00,000 per year + GST (≈₹4,200–8,300/mo) | Published |
+| School ERP INDIA | Startup (0–300 students) ₹5,000/yr | Techjockey |
+| MyClassboard, Jodo | No public price ("price on request", "book a demo") | Demo-led |
+| Teachmint, Entab CampusCare, Neverskip | No price on their sites | Checked |
 
 ## 5. Opportunities spotted in the data
 

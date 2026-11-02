@@ -1,6 +1,6 @@
 # Distributors & wholesalers (India) — group analysis
 
-Collected 30 Oct 2026 across 7 platforms ([config.json](config.json)). Per-platform detail: [Meta ads](meta-ads.md) · [Play Store](play-store.md) · [YouTube](youtube.md) · [Google search](google-search.md) · [Google Trends](google-trends.md) · [Reddit](reddit.md) · [Google Maps](google-maps.md).
+Collected 30 Oct 2026 across 7 platforms ([config.json](config.json)). Per-platform detail: [Meta ads](meta-ads.md) · [Play Store](play-store.md) · [YouTube](youtube.md) · [Google search](google-search.md) · [Google Trends](google-trends.md) · [Reddit](reddit.md) · [Google Maps](google-maps.md) · [Competitor pricing](competitor-pricing.md).
 
 **Data collected:** 996 Meta ads (622 advertisers) · 35 B2B apps / ~6,000 relevant Play reviews (after the relevance re-run) · 73 videos / 5,461 YouTube comments · 971 Google autocomplete suggestions + 6 result pages · 8 Trends terms · 663 Reddit posts / 1,415 comments · 138 distributors / 1,009 Maps reviews (Indore, Jaipur, Lucknow, Ahmedabad, Nagpur).
 
@@ -41,6 +41,17 @@ Prices were checked on 30 Oct 2026. "Published" means the vendor's own page. "Li
 | **Udaan, JioMart, Flipkart Wholesale** | B2B ordering platforms | Free to retailers; they earn on the goods margin | Their own model |
 
 **What this means:** billing and ordering tools for distributors cost **₹300–850/month** and are close to commodities. Field-sales apps charge **per salesman** (₹1,200+ each) and are bought by brands, not by distributors. The only collections tool, Credflow, costs about **₹1,000/month** and is generic, not built for distributors and retailers. Nothing is priced to the money it recovers.
+
+**Prices confirmed on 2 Nov 2026** from vendors' own pricing pages and Techjockey ([competitor-pricing.md](competitor-pricing.md)); where these differ from figures above, these win. Prices exclude GST unless stated.
+
+| Product | Plan and price | Source |
+| --- | --- | --- |
+| Marg ERP (incl. eOrder) | Nano ₹5,550; Basic ₹10,300; Silver ₹13,900 (1 user, + 18% GST); ₹3,000 per extra user | Published (Marg price list) |
+| Vyapar | Desktop + mobile: Silver ₹4,399/yr (≈₹367/mo), Gold ₹4,799/yr (≈₹400/mo) | Published |
+| myBillBook | ₹3,490/yr (≈₹291/mo) and ₹3,990/yr (≈₹333/mo); Pro Max from ₹570/mo | Published |
+| Busy | ₹5,000 / ₹8,000 / ₹12,000 / ₹50,000 per 360 days | Published |
+| Credflow | Tally Lite plan ₹4,999/yr | Techjockey |
+| Bizom, FieldAssist | No public price ("price on request") | Demo-led (vendor site, Techjockey) |
 
 ## 5. Opportunities spotted in the data
 

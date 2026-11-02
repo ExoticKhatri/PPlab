@@ -1,6 +1,6 @@
 # Small manufacturers / MSME factories (India) — group analysis
 
-Collected 27 Oct 2026 across 7 platforms ([config.json](config.json)). Per-platform detail: [Meta ads](meta-ads.md) · [Play Store](play-store.md) · [YouTube](youtube.md) · [Google search](google-search.md) · [Google Trends](google-trends.md) · [Reddit](reddit.md) · [Google Maps](google-maps.md).
+Collected 27 Oct 2026 across 7 platforms ([config.json](config.json)). Per-platform detail: [Meta ads](meta-ads.md) · [Play Store](play-store.md) · [YouTube](youtube.md) · [Google search](google-search.md) · [Google Trends](google-trends.md) · [Reddit](reddit.md) · [Google Maps](google-maps.md) · [Competitor pricing](competitor-pricing.md).
 
 **Data collected:** 2,495 Meta ads (1,396 advertisers) · 35 apps / 35,000 Play reviews · 74 videos / 7,617 YouTube comments · 1,343 Google autocomplete searches + 6 result pages · 8 Trends terms · 867 Reddit posts / 3,472 comments · 150 factories / 1,370 Maps reviews (Ludhiana, Rajkot, Coimbatore, Pune, Faridabad, Surat).
 
@@ -32,6 +32,17 @@ Owner-run small factories (roughly 10–200 workers): plastics, textiles/garment
 - **Labour:** PagarBook, SalaryBox, Workex, FactoHR; "₹799 once" Excel payroll.
 - **Finance/receivables:** PSB Loans in 59 Minutes, CGTMSE/ECLGS brokers, MSME Samadhaan (government, for delayed payments). No visible software player focused on MSME receivables collection appeared in the ads.
 - **Buyer leads:** IndiaMART (10M+ installs, paid lead packages), TradeIndia, JdMart, GlobalB2BMart.
+
+**Prices confirmed on 2 Nov 2026** from vendors' own pricing pages and Techjockey ([competitor-pricing.md](competitor-pricing.md)); where these differ from figures above, these win. Prices exclude GST unless stated.
+
+| Product | Plan and price | Source |
+| --- | --- | --- |
+| TranZact (manufacturing ERP) | Grow ₹8,333/mo, Scale+ ₹16,666/mo, Dominate ₹30,000/mo (billed yearly); extra users ₹2,000/user/mo | Published |
+| Zoho Inventory | Standard ₹999, Premium ₹2,299, Plus ₹4,999 per organisation/month (billed yearly); Enterprise ₹7,499; free plan for micro businesses | Published |
+| SalaryBox (attendance, payroll) | Starter ₹1,350/mo + ₹27/user; Business ₹2,700/mo + ₹67.5/user (quarterly billing); GPS ₹100/user/mo | Published |
+| PagarBook | Mobile ₹499/yr; biometric device ₹18,000 one-time | Techjockey / published |
+| Biziverse | ERP+CRM Starter ₹6,000/yr | Techjockey |
+| Rednote | ₹1,179 (listed) | Techjockey |
 
 ## 5. Opportunities spotted in the data
 

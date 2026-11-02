@@ -1,6 +1,6 @@
 # Small hospitals & nursing homes (India) — group analysis
 
-Collected 26 Oct 2026 across 7 platforms ([config.json](config.json)). Per-platform detail: [Meta ads](meta-ads.md) · [Play Store](play-store.md) · [YouTube](youtube.md) · [Google search](google-search.md) · [Google Trends](google-trends.md) · [Reddit](reddit.md) · [Google Maps](google-maps.md).
+Collected 26 Oct 2026 across 7 platforms ([config.json](config.json)). Per-platform detail: [Meta ads](meta-ads.md) · [Play Store](play-store.md) · [YouTube](youtube.md) · [Google search](google-search.md) · [Google Trends](google-trends.md) · [Reddit](reddit.md) · [Google Maps](google-maps.md) · [Competitor pricing](competitor-pricing.md).
 
 **Data collected:** 1,465 Meta ads (760 advertisers) · 35 apps / 24,423 Play reviews · 71 videos / 3,340 YouTube comments · 1,281 Google autocomplete searches + 6 result pages · 8 Trends terms · 682 Reddit posts / 2,953 comments · 199 hospitals and nursing homes / 1,944 Maps reviews (Lucknow, Jaipur, Indore, Nagpur, Patna).
 
@@ -32,6 +32,15 @@ Privately owned hospitals of roughly 10–100 beds and nursing homes, often doct
 - **NABH consulting:** entry-level certification "for just ₹65,000" (Healthbridge).
 - **Claims/RCM:** Nimblefin (insurance desk, audit, recoveries), WinSkill (cashless claim management). Google asks "top 5 RCM companies in India". Few visible players.
 - **Government:** NHA's free HEM/TMS portals for Ayushman, which staff struggle to use.
+
+**Prices confirmed on 2 Nov 2026** from vendors' own pricing pages and Techjockey ([competitor-pricing.md](competitor-pricing.md)); where these differ from figures above, these win. Prices exclude GST unless stated.
+
+| Product | Plan and price | Source |
+| --- | --- | --- |
+| Healthray (HMS) | Software price not shown; services published: training ₹15,000/day, consultant ₹2 lakh/month, customisation packages ₹5.25–34.5 lakh, integrations from ₹1 lakh/month | Published |
+| NiftyHMS | Essential ₹1,500/user/month | Techjockey |
+| KareXpert | No public price | Demo-led |
+| Myopd, TatvaCare, Medyclix, Drucare, Nimblefin, Adroit, Ezovion | No price found (site not found or no pricing page) | Checked |
 
 ## 5. Opportunities spotted in the data
 

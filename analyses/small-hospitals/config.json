@@ -236,5 +236,19 @@
     "reviewsPerPlace": 10,
     "reviewSort": "lowest",
     "maxReviewsPerBrand": 30
+  },
+  "competitorPricing": {
+    "products": [
+      "Healthray",
+      "Myopd",
+      "TatvaCare",
+      "Medyclix",
+      "Drucare",
+      "Nimblefin",
+      "KareXpert",
+      "Adroit eHospital",
+      "NiftyHMS",
+      "Ezovion"
+    ]
   }
 }

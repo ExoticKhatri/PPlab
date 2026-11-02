@@ -294,4 +294,5 @@ export const CHANGELOG = [
   { date: "2026-10-30", text: "Distributors & wholesalers added: retailer credit and collections wedge; smallest share needed (0.9% after expansion); shortlisted" },
   { date: "2026-11-02", text: "Exporters added: export money-and-compliance desk (₹8,000 → ₹20,000/month); shortlisted. Distributors deprioritised for low ability to pay" },
   { date: "2026-11-02", text: "Small real estate developers added: project milestone desk (₹15,000 → ₹30,000/month); shortlisted" },
+  { date: "2026-11-02", text: "Competitor prices confirmed from vendor pages: MSME ERPs up to ₹30,000/month and school ERPs up to ₹1 lakh/year support those price assumptions; distributors' tools cost ₹290–1,150/month" },
 ];

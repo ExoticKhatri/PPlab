@@ -223,5 +223,36 @@
     "reviewSort": "lowest",
     "maxReviewsPerBrand": 30,
     "concurrency": 3
+  },
+  "competitorPricing": {
+    "products": [
+      {
+        "name": "TranZact",
+        "website": "https://letstranzact.com"
+      },
+      {
+        "name": "Rednote",
+        "website": "https://rednote.in"
+      },
+      {
+        "name": "Biziverse",
+        "website": "https://www.biziverse.com"
+      },
+      "Vritti ERP",
+      {
+        "name": "PagarBook",
+        "website": "https://pagarbook.com"
+      },
+      "SalaryBox",
+      {
+        "name": "TallyPrime",
+        "website": "https://tallysolutions.com"
+      },
+      {
+        "name": "Zoho Inventory",
+        "website": "https://www.zoho.com/in/inventory/pricing/"
+      },
+      "IndiaMART seller"
+    ]
   }
 }

@@ -1,6 +1,6 @@
 # Exporters (India): group analysis
 
-Collected 2 Nov 2026 across 7 platforms in 29 minutes ([config.json](config.json)). Per-platform detail: [Meta ads](meta-ads.md) · [Play Store](play-store.md) · [YouTube](youtube.md) · [Google search](google-search.md) · [Google Trends](google-trends.md) · [Reddit](reddit.md) · [Google Maps](google-maps.md).
+Collected 2 Nov 2026 across 7 platforms in 29 minutes ([config.json](config.json)). Per-platform detail: [Meta ads](meta-ads.md) · [Play Store](play-store.md) · [YouTube](youtube.md) · [Google search](google-search.md) · [Google Trends](google-trends.md) · [Reddit](reddit.md) · [Google Maps](google-maps.md) · [Competitor pricing](competitor-pricing.md).
 
 **Data collected:**
 - Meta: 1,189 ads from 586 advertisers
@@ -75,6 +75,16 @@ Prices were checked on 2 Nov 2026. "Published" means the vendor's own page; "lis
 - CAs and CHAs (not measured).
 
 Documentation software is cheap (~₹1,000–5,000). **Nobody sells one product that tracks every shipment from shipping bill to payment, eBRC, EDPMS closure, RoDTEP, drawback and IGST refund.** The one tracking tool seen (Axodian) is demo-only and barely advertised.
+
+**Prices confirmed on 2 Nov 2026** from vendors' own pricing pages and Techjockey ([competitor-pricing.md](competitor-pricing.md)); where these differ from figures above, these win. Prices exclude GST unless stated.
+
+| Product | Plan and price | Source |
+| --- | --- | --- |
+| PayGlocal | International cards from 2.75% per transaction; multi-currency from $10 per transaction; Amazon Global Selling from 0.25% | Published |
+| Razorpay | Gateway from 2% per transaction; subscriptions from ₹2,499; custom pricing above ₹5 lakh/month | Published |
+| Volza | Startup plan from $1,500/yr | Techjockey |
+| Expodite | ₹1,180 (listed) | Techjockey |
+| Axodian OneCompliance, Shipzy, Credlix, Export Genius | No public price | Demo-led / not listed |
 
 ## 5. Opportunities spotted in the data
 

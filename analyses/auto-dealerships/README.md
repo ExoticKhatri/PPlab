@@ -1,6 +1,6 @@
 # Car & two-wheeler dealerships (India) — group analysis
 
-Collected 29 Oct 2026 across 7 platforms in 56 minutes ([config.json](config.json)). Per-platform detail: [Meta ads](meta-ads.md) · [Play Store](play-store.md) · [YouTube](youtube.md) · [Google search](google-search.md) · [Google Trends](google-trends.md) · [Reddit](reddit.md) · [Google Maps](google-maps.md).
+Collected 29 Oct 2026 across 7 platforms in 56 minutes ([config.json](config.json)). Per-platform detail: [Meta ads](meta-ads.md) · [Play Store](play-store.md) · [YouTube](youtube.md) · [Google search](google-search.md) · [Google Trends](google-trends.md) · [Reddit](reddit.md) · [Google Maps](google-maps.md) · [Competitor pricing](competitor-pricing.md).
 
 **Data collected:** 974 Meta ads (400 advertisers) · 35 apps / 31,015 Play reviews · 65 videos / 7,742 YouTube comments · 1,211 Google autocomplete searches + 5 result pages · 8 Trends terms · 839 Reddit posts / 3,980 comments · 172 dealerships / 1,100 Maps reviews (Pune, Jaipur, Lucknow, Indore, Coimbatore).
 
@@ -36,6 +36,16 @@ pplab's estimate is ~60K dealerships (`group-data.ts`, unsourced estimate). Ever
 - **Garage/workshop software:** Autorox, ARI, Repairing Shop Manager.
 - **Used-car platforms** (Cars24, Spinny, OLX Autos, CarDekho, Droom): channel and competitor at once for independent dealers.
 - Pricing is not public in the ads (demo-led).
+
+**Prices confirmed on 2 Nov 2026** from vendors' own pricing pages and Techjockey ([competitor-pricing.md](competitor-pricing.md)); where these differ from figures above, these win. Prices exclude GST unless stated.
+
+| Product | Plan and price | Source |
+| --- | --- | --- |
+| LeadSquared | Sales Pro ₹2,500/user/mo; Sales Super ₹5,000/user/mo | Published |
+| HelloLeads | Essential ₹334/user/mo; Enterprise ₹584/user/mo (billed yearly); 30-day trial | Published |
+| Groweon (dealer lead management) | ₹2,999/month | Techjockey |
+| Zoho CRM | Premium ₹3,539 (listed) | Techjockey |
+| Excellon (DMS), Autorox (workshop) | No public price | Demo-led |
 
 ## 5. Opportunities spotted in the data
 

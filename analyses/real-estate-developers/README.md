@@ -1,6 +1,6 @@
 # Small real estate developers (India): group analysis
 
-Collected 2 Nov 2026 across 6 of 7 platforms ([config.json](config.json)); Reddit was paused mid-run. Per-platform detail: [Meta ads](meta-ads.md) · [Play Store](play-store.md) · [YouTube](youtube.md) · [Google search](google-search.md) · [Google Trends](google-trends.md) · [Google Maps](google-maps.md) · [Competitor pricing](competitor-pricing.md).
+Collected 2 Nov 2026 across all 7 platforms ([config.json](config.json)); Reddit was paused after a rate limit and resumed later the same day. Per-platform detail: [Meta ads](meta-ads.md) · [Play Store](play-store.md) · [YouTube](youtube.md) · [Reddit](reddit.md) · [Google search](google-search.md) · [Google Trends](google-trends.md) · [Google Maps](google-maps.md) · [Competitor pricing](competitor-pricing.md).
 
 **Data collected:**
 - Meta: 1,858 ads from 997 advertisers
@@ -9,7 +9,7 @@ Collected 2 Nov 2026 across 6 of 7 platforms ([config.json](config.json)); Reddi
 - Google search: 892 autocomplete suggestions, 6 result pages
 - Google Trends: 8 terms
 - Google Maps: 108 developers, 996 reviews (Indore, Jaipur, Lucknow, Nagpur, Surat)
-- Reddit: partial (852 posts saved, mostly buyers; not analysed)
+- Reddit: 1,040 posts, 1,998 comments (mostly buyers and brokers)
 
 ## 1. The group
 
@@ -92,7 +92,7 @@ Opportunity 1 is the only one that clears the target math at a realistic share, 
 
 ## 6. Data gaps
 
-- **Reddit:** paused after Reddit rate-limited the run. 852 posts were saved, but they are mostly buyers (r/indianrealestate) with almost no developer voices. Resume with `node run.mjs real-estate-developers reddit`.
+- **Reddit:** complete, but almost entirely buyers, brokers and investors (5 posts by builders). It adds buyer-side evidence: RERA quarterly data is public and read by buyers ("I scraped Bengaluru RERA quarterly sales data…", ⬆234), and trust in RERA is low (⬆1,037).
 - **Group size:** ~50K developers is unsourced. RERA portals list promoters, and counting distinct promoters with active projects (starting with MahaRERA) would give a real number.
 - **YouTube:** mostly buyers and aspiring developers, with very little owner talk about collections.
 - **RERA:** state-specific QPR formats and the CA's role need checking before building.
