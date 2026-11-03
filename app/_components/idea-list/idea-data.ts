@@ -4,7 +4,7 @@
 // Build and marketing difficulty: 1 = easy … 5 = hard. Competitors = direct competitors
 // seen in the data (not the crowded first-degree market around them).
 
-import { customersFor } from "../idea-guide/guide-data";
+import { customersFor, INR_PER_USD, TARGET_PER_YEAR } from "../idea-guide/guide-data";
 
 export type Level = 1 | 2 | 3 | 4 | 5;
 
@@ -56,18 +56,76 @@ export const IDEAS: Idea[] = [
   { id: "ca-status", idea: "Client status and document collection", group: "CA firms", ticket: 2_500, build: 2, bodies: 1_00_000, bodiesLabel: "~1 lakh", marketing: 3, competitors: 5, competitorNote: "Zoho Practice, ICAI tool…", note: "Below the ₹50 Cr math at this price" },
 ];
 
+// The same idea sold worldwide: ticket in USD per business per month, businesses
+// worldwide and direct competitors abroad. Mostly estimates (group counts and spend
+// from group-finder/group-data.ts where it has them). null = India-only: the problem
+// comes from an Indian rule or system (RERA, EDPMS/RoDTEP, TPA/Ayushman, EMD/PWD).
+export interface GlobalMarket {
+  ticket: number;
+  bodies: number;
+  bodiesLabel: string;
+  competitors: number;
+  note?: string;
+}
+
+export const GLOBAL: Record<string, GlobalMarket | null> = {
+  "dev-milestone": { ticket: 400, bodies: 300_000, bodiesLabel: "~300K", competitors: 10, note: "RERA part is India-only; milestone billing and buyer updates travel" },
+  "dev-cp": { ticket: 200, bodies: 300_000, bodiesLabel: "~300K", competitors: 8, note: "Channel partners matter mostly in India and the Gulf" },
+  "dev-site": { ticket: 300, bodies: 300_000, bodiesLabel: "~300K", competitors: 30, note: "Procore, Buildertrend and many more" },
+  "exp-desk": null,
+  "exp-docs": { ticket: 100, bodies: 1_000_000, bodiesLabel: "~1M (estimate)", competitors: 15 },
+  "exp-recv": { ticket: 150, bodies: 1_000_000, bodiesLabel: "~1M (estimate)", competitors: 15 },
+  "msme-recv": { ticket: 200, bodies: 3_000_000, bodiesLabel: "~3M", competitors: 20, note: "45-day rule is India-only; collections tools exist abroad (Chaser, Upflow)" },
+  "msme-labour": { ticket: 100, bodies: 3_000_000, bodiesLabel: "~3M", competitors: 30 },
+  "msme-prod": { ticket: 200, bodies: 3_000_000, bodiesLabel: "~3M", competitors: 50 },
+  "school-fee": { ticket: 150, bodies: 1_500_000, bodiesLabel: "~1.5M", competitors: 20 },
+  "school-adm": { ticket: 150, bodies: 1_500_000, bodiesLabel: "~1.5M", competitors: 20 },
+  "school-app": { ticket: 100, bodies: 1_500_000, bodiesLabel: "~1.5M", competitors: 40 },
+  "hosp-tpa": null,
+  "hosp-hms": { ticket: 500, bodies: 250_000, bodiesLabel: "~250K", competitors: 50 },
+  "hosp-opd": { ticket: 150, bodies: 250_000, bodiesLabel: "~250K", competitors: 15 },
+  "dealer-service": { ticket: 300, bodies: 300_000, bodiesLabel: "~300K", competitors: 15 },
+  "dealer-used": { ticket: 200, bodies: 300_000, bodiesLabel: "~300K (estimate)", competitors: 20 },
+  "dealer-leads": { ticket: 300, bodies: 300_000, bodiesLabel: "~300K", competitors: 25 },
+  "dist-credit": { ticket: 150, bodies: 2_000_000, bodiesLabel: "~2M", competitors: 15 },
+  "dist-orders": { ticket: 150, bodies: 2_000_000, bodiesLabel: "~2M", competitors: 25 },
+  "dist-stock": { ticket: 150, bodies: 2_000_000, bodiesLabel: "~2M", competitors: 25 },
+  "gc-money": null,
+  "gc-bid": { ticket: 250, bodies: 500_000, bodiesLabel: "~500K (estimate)", competitors: 15 },
+  "col-accred": { ticket: 800, bodies: 25_000, bodiesLabel: "~25K (estimate)", competitors: 8, note: "Accreditation exists everywhere; frameworks differ by country" },
+  "col-adm": { ticket: 1_000, bodies: 25_000, bodiesLabel: "~25K (estimate)", competitors: 15 },
+  "col-fee": { ticket: 300, bodies: 25_000, bodiesLabel: "~25K (estimate)", competitors: 10 },
+  "ff-portal": { ticket: 300, bodies: 150_000, bodiesLabel: "~150K (estimate)", competitors: 10 },
+  "ff-dnd": { ticket: 150, bodies: 150_000, bodiesLabel: "~150K (estimate)", competitors: 8 },
+  "ff-docs": { ticket: 300, bodies: 150_000, bodiesLabel: "~150K (estimate)", competitors: 15 },
+  "ca-status": { ticket: 100, bodies: 1_500_000, bodiesLabel: "~1.5M", competitors: 20, note: "TaxDome, Karbon and others" },
+};
+
+export type MarketId = "india" | "global";
+
+export function customersForUsd(ticketUsd: number): number {
+  return Math.ceil(TARGET_PER_YEAR / INR_PER_USD / (ticketUsd * 12));
+}
+
 // Score out of 100. Ticket size weighs most (ability to pay is the main filter),
 // then the share of the group needed for ₹50 Cr/year, then competition and effort.
 export const WEIGHTS = { ticket: 0.35, share: 0.2, competitors: 0.2, build: 0.1, marketing: 0.15 };
 
-export function shareNeeded(idea: Idea): number {
-  return customersFor(idea.ticket) / idea.bodies;
+export function shareNeeded(idea: Idea, market: MarketId = "india"): number | null {
+  if (market === "india") return customersFor(idea.ticket) / idea.bodies;
+  const g = GLOBAL[idea.id];
+  return g ? customersForUsd(g.ticket) / g.bodies : null;
 }
 
-export function scoreOf(idea: Idea): number {
-  const ticket = Math.min(1, Math.max(0, Math.log10(idea.ticket / 1_000) / Math.log10(30))); // ₹1K → 0, ₹30K → 1
-  const share = Math.min(1, Math.max(0, (0.15 - shareNeeded(idea)) / 0.13)); // ≤2% → 1, ≥15% → 0
-  const competitors = 1 / (1 + idea.competitors / 3);
+// null when the idea has no global market. Global tickets are converted to rupees
+// so both markets use the same ₹1K → ₹30K ticket scale.
+export function scoreOf(idea: Idea, market: MarketId = "india"): number | null {
+  const g = market === "global" ? GLOBAL[idea.id] : null;
+  if (market === "global" && !g) return null;
+  const ticketInr = g ? g.ticket * INR_PER_USD : idea.ticket;
+  const ticket = Math.min(1, Math.max(0, Math.log10(ticketInr / 1_000) / Math.log10(30))); // ₹1K → 0, ₹30K → 1
+  const share = Math.min(1, Math.max(0, (0.15 - (shareNeeded(idea, market) ?? 1)) / 0.13)); // ≤2% → 1, ≥15% → 0
+  const competitors = 1 / (1 + (g ? g.competitors : idea.competitors) / 3);
   const easy = (level: Level) => (5 - level) / 4;
   const total =
     WEIGHTS.ticket * ticket +
