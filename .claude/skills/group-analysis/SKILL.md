@@ -208,6 +208,7 @@ The pplab group page (`/groups/<id>`) reads `app/_components/ad-research/researc
 | Reddit | `reddit.mjs` | Ready and resilient: signed-in Brave session (needs `node login.mjs` once); searches use the normal search pages when Reddit forbids search JSON; every request is paced; rate limits/blocks trigger automatic cool-downs (3 → 8 → 15 min, up to 45 min) and retries; progress is checkpointed after every step and a re-run of the same config resumes (`--fresh` to start over) |
 | Google Maps | `google-maps.mjs` | Ready (signed-in Brave; search lists in one tab, places + sorted reviews in 3 tabs; checkpoints every 5 places) |
 | Competitor pricing | `competitor-pricing.mjs` | Ready (vendor pricing pages rendered in headless Chromium, not the signed-in profile; Techjockey listings by plain HTTP; Capterra/G2/GetApp are not used because they block automation) |
+| Contact list | `leads.mjs` | Ready (`node leads.mjs <slug>`: phone list from Maps runs for interviews; written to raw/, never committed) |
 | LinkedIn | — | Planned (see docs/platform.md). If config lists it, skip it and note it under Data gaps. |
 
 ## Reliability built in

@@ -1,0 +1,18 @@
+{
+  "group": "MSME B2B suppliers: contact list for interviews",
+  "platforms": ["google-maps"],
+  "googleMaps": {
+    "hl": "en",
+    "queries": ["auto parts manufacturer", "CNC job work", "plastic injection moulding", "sheet metal fabrication", "corrugated box manufacturer"],
+    "locations": ["Ludhiana", "Rajkot", "Pune", "Faridabad", "Coimbatore"],
+    "maxPlacesPerSearch": 15,
+    "reviewsPerPlace": 0,
+    "reviewSort": "lowest",
+    "maxReviewsPerBrand": 0,
+    "concurrency": 3
+  },
+  "leads": {
+    "excludeCategories": ["distributor", "wholesaler", "dealer", "store", "shop", "corporate office", "consultant", "government office", "school", "college", "bank", "training", "institute"],
+    "preferCategories": ["manufacturer", "workshop", "factory", "industries", "fabricat", "machining", "moulding", "molding", "forging", "casting", "packaging", "job work", "engineering works", "auto parts"]
+  }
+}
