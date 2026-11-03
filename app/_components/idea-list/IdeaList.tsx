@@ -1,7 +1,9 @@
 "use client";
 
 import type { ReactNode } from "react";
+import Link from "next/link";
 import { useMemo, useState } from "react";
+import { DETAILS } from "../idea-detail/details";
 import { customersFor, formatInr, INR_PER_USD } from "../idea-guide/guide-data";
 import type { GlobalMarket, Idea, Level, MarketId } from "./idea-data";
 import { customersForUsd, GLOBAL, IDEAS, scoreOf, shareNeeded, WEIGHTS } from "./idea-data";
@@ -88,11 +90,17 @@ function IdeaRow({ row, rank, market }: { row: Row; rank: number; market: Market
   const indiaShare = shareNeeded(row, "india") ?? 0;
   const globalShare = shareNeeded(row, "global");
   return (
-    <li className="grid grid-cols-[2rem_1fr_auto] gap-x-3 gap-y-3 rounded-2xl border border-white/[0.07] bg-white/[0.02] p-4 transition hover:border-white/20 hover:bg-white/[0.04] lg:grid-cols-[2.5rem_minmax(0,2.4fr)_repeat(5,minmax(0,1fr))_4rem] lg:items-center lg:gap-4 lg:rounded-xl lg:px-4 lg:py-3">
+    <li className="relative grid grid-cols-[2rem_1fr_auto] gap-x-3 gap-y-3 rounded-2xl border border-white/[0.07] bg-white/[0.02] p-4 transition hover:border-white/20 hover:bg-white/[0.04] lg:grid-cols-[2.5rem_minmax(0,2.4fr)_repeat(5,minmax(0,1fr))_4rem] lg:items-center lg:gap-4 lg:rounded-xl lg:px-4 lg:py-3">
       <span className="pt-0.5 font-mono text-xs text-white/30 tabular-nums lg:pt-0">{String(rank).padStart(2, "0")}</span>
 
       <div className="min-w-0">
-        <p className="text-sm font-medium text-white">{row.idea}</p>
+        <p className="text-sm font-medium text-white">
+          {/* Stretched link: the whole row opens the idea page. */}
+          <Link href={`/ideas/${row.id}`} className="after:absolute after:inset-0 after:rounded-2xl focus-visible:outline-none focus-visible:after:ring-2 focus-visible:after:ring-emerald-300/70 lg:after:rounded-xl">
+            {row.idea}
+          </Link>
+          {DETAILS[row.id] && <span className="ml-2 rounded-full border border-emerald-300/30 px-2 py-0.5 align-middle text-[10px] font-normal text-emerald-200">Deep dive</span>}
+        </p>
         <p className="mt-0.5 text-xs text-white/40">
           <span className="text-emerald-300/80">{row.group}</span> · {market === "global" && g?.note ? g.note : row.note}
         </p>
