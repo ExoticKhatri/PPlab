@@ -1,0 +1,115 @@
+{
+  "group": "Freight forwarders & customs brokers (India)",
+  "platforms": "all",
+  "metaAds": {
+    "countries": ["IN"],
+    "keywords": [
+      "freight forwarding software", "freight forwarder", "customs broker", "CHA software", "customs clearance software",
+      "logistics software", "freight management software", "shipment tracking software", "freight forwarder CRM",
+      "freight rates", "ocean freight rates", "air freight booking", "container booking", "NVOCC", "freight marketplace",
+      "for freight forwarders", "customs clearing agent", "ICEGATE", "bill of entry", "logistics ERP",
+      "freight invoice", "freight forwarding business", "CargoWise", "Logi-Sys", "Freightos"
+    ],
+    "maxAdsPerKeyword": 150,
+    "maxScrollRounds": 30,
+    "activeOnly": true,
+    "sellerTerms": [
+      "for freight forwarders", "forwarders", "customs brokers", "CHA", "logistics companies", "freight", "NVOCC",
+      "shipment", "rates", "booking", "ERP", "CRM", "ICEGATE", "bill of entry"
+    ],
+    "selfTerms": ["we ship", "send your parcel", "courier to", "door to door", "lowest rates to", "ship to usa", "ship to uk", "cargo service to"],
+    "concurrency": 2
+  },
+  "playStore": {
+    "country": "in",
+    "lang": "en",
+    "searchTerms": [
+      "freight forwarding", "logistics management", "customs clearance", "shipment tracking", "freight rates",
+      "container tracking", "CargoWise", "Freightbro", "logistics ERP"
+    ],
+    "appIds": [],
+    "maxApps": 35,
+    "minReviews": 10,
+    "reviewsPerApp": 1000,
+    "complaintMaxStars": 3,
+    "excludeGames": true,
+    "excludeTitles": ["simulator", "game", "truck driver", "parcel", "courier tracking"],
+    "concurrency": 4,
+    "rankBy": "relevance"
+  },
+  "youtube": {
+    "queries": [
+      "freight forwarding business problems", "customs clearance process india", "CHA business india", "freight forwarder payment problems",
+      "detention demurrage charges", "freight forwarding software demo", "how freight forwarders get clients",
+      "bill of entry filing icegate", "freight forwarding profit margin", "freight forwarder kaise bane"
+    ],
+    "videosPerQuery": 8,
+    "maxCommentsPerVideo": 1000,
+    "maxRepliesPerThread": 5,
+    "commentSort": "top",
+    "minViews": 0,
+    "titleMustMatch": false,
+    "concurrency": 3
+  },
+  "googleSearch": {
+    "hl": "en",
+    "gl": "in",
+    "seeds": ["freight forwarding software", "customs clearance", "CHA", "detention charges", "freight rates", "bill of entry", "freight forwarder"],
+    "expandAlphabet": true,
+    "resultsQueries": [
+      "best freight forwarding software india price", "how to reduce detention and demurrage charges", "customs broker license india",
+      "freight forwarder client not paying", "how to get freight forwarding clients", "CargoWise alternative india"
+    ],
+    "maxResultsPages": 6,
+    "expandPeopleAlsoAsk": 3,
+    "captchaWaitSeconds": 180,
+    "bingFallback": true,
+    "pageGapSeconds": [15, 40]
+  },
+  "googleTrends": {
+    "geo": "IN",
+    "timeframe": "today 5-y",
+    "keywords": ["freight forwarding", "customs clearance", "freight rates", "CHA", "detention charges", "ICEGATE", "logistics software", "NVOCC"],
+    "regionsResolution": "REGION"
+  },
+  "reddit": {
+    "subreddits": ["FreightBrokers", "logistics", "supplychain", "IndiaBusiness", "exportersindia"],
+    "searchQueries": ["freight forwarder", "customs broker", "CargoWise", "detention demurrage", "freight rates", "forwarding software", "customs clearance india", "CHA"],
+    "searchAllReddit": true,
+    "searchSort": "relevance",
+    "searchTimeframe": "all",
+    "discoverSubreddits": true,
+    "discoveryQueries": ["freight forwarding", "customs broker", "logistics india"],
+    "groupTerms": ["freight forwarder", "forwarder", "customs broker", "cha", "nvocc", "freight", "cargowise", "demurrage", "detention", "bill of entry", "shipping line"],
+    "postsPerSearch": 25,
+    "topPostsPerSub": 15,
+    "topTimeframe": "year",
+    "maxThreads": 60,
+    "commentsPerThread": 200,
+    "minPostScore": 0,
+    "relevanceFilter": true
+  },
+  "googleMaps": {
+    "hl": "en",
+    "queries": ["freight forwarder", "customs clearing agent"],
+    "locations": ["Mumbai", "Chennai", "Delhi", "Ahmedabad", "Kolkata"],
+    "maxPlacesPerSearch": 15,
+    "reviewsPerPlace": 10,
+    "reviewSort": "lowest",
+    "maxReviewsPerBrand": 30,
+    "concurrency": 3
+  },
+  "competitorPricing": {
+    "products": [
+      { "name": "Logi-Sys", "website": "https://www.logi-sys.com" },
+      { "name": "CargoWise", "website": "https://www.cargowise.com" },
+      { "name": "Freightbro", "website": "https://www.freightbro.com" },
+      { "name": "Magaya", "website": "https://www.magaya.com" },
+      { "name": "Shipthis", "website": "https://shipthis.co" },
+      { "name": "Freightify", "website": "https://www.freightify.com" },
+      { "name": "Cogoport", "website": "https://www.cogoport.com" },
+      { "name": "GoFreight", "website": "https://gofreight.com" },
+      { "name": "Freightos", "website": "https://www.freightos.com" }
+    ]
+  }
+}

@@ -299,6 +299,21 @@ export const CANDIDATES: Candidate[] = [
     statusNote: "Research more (staff evidence thin)",
   },
   {
+    group: "Freight forwarders & customs brokers",
+    firstDegree: "CargoWise, Logi-Sys, Magaya (Shipthis $89/user)",
+    wedge: "Client status and charges portal",
+    degree: 2,
+    cashLink: "Fewer charge disputes; detention avoided",
+    wedgePrice: 10_000,
+    expandedPrice: 25_000,
+    expansion: "+ quote desk, job costing, billing",
+    groupSize: 25_000,
+    groupSizeLabel: "~25K (estimate)",
+    evidence: ["No response is the top Maps complaint (57 of 164)", "284 bill-of-entry status + 215 detention searches", "CargoWise called clunky; group too small for India alone"],
+    status: "below",
+    statusNote: "Below target math (India too small)",
+  },
+  {
     group: "CA firms",
     firstDegree: "Practice management (Zoho, ICAI entering)",
     wedge: "Client status and document collection",
@@ -327,4 +342,5 @@ export const CHANGELOG = [
   { date: "2026-11-02", text: "Competitor prices confirmed from vendor pages: MSME ERPs up to ₹30,000/month and school ERPs up to ₹1 lakh/year support those price assumptions; distributors' tools cost ₹290–1,150/month" },
   { date: "2026-11-02", text: "Government contractors added: contract money desk (₹3,000 → ₹8,000/month); research more, since paid tools seen cost only ₹200–600/month" },
   { date: "2026-11-02", text: "Private colleges added: accreditation evidence desk (₹20,000 → ₹40,000/month); research more, since staff evidence is thin and compliance interest is falling" },
+  { date: "2026-11-03", text: "Freight forwarders & customs brokers added: client status and charges portal (₹10,000 → ₹25,000/month); below target math in India, viable only as a global product" },
 ];
