@@ -125,14 +125,8 @@ export default function IdeaList() {
   return (
     <div className="h-full overflow-y-auto bg-[#07080a] text-white">
       <div className="mx-auto max-w-7xl px-4 pt-10 pb-32 sm:px-8">
-        <header className="pb-8">
-          <p className="text-xs tracking-[0.2em] text-emerald-300/70 uppercase">Ideas</p>
-          <h1 className="mt-2 max-w-4xl text-3xl font-semibold tracking-tight sm:text-5xl">Every idea from the research, best first</h1>
-          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-white/50">
-            {IDEAS.length} ideas from {new Set(IDEAS.map((i) => i.group)).size} group analyses. Ticket is the suggested entry price per business per month; &quot;need&quot; is how many paying businesses reach ₹50 Cr a year, and the share of the group that is.
-          </p>
-          <p className="mt-2 text-xs text-white/35">Score weights: {weightText}. Click a column to re-sort.</p>
-        </header>
+        <h1 className="sr-only">Ideas ranked</h1>
+        <p className="pb-4 text-xs text-white/35">Score weights: {weightText}. Click a column to re-sort.</p>
 
         <div className="sticky top-0 z-10 -mx-1 mb-2 hidden grid-cols-[2.5rem_minmax(0,2.6fr)_repeat(5,minmax(0,1fr))_4rem] gap-4 rounded-xl bg-[#07080a]/90 px-5 py-2 backdrop-blur lg:grid">
           <span className="text-[10px] tracking-wide text-white/30 uppercase">#</span>
