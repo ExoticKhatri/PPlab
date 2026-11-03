@@ -314,6 +314,21 @@ export const CANDIDATES: Candidate[] = [
     statusNote: "Below target math (India too small)",
   },
   {
+    group: "Pharma & nutraceutical manufacturers",
+    firstDegree: "eQMS (MasterControl, Veeva, Qualio), AmpleLogic, Caliber",
+    wedge: "Lightweight GMP compliance desk (Schedule M)",
+    degree: 2,
+    cashLink: "Audits passed, licence kept",
+    wedgePrice: 15_000,
+    expandedPrice: 35_000,
+    expansion: "+ eBMR, LIMS-lite; $500 → $1,200 globally",
+    groupSize: 10_500,
+    groupSizeLabel: "~10.5K India (~60K global, estimate)",
+    evidence: ["Only ~26% of MSME units had Schedule M upgrade plans before the deadline", "Schedule M searches +103%, data integrity +162%", "Entry eQMS abroad costs ≈$1,460/month (SimplerQMS)"],
+    status: "conditional",
+    statusNote: "Global-first (India too small)",
+  },
+  {
     group: "CA firms",
     firstDegree: "Practice management (Zoho, ICAI entering)",
     wedge: "Client status and document collection",
@@ -343,4 +358,5 @@ export const CHANGELOG = [
   { date: "2026-11-02", text: "Government contractors added: contract money desk (₹3,000 → ₹8,000/month); research more, since paid tools seen cost only ₹200–600/month" },
   { date: "2026-11-02", text: "Private colleges added: accreditation evidence desk (₹20,000 → ₹40,000/month); research more, since staff evidence is thin and compliance interest is falling" },
   { date: "2026-11-03", text: "Freight forwarders & customs brokers added: client status and charges portal (₹10,000 → ₹25,000/month); below target math in India, viable only as a global product" },
+  { date: "2026-11-03", text: "Pharma & nutraceutical manufacturers added: GMP compliance desk (₹15,000 → ₹35,000/month; $500 → $1,200 global); global-first" },
 ];

@@ -1,0 +1,114 @@
+{
+  "group": "Pharma & nutraceutical manufacturers (India + global)",
+  "platforms": "all",
+  "metaAds": {
+    "countries": ["IN", "US"],
+    "keywords": [
+      "GMP compliance", "Schedule M", "revised Schedule M", "QMS software", "quality management software pharma", "eQMS",
+      "CAPA software", "deviation management", "change control software", "document management pharma", "LIMS",
+      "batch manufacturing record", "electronic batch record", "21 CFR Part 11", "WHO GMP", "USFDA audit", "audit readiness",
+      "pharma ERP", "pharma manufacturing software", "nutraceutical manufacturing", "third party manufacturing pharma",
+      "validation software", "training management pharma", "MasterControl", "Qualio"
+    ],
+    "maxAdsPerKeyword": 120,
+    "maxScrollRounds": 25,
+    "activeOnly": true,
+    "sellerTerms": [
+      "pharma", "GMP", "QMS", "eQMS", "CAPA", "deviation", "LIMS", "batch record", "21 CFR", "audit", "validation", "Schedule M",
+      "compliance", "life sciences", "quality teams"
+    ],
+    "selfTerms": ["third party manufacturing", "pcd pharma franchise", "monopoly rights", "buy now", "order now", "tablets", "capsules", "syrup"],
+    "concurrency": 2
+  },
+  "playStore": {
+    "country": "in",
+    "lang": "en",
+    "searchTerms": [
+      "pharma QMS", "GMP audit", "LIMS", "pharma ERP", "batch manufacturing record", "quality management system", "validation pharma",
+      "pharmaceutical guidelines", "21 CFR"
+    ],
+    "appIds": [],
+    "maxApps": 35,
+    "minReviews": 10,
+    "reviewsPerApp": 1000,
+    "complaintMaxStars": 3,
+    "excludeGames": true,
+    "excludeTitles": ["game", "simulator", "medicine reminder", "pharmacy delivery", "1mg", "netmeds", "pharmeasy"],
+    "concurrency": 4,
+    "rankBy": "relevance"
+  },
+  "youtube": {
+    "queries": [
+      "revised schedule M compliance", "GMP audit observations", "USFDA 483 observations", "CAPA in pharma", "deviation management pharma",
+      "data integrity pharma", "QA job pharma problems", "pharma QMS software demo", "WHO GMP audit preparation", "pharma plant documentation"
+    ],
+    "videosPerQuery": 8,
+    "maxCommentsPerVideo": 1000,
+    "maxRepliesPerThread": 5,
+    "commentSort": "top",
+    "minViews": 0,
+    "titleMustMatch": false,
+    "concurrency": 3
+  },
+  "googleSearch": {
+    "hl": "en",
+    "gl": "in",
+    "seeds": ["revised schedule M", "GMP audit", "QMS software", "CAPA", "deviation", "data integrity", "electronic batch record"],
+    "expandAlphabet": true,
+    "resultsQueries": [
+      "best pharma QMS software price", "revised schedule M compliance deadline MSME", "how to prepare for USFDA audit",
+      "CAPA software for small pharma", "electronic batch record cost", "MasterControl alternative"
+    ],
+    "maxResultsPages": 6,
+    "expandPeopleAlsoAsk": 3,
+    "captchaWaitSeconds": 180,
+    "bingFallback": true,
+    "pageGapSeconds": [15, 40]
+  },
+  "googleTrends": {
+    "geo": "",
+    "timeframe": "today 5-y",
+    "keywords": ["GMP", "QMS software", "eQMS", "CAPA", "data integrity", "electronic batch record", "21 CFR Part 11", "schedule M"],
+    "regionsResolution": "COUNTRY"
+  },
+  "reddit": {
+    "subreddits": ["QualityAssurance", "pharmaceuticals", "biotech", "Pharma", "IndianPharma"],
+    "searchQueries": ["QMS software", "CAPA", "deviation", "MasterControl", "Veeva", "GMP audit", "FDA 483", "data integrity"],
+    "searchAllReddit": true,
+    "searchSort": "relevance",
+    "searchTimeframe": "all",
+    "discoverSubreddits": true,
+    "discoveryQueries": ["pharmaceutical quality", "GMP manufacturing", "pharma QA"],
+    "groupTerms": ["gmp", "qms", "eqms", "capa", "deviation", "change control", "batch record", "fda", "483", "data integrity", "validation", "qa", "quality assurance", "pharma", "mastercontrol", "veeva", "trackwise"],
+    "postsPerSearch": 25,
+    "topPostsPerSub": 15,
+    "topTimeframe": "year",
+    "maxThreads": 60,
+    "commentsPerThread": 200,
+    "minPostScore": 0,
+    "relevanceFilter": true
+  },
+  "googleMaps": {
+    "hl": "en",
+    "queries": ["pharmaceutical manufacturer", "nutraceutical manufacturer"],
+    "locations": ["Baddi", "Ahmedabad", "Hyderabad", "Vadodara", "Aurangabad"],
+    "maxPlacesPerSearch": 15,
+    "reviewsPerPlace": 10,
+    "reviewSort": "lowest",
+    "maxReviewsPerBrand": 30,
+    "concurrency": 3
+  },
+  "competitorPricing": {
+    "products": [
+      { "name": "MasterControl", "website": "https://www.mastercontrol.com" },
+      { "name": "Qualio", "website": "https://www.qualio.com" },
+      { "name": "SimplerQMS", "website": "https://simplerqms.com" },
+      { "name": "QT9 QMS", "website": "https://qt9software.com" },
+      { "name": "Scilife", "website": "https://www.scilife.io" },
+      { "name": "ComplianceQuest", "website": "https://www.compliancequest.com" },
+      { "name": "Dot Compliance", "website": "https://www.dotcompliance.com" },
+      { "name": "AmpleLogic", "website": "https://amplelogic.com" },
+      { "name": "Caliber", "website": "https://www.caliberuniversal.com" }
+    ]
+  }
+}

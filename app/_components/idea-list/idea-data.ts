@@ -53,6 +53,9 @@ export const IDEAS: Idea[] = [
   { id: "ff-portal", idea: "Client status and charges portal for forwarders and CHAs", group: "Freight forwarders", ticket: 10_000, build: 4, bodies: 25_000, bodiesLabel: "~25K (estimate)", marketing: 3, competitors: 6, competitorNote: "CargoWise, Logi-Sys, Shipthis, Freightify…", note: "No response is the top client complaint; group small for India" },
   { id: "ff-dnd", idea: "Detention and demurrage tracker", group: "Freight forwarders", ticket: 4_000, build: 3, bodies: 25_000, bodiesLabel: "~25K (estimate)", marketing: 3, competitors: 4, competitorNote: "Container trackers (GoComet, Lynktrac…)", note: "215 detention searches; could also sell to importers" },
   { id: "ff-docs", idea: "Document-to-job automation (BL, invoice into the forwarding system)", group: "Freight forwarders", ticket: 10_000, build: 3, bodies: 25_000, bodiesLabel: "~25K (estimate)", marketing: 3, competitors: 8, competitorNote: "AI document tools, CargoWise add-ons", note: "Manual job entry; many AI tools compete" },
+  { id: "ph-gmp", idea: "Lightweight GMP compliance desk: documents, logbooks, CAPA, training, Schedule M", group: "Pharma manufacturers", ticket: 15_000, build: 4, bodies: 10_500, bodiesLabel: "~10.5K", marketing: 4, competitors: 3, competitorNote: "AmpleLogic, Caliber, consultants", note: "Only ~26% of MSME units had Schedule M upgrade plans before the deadline" },
+  { id: "ph-ebmr", idea: "Electronic batch records for small plants", group: "Pharma manufacturers", ticket: 25_000, build: 5, bodies: 10_500, bodiesLabel: "~10.5K", marketing: 4, competitors: 4, competitorNote: "AmpleLogic, Caliber, Körber…", note: "Paper batch records cause data-integrity findings" },
+  { id: "ph-gdp", idea: "Training and document-control module for QA staff", group: "Pharma manufacturers", ticket: 5_000, build: 2, bodies: 10_500, bodiesLabel: "~10.5K", marketing: 3, competitors: 5, competitorNote: "QMS modules, LMS tools", note: "Entry module; fails India math alone" },
   { id: "ca-status", idea: "Client status and document collection", group: "CA firms", ticket: 2_500, build: 2, bodies: 1_00_000, bodiesLabel: "~1 lakh", marketing: 3, competitors: 5, competitorNote: "Zoho Practice, ICAI tool…", note: "Below the ₹50 Cr math at this price" },
 ];
 
@@ -98,6 +101,9 @@ export const GLOBAL: Record<string, GlobalMarket | null> = {
   "ff-portal": { ticket: 300, bodies: 150_000, bodiesLabel: "~150K (estimate)", competitors: 10 },
   "ff-dnd": { ticket: 150, bodies: 150_000, bodiesLabel: "~150K (estimate)", competitors: 8 },
   "ff-docs": { ticket: 300, bodies: 150_000, bodiesLabel: "~150K (estimate)", competitors: 15 },
+  "ph-gmp": { ticket: 500, bodies: 60_000, bodiesLabel: "~60K (estimate)", competitors: 15, note: "Small GMP plants worldwide; entry eQMS costs ≈$1,460/mo" },
+  "ph-ebmr": { ticket: 800, bodies: 60_000, bodiesLabel: "~60K (estimate)", competitors: 10 },
+  "ph-gdp": { ticket: 200, bodies: 60_000, bodiesLabel: "~60K (estimate)", competitors: 20 },
   "ca-status": { ticket: 100, bodies: 1_500_000, bodiesLabel: "~1.5M", competitors: 20, note: "TaxDome, Karbon and others" },
 };
 
