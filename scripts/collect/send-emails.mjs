@@ -163,32 +163,32 @@ async function main() {
     return;
   }
 
-  const { context, page } = await openProfileBrowser();
-  try {
-    const account = await signedInAccount(page, from);
-    if (!account) throw new Error("Not signed in to Gmail in the automation profile. Run `node login.mjs` and sign in.");
-    if (account !== from) throw new Error(`Gmail opened as ${account}, not ${from}. Add ${from} to the profile with \`node login.mjs\` (Google account menu → Add another account), then re-run. Stopping.`);
-    log(P, `Gmail account confirmed: ${account}`);
-
-    for (const [i, q] of queue.entries()) {
-      while (!withinHours(hours)) {
-        log(P, `outside sending hours (${hours}, Mon–Sat): waiting…`);
-        await sleep(15 * 60_000);
-      }
-      await sendOne(page, from, q);
-      sentLog[q.to] = { ...(sentLog[q.to] ?? {}), company: q.company, [kind]: { sentAt: new Date().toISOString(), subject: q.subject } };
-      saveLog();
-      log(P, `[${i + 1}/${queue.length}] sent to ${q.company} <${q.to}>`);
-      if (i < queue.length - 1) {
-        const wait = gapMin * 60_000 + Math.random() * 60_000;
-        log(P, `  next in ${Math.round(wait / 60_000)} min`);
-        await sleep(wait);
-      }
+  // The browser is opened for each send and closed right after, so no window or tab
+  // stays open during the gaps (and other collectors can use the profile meanwhile).
+  for (const [i, q] of queue.entries()) {
+    while (!withinHours(hours)) {
+      log(P, `outside sending hours (${hours}, Mon–Sat): waiting…`);
+      await sleep(15 * 60_000);
     }
-    log(P, `done: ${queue.length} sent. Log: ${logFile}`);
-  } finally {
-    await closeProfileBrowser(context);
+    const { context, page } = await openProfileBrowser();
+    try {
+      const account = await signedInAccount(page, from);
+      if (!account) throw new Error("Not signed in to Gmail in the automation profile. Run `node login.mjs` and sign in.");
+      if (account !== from) throw new Error(`Gmail opened as ${account}, not ${from}. Add ${from} to the profile with \`node login.mjs\` (Google account menu → Add another account), then re-run. Stopping.`);
+      await sendOne(page, from, q);
+    } finally {
+      await closeProfileBrowser(context);
+    }
+    sentLog[q.to] = { ...(sentLog[q.to] ?? {}), company: q.company, [kind]: { sentAt: new Date().toISOString(), subject: q.subject } };
+    saveLog();
+    log(P, `[${i + 1}/${queue.length}] sent to ${q.company} <${q.to}> (browser closed)`);
+    if (i < queue.length - 1) {
+      const wait = gapMin * 60_000 + Math.random() * 60_000;
+      log(P, `  next in ${Math.round(wait / 60_000)} min`);
+      await sleep(wait);
+    }
   }
+  log(P, `done: ${queue.length} sent. Log: ${logFile}`);
 }
 
 main().catch((error) => {
