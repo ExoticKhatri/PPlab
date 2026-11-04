@@ -74,8 +74,9 @@ function withinHours(range) {
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-async function signedInAccount(page) {
-  await page.goto("https://mail.google.com/mail/u/0/#inbox", { waitUntil: "domcontentloaded", timeout: 60_000 });
+// authuser picks the account when the profile holds several Google accounts.
+async function signedInAccount(page, from) {
+  await page.goto(`https://mail.google.com/mail/?authuser=${encodeURIComponent(from)}#inbox`, { waitUntil: "domcontentloaded", timeout: 60_000 });
   await page.waitForTimeout(5000);
   if (/accounts\.google\.com/.test(page.url())) return null;
   const label = await page
@@ -87,15 +88,29 @@ async function signedInAccount(page) {
 }
 
 // Open a pre-filled compose window, send it, and wait for Gmail's confirmation.
-async function sendOne(page, { to, subject, body }) {
-  const url = `https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&to=${encodeURIComponent(to)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+async function sendOne(page, from, { to, subject, body }) {
+  const url = `https://mail.google.com/mail/?authuser=${encodeURIComponent(from)}&view=cm&fs=1&tf=1&to=${encodeURIComponent(to)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   await page.goto(url, { waitUntil: "domcontentloaded", timeout: 60_000 });
   if (await isBlocked(page)) throw new Error("Gmail showed a block or captcha page");
   const send = page.locator('div[role="button"][aria-label^="Send"]').first();
   await send.waitFor({ state: "visible", timeout: 30_000 });
-  await page.waitForTimeout(1500 + Math.random() * 1500);
+  await page.waitForTimeout(2000 + Math.random() * 1500);
+  // Sent = the compose window closes or Gmail shows "Message sent". The full-page compose view
+  // sometimes ignores the click, so fall back to Gmail's own Ctrl+Enter shortcut.
+  const sent = () =>
+    Promise.race([
+      send.waitFor({ state: "detached", timeout: 15_000 }),
+      page.getByText(/Message sent/i).first().waitFor({ state: "visible", timeout: 15_000 }),
+    ]).then(
+      () => true,
+      () => false,
+    );
   await send.click();
-  await page.getByText(/Message sent/i).first().waitFor({ state: "visible", timeout: 30_000 });
+  if (await sent()) return;
+  await page.locator('div[role="textbox"][aria-label*="Message Body"]').first().click().catch(() => {});
+  await page.keyboard.press("Control+Enter");
+  if (await sent()) return;
+  throw new Error(`Gmail did not confirm the send to ${to}; check Drafts before re-running`);
 }
 
 async function main() {
@@ -125,7 +140,7 @@ async function main() {
 
   const queue = [];
   const seenCompanies = new Set();
-  const candidates = testTo ? [{ name: "Test", email: testTo, status: "" }] : leads;
+  const candidates = testTo ? [{ name: "Test", email: testTo, city: "Test", status: "" }] : leads;
   for (const lead of candidates) {
     const to = (lead.email ?? "").split(/\s+/)[0];
     if (!to || seenCompanies.has(lead.name)) continue;
@@ -150,9 +165,9 @@ async function main() {
 
   const { context, page } = await openProfileBrowser();
   try {
-    const account = await signedInAccount(page);
+    const account = await signedInAccount(page, from);
     if (!account) throw new Error("Not signed in to Gmail in the automation profile. Run `node login.mjs` and sign in.");
-    if (account !== from) throw new Error(`Gmail is signed in as ${account}, not ${from}. Stopping.`);
+    if (account !== from) throw new Error(`Gmail opened as ${account}, not ${from}. Add ${from} to the profile with \`node login.mjs\` (Google account menu → Add another account), then re-run. Stopping.`);
     log(P, `Gmail account confirmed: ${account}`);
 
     for (const [i, q] of queue.entries()) {
@@ -160,7 +175,7 @@ async function main() {
         log(P, `outside sending hours (${hours}, Mon–Sat): waiting…`);
         await sleep(15 * 60_000);
       }
-      await sendOne(page, q);
+      await sendOne(page, from, q);
       sentLog[q.to] = { ...(sentLog[q.to] ?? {}), company: q.company, [kind]: { sentAt: new Date().toISOString(), subject: q.subject } };
       saveLog();
       log(P, `[${i + 1}/${queue.length}] sent to ${q.company} <${q.to}>`);
