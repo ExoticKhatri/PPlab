@@ -150,7 +150,19 @@ async function main() {
       if (++done % 20 === 0) log(P, `  ${done}/${todo.length}`);
     });
     fs.writeFileSync(cacheFile, JSON.stringify(cache, null, 1));
-    for (const l of leads) l.emails = cache[l.website] ?? [];
+    // Keep emails on the site's own domain or a free provider owners use; others are usually the
+    // web designer's or theme vendor's address (e.g. info@peacefulthemes.com on a factory site).
+    const FREE = /@(gmail|yahoo|rediffmail|hotmail|outlook|live|ymail|icloud)\.(com|co\.in|in)$/;
+    for (const l of leads) {
+      let host = "";
+      try {
+        host = new URL(l.website.startsWith("http") ? l.website : `http://${l.website}`).hostname.replace(/^www\./, "");
+      } catch {
+        host = "";
+      }
+      const base = host.split(".").slice(-2)[0] ?? "";
+      l.emails = (cache[l.website] ?? []).filter((e) => FREE.test(e) || (base && e.split("@")[1]?.includes(base)));
+    }
   }
 
   // Best first: targeted runs, target categories, an email (outreach starts by email), a mobile, a website, more reviews.

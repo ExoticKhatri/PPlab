@@ -100,6 +100,13 @@ How we keep it safe:
 - **How:** [scripts/collect/leads.mjs](../scripts/collect/leads.mjs) `node leads.mjs <slug> [more-slugs…] [--out <name>]` reads `raw/google-maps/places.json`. It keeps open places with a phone, drops duplicates and `leads.excludeCategories`, normalises Indian numbers (+91; mobile vs landline), adds a WhatsApp link for mobiles, and ranks `leads.preferCategories` first.
 - **Emails:** `--emails` visits each listed website with plain HTTP (homepage, then its contact page, `/contact-us` or `/contact`). It reads email addresses, including Cloudflare-hidden ones, skips template and no-reply addresses, and ranks the site's own domain first. Results are cached in `raw/google-maps/emails.json`. On the MSME runs, about two in three factory websites listed an email.
 - **Fast runs:** a Maps run with `reviewsPerPlace: 0` collects contact details only (about 4 s per place).
+- **Sending:** [scripts/collect/send-emails.mjs](../scripts/collect/send-emails.mjs) `node send-emails.mjs <slug> --from you@gmail.com [--send] [--followups]` sends the template in `raw/outreach-email.json` through Gmail in the signed-in profile.
+  - It is a dry run unless `--send` is given.
+  - It checks the signed-in account matches `--from`.
+  - One email per company, at most 15 per run, 10 minutes apart, during business hours (Mon–Sat).
+  - It logs every send in `raw/outreach-log.json`, so no address gets the same email twice.
+  - It stops at the first unconfirmed send.
+  - Only emails on the factory's own domain or a free provider are kept; designer and theme-vendor addresses are dropped.
 - **Output:** `raw/google-maps/<name>.csv` with blank `status` and `notes` columns for the caller. It stays in raw/, which is gitignored, so phone numbers are never committed.
 
 ## Competitor pricing
