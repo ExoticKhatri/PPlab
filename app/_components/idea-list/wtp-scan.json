@@ -1,0 +1,200 @@
+{
+ "dev-milestone": {
+  "jobs": 1796,
+  "ads": 0,
+  "prices": 0,
+  "intent": 11
+ },
+ "dev-cp": {
+  "jobs": 96,
+  "ads": 2,
+  "prices": 1,
+  "intent": 3
+ },
+ "dev-site": {
+  "jobs": 19021,
+  "ads": 2,
+  "prices": 0,
+  "intent": 61
+ },
+ "exp-desk": {
+  "jobs": 1481,
+  "ads": 0,
+  "prices": 2,
+  "intent": 21
+ },
+ "exp-docs": {
+  "jobs": 1682,
+  "ads": 0,
+  "prices": 0,
+  "intent": 24
+ },
+ "exp-recv": {
+  "jobs": 40178,
+  "ads": 0,
+  "prices": 1,
+  "intent": 4
+ },
+ "msme-recv": {
+  "jobs": 214167,
+  "ads": 1,
+  "prices": 1,
+  "intent": 59
+ },
+ "msme-labour": {
+  "jobs": 577,
+  "ads": 2,
+  "prices": 1,
+  "intent": 36
+ },
+ "msme-prod": {
+  "jobs": 97,
+  "ads": 2,
+  "prices": 0,
+  "intent": 11
+ },
+ "school-fee": {
+  "jobs": 19219,
+  "ads": 0,
+  "prices": 1,
+  "intent": 33
+ },
+ "school-adm": {
+  "jobs": 19219,
+  "ads": 0,
+  "prices": 1,
+  "intent": 9
+ },
+ "school-app": {
+  "jobs": 19219,
+  "ads": 0,
+  "prices": 0,
+  "intent": 69
+ },
+ "hosp-tpa": {
+  "jobs": 15274,
+  "ads": 0,
+  "prices": 0,
+  "intent": 69
+ },
+ "hosp-hms": {
+  "jobs": 894,
+  "ads": 0,
+  "prices": 0,
+  "intent": 69
+ },
+ "hosp-opd": {
+  "jobs": 2142,
+  "ads": 1,
+  "prices": 0,
+  "intent": 18
+ },
+ "dealer-service": {
+  "jobs": 17,
+  "ads": 0,
+  "prices": 0,
+  "intent": 30
+ },
+ "dealer-used": {
+  "jobs": 62,
+  "ads": 0,
+  "prices": 4,
+  "intent": 21
+ },
+ "dealer-leads": {
+  "jobs": 8562,
+  "ads": 0,
+  "prices": 0,
+  "intent": 8
+ },
+ "dist-credit": {
+  "jobs": null,
+  "ads": 0,
+  "prices": 0,
+  "intent": 20
+ },
+ "dist-orders": {
+  "jobs": 20,
+  "ads": 1,
+  "prices": 0,
+  "intent": 9
+ },
+ "dist-stock": {
+  "jobs": 6347,
+  "ads": 0,
+  "prices": 0,
+  "intent": 5
+ },
+ "gc-money": {
+  "jobs": 43,
+  "ads": 0,
+  "prices": 0,
+  "intent": 41
+ },
+ "gc-bid": {
+  "jobs": 53146,
+  "ads": 0,
+  "prices": 12,
+  "intent": 70
+ },
+ "col-accred": {
+  "jobs": 333,
+  "ads": 0,
+  "prices": 12,
+  "intent": 17
+ },
+ "col-adm": {
+  "jobs": 9130,
+  "ads": 3,
+  "prices": 1,
+  "intent": 10
+ },
+ "col-fee": {
+  "jobs": 9130,
+  "ads": 0,
+  "prices": 0,
+  "intent": 8
+ },
+ "ff-portal": {
+  "jobs": 7307,
+  "ads": 0,
+  "prices": 1,
+  "intent": 17
+ },
+ "ff-dnd": {
+  "jobs": 220,
+  "ads": 0,
+  "prices": 0,
+  "intent": 13
+ },
+ "ff-docs": {
+  "jobs": 456,
+  "ads": 0,
+  "prices": 0,
+  "intent": 4
+ },
+ "ph-gmp": {
+  "jobs": 40548,
+  "ads": 2,
+  "prices": 0,
+  "intent": 34
+ },
+ "ph-ebmr": {
+  "jobs": 6815,
+  "ads": 2,
+  "prices": 0,
+  "intent": 2
+ },
+ "ph-gdp": {
+  "jobs": 117,
+  "ads": 0,
+  "prices": 0,
+  "intent": 14
+ },
+ "ca-status": {
+  "jobs": 4638,
+  "ads": 0,
+  "prices": 0,
+  "intent": 10
+ }
+}

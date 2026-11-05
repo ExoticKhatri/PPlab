@@ -7,11 +7,33 @@ import { DETAILS } from "../idea-detail/details";
 import { customersFor, formatInr, INR_PER_USD } from "../idea-guide/guide-data";
 import type { GlobalMarket, Idea, Level, MarketId } from "./idea-data";
 import { customersForUsd, GLOBAL, IDEAS, scoreOf, shareNeeded, WEIGHTS } from "./idea-data";
+import { PAID_ALONE, SCAN_RESULTS, wtpScore } from "./wtp-data";
 
-type SortKey = "score" | "ticket" | "build" | "bodies" | "marketing" | "competitors";
+const PAID_WORD = ["No sign", "Bundled only", "Paid, cheap", "Paid alone"] as const;
+const PAID_TONE = ["text-rose-300", "text-rose-200", "text-amber-200", "text-emerald-300"] as const;
+
+// Does anyone already pay for exactly this task alone? Hand level + scan evidence.
+function PaysAlone({ id }: { id: string }) {
+  const p = PAID_ALONE[id];
+  const s = SCAN_RESULTS[id];
+  const level = p?.level ?? 0;
+  const facts = s ? `${s.jobs ?? "?"} jobs · ${s.ads} ads · ${s.intent} intent` : "not scanned";
+  return (
+    <div title={p?.evidence}>
+      <p className={`text-sm font-semibold tabular-nums ${PAID_TONE[level]}`}>
+        {wtpScore(id)}
+        <span className="ml-1 text-[11px] font-normal">{PAID_WORD[level]}</span>
+      </p>
+      <p className="truncate text-[11px] text-white/35">{facts}</p>
+    </div>
+  );
+}
+
+type SortKey = "score" | "pay" | "ticket" | "build" | "bodies" | "marketing" | "competitors";
 
 // First click on a column shows the best ideas first, so "better" sets the direction.
 const COLUMNS: { key: SortKey; label: string; better: "high" | "low" }[] = [
+  { key: "pay", label: "Pays alone", better: "high" },
   { key: "ticket", label: "Ticket / month", better: "high" },
   { key: "build", label: "Build difficulty", better: "low" },
   { key: "bodies", label: "Businesses", better: "high" },
@@ -40,6 +62,8 @@ function valueOf(row: Row, key: SortKey, market: MarketId): number | null {
   switch (key) {
     case "score":
       return row.score;
+    case "pay":
+      return wtpScore(row.id);
     case "ticket":
       return g ? g.ticket * INR_PER_USD : row.ticket;
     case "bodies":
@@ -90,7 +114,7 @@ function IdeaRow({ row, rank, market }: { row: Row; rank: number; market: Market
   const indiaShare = shareNeeded(row, "india") ?? 0;
   const globalShare = shareNeeded(row, "global");
   return (
-    <li className="relative grid grid-cols-[2rem_1fr_auto] gap-x-3 gap-y-3 rounded-2xl border border-white/[0.07] bg-white/[0.02] p-4 transition hover:border-white/20 hover:bg-white/[0.04] lg:grid-cols-[2.5rem_minmax(0,2.4fr)_repeat(5,minmax(0,1fr))_4rem] lg:items-center lg:gap-4 lg:rounded-xl lg:px-4 lg:py-3">
+    <li className="relative grid grid-cols-[2rem_1fr_auto] gap-x-3 gap-y-3 rounded-2xl border border-white/[0.07] bg-white/[0.02] p-4 transition hover:border-white/20 hover:bg-white/[0.04] lg:grid-cols-[2.5rem_minmax(0,2.4fr)_repeat(6,minmax(0,1fr))_4rem] lg:items-center lg:gap-4 lg:rounded-xl lg:px-4 lg:py-3">
       <span className="pt-0.5 font-mono text-xs text-white/30 tabular-nums lg:pt-0">{String(rank).padStart(2, "0")}</span>
 
       <div className="min-w-0">
@@ -112,6 +136,10 @@ function IdeaRow({ row, rank, market }: { row: Row; rank: number; market: Market
 
       {/* Metrics: a 2–3 column grid on phones, table cells on large screens. */}
       <div className="col-span-3 col-start-1 grid grid-cols-2 gap-3 border-t border-white/5 pt-3 sm:grid-cols-3 lg:contents">
+        <div>
+          <p className="mb-1 text-[10px] tracking-wide text-white/35 uppercase lg:hidden">Pays alone</p>
+          <PaysAlone id={row.id} />
+        </div>
         <div className="space-y-1">
           <p className="text-[10px] tracking-wide text-white/35 uppercase lg:hidden">Ticket / month</p>
           <MarketLine active={market === "india"}>
@@ -194,7 +222,7 @@ export default function IdeaList() {
     setSort((s) => (s.key === key ? { key, dir: s.dir === 1 ? -1 : 1 } : { key, dir: best }));
   }
 
-  const weightText = `ticket ${WEIGHTS.ticket * 100}% · share of group needed ${WEIGHTS.share * 100}% · competitors ${WEIGHTS.competitors * 100}% · marketing ${WEIGHTS.marketing * 100}% · build ${WEIGHTS.build * 100}%`;
+  const weightText = `ticket ${Math.round(WEIGHTS.ticket * 100)}% · pays alone ${Math.round(WEIGHTS.pay * 100)}% · share of group needed ${WEIGHTS.share * 100}% · competitors ${WEIGHTS.competitors * 100}% · marketing ${WEIGHTS.marketing * 100}% · build ${WEIGHTS.build * 100}%`;
   const indiaOnly = IDEAS.filter((i) => !GLOBAL[i.id]).length;
 
   return (
@@ -222,7 +250,7 @@ export default function IdeaList() {
           </p>
         </div>
 
-        <div className="sticky top-0 z-10 -mx-1 mb-2 hidden grid-cols-[2.5rem_minmax(0,2.4fr)_repeat(5,minmax(0,1fr))_4rem] gap-4 rounded-xl bg-[#07080a]/90 px-5 py-2 backdrop-blur lg:grid">
+        <div className="sticky top-0 z-10 -mx-1 mb-2 hidden grid-cols-[2.5rem_minmax(0,2.4fr)_repeat(6,minmax(0,1fr))_4rem] gap-4 rounded-xl bg-[#07080a]/90 px-5 py-2 backdrop-blur lg:grid">
           <span className="text-[10px] tracking-wide text-white/30 uppercase">#</span>
           <span className="text-[10px] tracking-wide text-white/30 uppercase">Idea</span>
           {COLUMNS.map((c) => (

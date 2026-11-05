@@ -5,6 +5,7 @@
 // seen in the data (not the crowded first-degree market around them).
 
 import { customersFor, INR_PER_USD, TARGET_PER_YEAR } from "../idea-guide/guide-data";
+import { wtpScore } from "./wtp-data";
 
 export type Level = 1 | 2 | 3 | 4 | 5;
 
@@ -113,9 +114,9 @@ export function customersForUsd(ticketUsd: number): number {
   return Math.ceil(TARGET_PER_YEAR / INR_PER_USD / (ticketUsd * 12));
 }
 
-// Score out of 100. Ticket size weighs most (ability to pay is the main filter),
-// then the share of the group needed for ₹50 Cr/year, then competition and effort.
-export const WEIGHTS = { ticket: 0.35, share: 0.2, competitors: 0.2, build: 0.1, marketing: 0.15 };
+// Score out of 100. Ticket size and proof that people already pay for this task alone
+// weigh most, then the share of the group needed for ₹50 Cr/year, then competition and effort.
+export const WEIGHTS = { ticket: 0.26, pay: 0.25, share: 0.15, competitors: 0.15, build: 0.08, marketing: 0.11 };
 
 export function shareNeeded(idea: Idea, market: MarketId = "india"): number | null {
   if (market === "india") return customersFor(idea.ticket) / idea.bodies;
@@ -135,6 +136,7 @@ export function scoreOf(idea: Idea, market: MarketId = "india"): number | null {
   const easy = (level: Level) => (5 - level) / 4;
   const total =
     WEIGHTS.ticket * ticket +
+    WEIGHTS.pay * (wtpScore(idea.id) / 100) +
     WEIGHTS.share * share +
     WEIGHTS.competitors * competitors +
     WEIGHTS.build * easy(idea.build) +

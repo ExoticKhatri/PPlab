@@ -209,6 +209,7 @@ The pplab group page (`/groups/<id>`) reads `app/_components/ad-research/researc
 | Google Maps | `google-maps.mjs` | Ready (signed-in Brave; search lists in one tab, places + sorted reviews in 3 tabs; checkpoints every 5 places) |
 | Competitor pricing | `competitor-pricing.mjs` | Ready (vendor pricing pages rendered in headless Chromium, not the signed-in profile; Techjockey listings by plain HTTP; Capterra/G2/GetApp are not used because they block automation) |
 | Contact list | `leads.mjs` | Ready (`node leads.mjs <slug>`: phone list from Maps runs for interviews; written to raw/, never committed) |
+| Willingness-to-pay scan (all ideas) | `wtp-scan.mjs` | Ready (`node wtp-scan.mjs [idea-id…]`: Naukri jobs, Google ads/prices, buying-intent autocomplete per idea; add each new idea to `analyses/wtp-scan/config.json` and score its `PAID_ALONE` level in `app/_components/idea-list/wtp-data.ts`) |
 | LinkedIn | — | Planned (see docs/platform.md). If config lists it, skip it and note it under Data gaps. |
 
 ## Reliability built in

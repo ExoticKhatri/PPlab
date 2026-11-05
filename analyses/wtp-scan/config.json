@@ -1,0 +1,425 @@
+{
+  "about": "Willingness-to-pay scan: does anyone already pay for exactly this task, alone? One entry per idea in app/_components/idea-list/idea-data.ts. jobs = Naukri searches for the role that does the task; google = buyer searches (ads and ₹ prices counted); seeds = autocomplete seeds probed with buying-intent words.",
+  "ideas": [
+    {
+      "id": "dev-milestone",
+      "jobs": [
+        "rera executive",
+        "crm executive real estate"
+      ],
+      "google": [
+        "rera qpr filing consultant",
+        "builder demand letter software"
+      ],
+      "seeds": [
+        "rera compliance",
+        "rera qpr"
+      ]
+    },
+    {
+      "id": "dev-cp",
+      "jobs": [
+        "channel partner manager real estate"
+      ],
+      "google": [
+        "channel partner management software real estate"
+      ],
+      "seeds": [
+        "channel partner management"
+      ]
+    },
+    {
+      "id": "dev-site",
+      "jobs": [
+        "quantity surveyor"
+      ],
+      "google": [
+        "construction site management software"
+      ],
+      "seeds": [
+        "construction management software"
+      ]
+    },
+    {
+      "id": "exp-desk",
+      "jobs": [
+        "export documentation executive",
+        "edpms"
+      ],
+      "google": [
+        "igst refund consultant exporters",
+        "edpms shipping bill closure services"
+      ],
+      "seeds": [
+        "igst refund",
+        "rodtep",
+        "edpms"
+      ]
+    },
+    {
+      "id": "exp-docs",
+      "jobs": [
+        "export documentation"
+      ],
+      "google": [
+        "export documentation software"
+      ],
+      "seeds": [
+        "export documentation"
+      ]
+    },
+    {
+      "id": "exp-recv",
+      "jobs": [
+        "export collection"
+      ],
+      "google": [
+        "export invoice factoring india"
+      ],
+      "seeds": [
+        "export factoring"
+      ]
+    },
+    {
+      "id": "msme-recv",
+      "jobs": [
+        "accounts receivable executive",
+        "collection executive"
+      ],
+      "google": [
+        "msme delayed payment recovery lawyer",
+        "payment reminder software for tally"
+      ],
+      "seeds": [
+        "payment recovery",
+        "msme samadhaan"
+      ]
+    },
+    {
+      "id": "msme-labour",
+      "jobs": [
+        "payroll executive factory"
+      ],
+      "google": [
+        "factory labour attendance software"
+      ],
+      "seeds": [
+        "attendance software"
+      ]
+    },
+    {
+      "id": "msme-prod",
+      "jobs": [
+        "production planning executive"
+      ],
+      "google": [
+        "production planning software for small manufacturers"
+      ],
+      "seeds": [
+        "production planning software"
+      ]
+    },
+    {
+      "id": "school-fee",
+      "jobs": [
+        "school fee collection"
+      ],
+      "google": [
+        "school fee collection software"
+      ],
+      "seeds": [
+        "school fee software"
+      ]
+    },
+    {
+      "id": "school-adm",
+      "jobs": [
+        "school admission counsellor"
+      ],
+      "google": [
+        "school admission crm"
+      ],
+      "seeds": [
+        "school admission software"
+      ]
+    },
+    {
+      "id": "school-app",
+      "jobs": [
+        "school erp coordinator"
+      ],
+      "google": [
+        "school app for parents"
+      ],
+      "seeds": [
+        "school app"
+      ]
+    },
+    {
+      "id": "hosp-tpa",
+      "jobs": [
+        "tpa executive",
+        "insurance coordinator hospital"
+      ],
+      "google": [
+        "hospital insurance claim management services",
+        "tpa billing outsourcing for hospitals"
+      ],
+      "seeds": [
+        "tpa claim",
+        "medical billing"
+      ]
+    },
+    {
+      "id": "hosp-hms",
+      "jobs": [
+        "hospital mis executive"
+      ],
+      "google": [
+        "hospital management software"
+      ],
+      "seeds": [
+        "hospital software"
+      ]
+    },
+    {
+      "id": "hosp-opd",
+      "jobs": [
+        "hospital front office executive"
+      ],
+      "google": [
+        "opd queue management system"
+      ],
+      "seeds": [
+        "opd software"
+      ]
+    },
+    {
+      "id": "dealer-service",
+      "jobs": [
+        "service advisor automobile"
+      ],
+      "google": [
+        "service reminder software for automobile dealers"
+      ],
+      "seeds": [
+        "dms software"
+      ]
+    },
+    {
+      "id": "dealer-used",
+      "jobs": [
+        "used car sales executive"
+      ],
+      "google": [
+        "used car dealer software"
+      ],
+      "seeds": [
+        "used car software"
+      ]
+    },
+    {
+      "id": "dealer-leads",
+      "jobs": [
+        "telecaller automobile"
+      ],
+      "google": [
+        "automobile dealer crm"
+      ],
+      "seeds": [
+        "automobile crm"
+      ]
+    },
+    {
+      "id": "dist-credit",
+      "jobs": [
+        "collection executive distributor"
+      ],
+      "google": [
+        "distributor payment collection app"
+      ],
+      "seeds": [
+        "payment reminder"
+      ]
+    },
+    {
+      "id": "dist-orders",
+      "jobs": [
+        "order booking executive"
+      ],
+      "google": [
+        "distributor order taking app"
+      ],
+      "seeds": [
+        "order taking app"
+      ]
+    },
+    {
+      "id": "dist-stock",
+      "jobs": [
+        "inventory executive distributor"
+      ],
+      "google": [
+        "expiry management software for distributors"
+      ],
+      "seeds": [
+        "expiry management"
+      ]
+    },
+    {
+      "id": "gc-money",
+      "jobs": [
+        "billing engineer civil"
+      ],
+      "google": [
+        "emd refund services for contractors",
+        "bank guarantee tracking software"
+      ],
+      "seeds": [
+        "emd refund",
+        "bank guarantee"
+      ]
+    },
+    {
+      "id": "gc-bid",
+      "jobs": [
+        "tender executive"
+      ],
+      "google": [
+        "tender bidding consultant",
+        "gem tender consultant fees"
+      ],
+      "seeds": [
+        "tender consultant",
+        "gem consultant"
+      ]
+    },
+    {
+      "id": "col-accred",
+      "jobs": [
+        "iqac coordinator",
+        "naac coordinator"
+      ],
+      "google": [
+        "naac consultant fees",
+        "naac accreditation software"
+      ],
+      "seeds": [
+        "naac consultant",
+        "naac software"
+      ]
+    },
+    {
+      "id": "col-adm",
+      "jobs": [
+        "admission counsellor college"
+      ],
+      "google": [
+        "college admission crm",
+        "student admission leads for colleges"
+      ],
+      "seeds": [
+        "admission crm"
+      ]
+    },
+    {
+      "id": "col-fee",
+      "jobs": [
+        "college fee accountant"
+      ],
+      "google": [
+        "college fee management software"
+      ],
+      "seeds": [
+        "college fee software"
+      ]
+    },
+    {
+      "id": "ff-portal",
+      "jobs": [
+        "customer service executive freight forwarding"
+      ],
+      "google": [
+        "freight forwarding software india"
+      ],
+      "seeds": [
+        "freight forwarding software"
+      ]
+    },
+    {
+      "id": "ff-dnd",
+      "jobs": [
+        "detention demurrage"
+      ],
+      "google": [
+        "container detention demurrage tracking"
+      ],
+      "seeds": [
+        "detention demurrage"
+      ]
+    },
+    {
+      "id": "ff-docs",
+      "jobs": [
+        "documentation executive freight forwarding"
+      ],
+      "google": [
+        "bill of lading data extraction software"
+      ],
+      "seeds": [
+        "freight documentation"
+      ]
+    },
+    {
+      "id": "ph-gmp",
+      "jobs": [
+        "qa executive pharma",
+        "document control pharma"
+      ],
+      "google": [
+        "gmp consultant schedule m",
+        "qms software for pharma india"
+      ],
+      "seeds": [
+        "gmp consultant",
+        "qms software"
+      ]
+    },
+    {
+      "id": "ph-ebmr",
+      "jobs": [
+        "batch record review"
+      ],
+      "google": [
+        "electronic batch record software india"
+      ],
+      "seeds": [
+        "ebmr software"
+      ]
+    },
+    {
+      "id": "ph-gdp",
+      "jobs": [
+        "training coordinator pharma"
+      ],
+      "google": [
+        "gmp training software"
+      ],
+      "seeds": [
+        "gmp training"
+      ]
+    },
+    {
+      "id": "ca-status",
+      "jobs": [
+        "ca firm article assistant"
+      ],
+      "google": [
+        "ca practice management software"
+      ],
+      "seeds": [
+        "ca practice software"
+      ]
+    }
+  ]
+}

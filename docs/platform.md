@@ -118,6 +118,15 @@ How we keep it safe:
 - **Run it second:** competitors are known only after Meta and Play, so add them to config and run `node run.mjs <slug> competitor-pricing`.
 - **Cost:** free.
 
+## Willingness-to-pay scan (across ideas, not one group)
+
+- **What it is:** public evidence that people already pay for one task on its own, which is the test a wedge product must pass. It feeds the "Pays alone" column and 25% of the score on the Ideas tab.
+- **How:** [scripts/collect/wtp-scan.mjs](../scripts/collect/wtp-scan.mjs) `node wtp-scan.mjs [idea-id…]` reads `analyses/wtp-scan/config.json` (per idea: Naukri roles, Google buyer searches, autocomplete seeds). In the signed-in Brave profile it reads Naukri job counts (headless is blocked by Akamai) and Google result pages (sponsored results, ₹ prices, service words); autocomplete runs over plain HTTP with buying-intent words. Checkpoints after each idea; a captcha stops the run and a re-run resumes.
+- **Hand-scored part:** whether a priced service or a standalone tool already does exactly this task (`PAID_ALONE` in `app/_components/idea-list/wtp-data.ts`, with the evidence). It counts 65% of the pays-alone score (jobs 10%, Google ads/prices 10%, intent 15%).
+- **Output:** `analyses/wtp-scan/wtp-scan.md` (table), `app/_components/idea-list/wtp-scan.json` (numbers for the app), raw pages in `raw/` (gitignored). `node wtp-scan.mjs --summary` rebuilds the outputs from raw data.
+- **Caveats:** Naukri counts match words loosely, so generic roles (e.g. "quantity surveyor") inflate counts; the score log-scales jobs and weights them only 10%. Google shows few ads to a signed-in profile for niche B2B terms. Uses the browser profile, so don't run it while send-emails.mjs is sending.
+- **Cost:** free; ~1.5 minutes per idea.
+
 ## Reddit
 
 - **What it is:** communities of professionals (r/TattooArtists, r/medicallaboratory, r/Teachers). Staff and owners vent there in detail, mostly outside India.
