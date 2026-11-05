@@ -97,3 +97,14 @@ Opportunity 1 is the only one that clears the target math at a realistic share, 
 - **YouTube:** mostly buyers and aspiring developers, with very little owner talk about collections.
 - **RERA:** state-specific QPR formats and the CA's role need checking before building.
 - **Not collected:** CREDAI and NAREDCO member forums, LinkedIn, CA communities handling RERA.
+
+## 7. Deep dive: project milestone desk (5 Nov 2026)
+
+Opportunity 1 was researched further, each fact sourced. See the idea page `/ideas/dev-milestone` (`app/_components/idea-detail/dev-milestone.ts`). Main findings:
+
+- **Enforcement:** MahaRERA flagged 8,212 projects (2,311 in Pune) for the Jan–Mar 2026 QPR (₹50,000 penalty, possible suspension and sales ban); 10,773 lapsed projects were found and 4,812 suspended with frozen accounts by Aug 2025. Karnataka: ₹25,000 per missed quarterly update (Feb 2026 circular).
+- **Money rules:** 70% of buyer money in a separate account, withdrawals backed by Forms 1/2/3 (architect, engineer, CA); Tamil Nadu's three-account system from 1 Jan 2026; 10% cap before the agreement; 5%/1% GST and 1% TDS (194-IA) on each demand.
+- **Competitors:** ReraDesk (RERA only, ₹29,999/project/yr, beta), Buildesk (post-sales, ≈₹1,000/user/month), StrategicERP (₹4,000/user/month, customer app), Sell.Do (quote), Farvision, plus RERA consultants (ReraOne; CAs from ₹15,000/month/project).
+- **Market:** 1.43 lakh RERA projects (Jan 2025; Maharashtra ~50K); CREDAI 13,000+ developers; top-7-city sales fell 14% in 2025 and unsold stock rose 4%.
+- **Pricing lesson:** RERA alone is worth ~₹2,500–4,000 per project per month; the ₹15,000 entry price needs demand letters, collections and the buyer portal to earn it.
+- **Next:** count promoters with ongoing projects on MahaRERA and contact developers from the 8,212 non-compliant list.

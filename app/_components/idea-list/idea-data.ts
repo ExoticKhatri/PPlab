@@ -24,7 +24,7 @@ export interface Idea {
 }
 
 export const IDEAS: Idea[] = [
-  { id: "dev-milestone", idea: "Project milestone desk: RERA reports + buyer demand letters", group: "Real estate developers", ticket: 15_000, build: 4, bodies: 50_000, bodiesLabel: "~50K", marketing: 3, competitors: 2, competitorNote: "Buildesk, ReraDesk", note: "8,212 MahaRERA projects got notices for missed quarterly reports" },
+  { id: "dev-milestone", idea: "Project milestone desk: RERA reports + buyer demand letters", group: "Real estate developers", ticket: 15_000, build: 4, bodies: 50_000, bodiesLabel: "~50K", marketing: 3, competitors: 4, competitorNote: "Buildesk, ReraDesk (₹29,999/project/yr), StrategicERP, Sell.Do", note: "8,212 MahaRERA projects flagged for missed QPRs; 4,812 suspended in 2025" },
   { id: "dev-cp", idea: "Channel-partner management and payouts", group: "Real estate developers", ticket: 8_000, build: 2, bodies: 50_000, bodiesLabel: "~50K", marketing: 3, competitors: 5, competitorNote: "CRM add-ons (Buildesk, Leadrat)", note: "111 channel-partner searches, mostly brokers" },
   { id: "dev-site", idea: "Site cost and material control", group: "Real estate developers", ticket: 6_000, build: 3, bodies: 50_000, bodiesLabel: "~50K", marketing: 4, competitors: 10, competitorNote: "Powerplay, Onsite, RDash, Nway…", note: "Crowded; Powerplay Pro ₹71,999/yr" },
   { id: "exp-desk", idea: "Export money-and-compliance desk: shipping bill to eBRC, EDPMS, RoDTEP, refunds", group: "Exporters", ticket: 8_000, build: 4, bodies: 1_50_000, bodiesLabel: "~1.5 lakh", marketing: 3, competitors: 4, competitorNote: "Axodian (free beta), Seasaw (₹18K/mo), EXIM Shift, OptiEXIM", note: "Realisation cut to 9 months from Oct 2026; small-bill closure now ₹25–100" },

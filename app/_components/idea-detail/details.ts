@@ -4,6 +4,7 @@
 // "assumption" (our estimate or proposal, not yet verified).
 
 import { COL_ADM } from "./col-adm";
+import { DEV_MILESTONE } from "./dev-milestone";
 import { EXP_DESK } from "./exp-desk";
 
 export type FactKind ="confirmed" | "our-data" | "assumption";
@@ -151,4 +152,5 @@ export const DETAILS: Record<string, IdeaDetail> = {
   "msme-recv": MSME_RECV,
   "exp-desk": EXP_DESK,
   "col-adm": COL_ADM,
+  "dev-milestone": DEV_MILESTONE,
 };
