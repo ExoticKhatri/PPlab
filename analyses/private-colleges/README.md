@@ -102,3 +102,15 @@ Opportunity 2 was researched further, each fact sourced. See the idea page `/ide
 - **Our data:** of 1,201 one- and two-star Maps reviews, 179 mention admission, 39 false promises, 36 unanswered calls.
 - **Rules:** DPDP obligations from May 2027 (parental consent under 18); TRAI 140/1600 calling series; WhatsApp ≈₹0.86 per marketing message.
 - **Verdict unchanged:** real pain and proven spend, but the wedge needs an angle the leaders don't serve, such as small colleges or pay-per-admission.
+
+## 8. Deep dive: accreditation evidence desk (5 Nov 2026)
+
+Opportunity 1 was researched further, each fact sourced. See the idea page `/ideas/col-accred` (`app/_components/idea-detail/col-accred.ts`). Main findings:
+
+- **Coverage is low:** 11,829 institutions finished a first NAAC cycle (11,268 colleges, 561 universities; 21% graded A). About 26% of colleges and 52% of universities hold valid accreditation. Only 25 institutions reached a fifth cycle.
+- **Still voluntary:** NAAC's chairman says no regulator has made it mandatory, though UGC's 2012 rules require it and online degrees need it.
+- **Changing:** binary accreditation plus maturity levels L1–L5 (announced Feb 2025, rollout unclear); online-only peer assessment for colleges after the Feb 2025 CBI bribery case; "One Nation One Data" single annual upload; VBSA Bill (Dec 2025) would merge regulators with a new Accreditation Council.
+- **Costs today:** NAAC IIQA ₹1 lakh + GST for colleges (2021 schedule); NBA registration ₹1 lakh + tax; consultants ≈₹2–10 lakh per cycle.
+- **Crowded:** 9 tools with accreditation modules (Kramah 200+ institutions, iCloudEMS 150+, vmedulife 800+, PI-360, Linways, MasterSoft, Camu, Creatrix, Biyani), none with public prices. The earlier "no focused advertiser" finding held for Meta only.
+- **NIRF 2025:** 7,692 institutions, 14,163 applications.
+- **Verdict:** weaker than first thought. Score drops to 54; the admissions CRM (61) is now the stronger college idea.
