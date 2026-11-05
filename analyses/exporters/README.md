@@ -128,3 +128,14 @@ Opportunity 1 is the only one that clears the target math with a realistic share
 - **Maps:** reviewers are domestic buyers and job seekers, not the exporters' overseas clients.
 - **Reddit:** exporter subreddits are small (largest 5.5K members). The strongest posts are from e-commerce (CSB-V) exporters, whose bill volumes are extreme.
 - **Not collected:** EPC member forums, LinkedIn, CA/CHA communities, bank trade-desk pricing.
+
+## 7. Deep dive (5 Nov 2026)
+
+Opportunity 1 was researched further: rules, bank charges, competitors and market size, each fact sourced. See the idea page `/ideas/exp-desk` (`app/_components/idea-detail/exp-desk.ts`). Main changes to this analysis:
+
+- **New RBI rules from 1 Oct 2026** (FEMA 23(R)/2026-RB, amended 22 Sep 2026): realisation within **9 months** (12 for rupee-invoiced trade), down from 15. Bills up to ₹10 lakh close in EDPMS on the exporter's declaration, singly or quarterly.
+- **Bank closure is now cheap for small bills:** Union Bank ₹25–100 per bill, Bandhan ₹100, SBI ₹50 for extension or write-off up to ₹10 lakh. The Reddit "₹400 per bill" pain predates this, so the wedge should lead with deadlines, RoDTEP and IGST refunds, not closure fees.
+- **More competitors than seen in ads:** Axodian OneCompliance (free in beta), Seasaw AI (₹18,000/month listed), EXIM Shift (custom), OptiEXIM (SAP add-on); services Legal Suvidha (from ₹6,999) and refund consultants.
+- **RoDTEP** runs only to 31 Dec 2026 (Notification 41/2026-27); FY27 budget ₹10,000 Cr vs ₹18,232 Cr in FY26.
+- **Data access:** DGFT's eBRC API (Trade Notice 12/2024-25) lets an exporter-authorised app pull IRM data; no public ICEGATE API was found.
+- **Market:** 6 lakh+ IEC holders; FIEO represents 2 lakh+ exporters; 83,500+ exporters had received IGST refunds by 2019. Active-exporter count still unsourced.

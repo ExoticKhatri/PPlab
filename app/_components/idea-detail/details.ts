@@ -3,7 +3,9 @@
 // price, with a link), "our-data" (counted by our collectors, see analyses/), or
 // "assumption" (our estimate or proposal, not yet verified).
 
-export type FactKind = "confirmed" | "our-data" | "assumption";
+import { EXP_DESK } from "./exp-desk";
+
+export type FactKind ="confirmed" | "our-data" | "assumption";
 
 export interface Fact {
   text: string;
@@ -146,4 +148,5 @@ const MSME_RECV: IdeaDetail = {
 
 export const DETAILS: Record<string, IdeaDetail> = {
   "msme-recv": MSME_RECV,
+  "exp-desk": EXP_DESK,
 };
