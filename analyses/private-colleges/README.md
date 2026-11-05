@@ -90,3 +90,15 @@ Customers needed are for **₹50 Cr/year** (₹50 Cr ÷ (price × 12)), as a sha
 - **NAAC framework details:** the 90% target and online verification come from a Reddit summary and need confirming from NAAC's own documents.
 - **Accreditation status:** the share of private colleges already accredited is unknown. NAAC's accredited list should be counted against AISHE.
 - **Pricing:** all ERPs hide prices. Demo calls would reveal real quotes.
+
+## 7. Deep dive: admissions conversion CRM (5 Nov 2026)
+
+Opportunity 2 was researched further, each fact sourced. See the idea page `/ideas/col-adm` (`app/_components/idea-detail/col-adm.ts`). Main findings:
+
+- **Conversion is low:** 1.06% of enquiries enroll; same-day replies convert 2×; a connected call lifts conversion from 0.75% to 2.29%; repeat enquirers are 14% of leads but 40% of enrolments (Meritto Enrollment Index 2026, vendor data).
+- **Colleges pay a lot:** Meritto (NoPaperForms) made ₹115.6 Cr in FY26 from 1,183 customers, ₹9.8 lakh each on average, and has filed for an IPO. LeadSquared gets ~20% of its ₹326 Cr revenue from education.
+- **Crowded:** Meritto, LeadSquared (₹2,500–5,000/user), Salesforce Education Cloud ($87–363/user), ExtraaEdge (~$30/user), MCB, TeleCRM (₹799/user), HelloGrowth (₹899/user), plus agencies and lead portals.
+- **Seats are emptying:** about 30% of engineering UG seats went unfilled from 2019-20 to 2023-24; 58 colleges were closed in 2025-26.
+- **Our data:** of 1,201 one- and two-star Maps reviews, 179 mention admission, 39 false promises, 36 unanswered calls.
+- **Rules:** DPDP obligations from May 2027 (parental consent under 18); TRAI 140/1600 calling series; WhatsApp ≈₹0.86 per marketing message.
+- **Verdict unchanged:** real pain and proven spend, but the wedge needs an angle the leaders don't serve, such as small colleges or pay-per-admission.

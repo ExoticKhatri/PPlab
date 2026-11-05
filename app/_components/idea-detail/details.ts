@@ -3,6 +3,7 @@
 // price, with a link), "our-data" (counted by our collectors, see analyses/), or
 // "assumption" (our estimate or proposal, not yet verified).
 
+import { COL_ADM } from "./col-adm";
 import { EXP_DESK } from "./exp-desk";
 
 export type FactKind ="confirmed" | "our-data" | "assumption";
@@ -149,4 +150,5 @@ const MSME_RECV: IdeaDetail = {
 export const DETAILS: Record<string, IdeaDetail> = {
   "msme-recv": MSME_RECV,
   "exp-desk": EXP_DESK,
+  "col-adm": COL_ADM,
 };
