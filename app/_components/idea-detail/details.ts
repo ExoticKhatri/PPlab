@@ -45,8 +45,8 @@ export interface IdeaDetail {
 }
 
 const MSME_RECV: IdeaDetail = {
-  status: "Deep dive in progress",
-  updated: "2026-11-03",
+  status: "Dropped",
+  updated: "2026-11-06",
   summary:
     "Small manufacturers sell to bigger companies and wait months to be paid. Indian law already says buyers must pay micro and small suppliers within 45 days, with penalty interest and a lost tax deduction if they don't. Yet only 14,814 cases had reached the government's dispute portal by March 2026. The product tracks every invoice against the 45-day clock and turns the law into reminders, notices and filings.",
   sections: [
