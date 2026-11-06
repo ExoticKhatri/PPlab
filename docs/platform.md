@@ -118,6 +118,14 @@ How we keep it safe:
 - **Run it second:** competitors are known only after Meta and Play, so add them to config and run `node run.mjs <slug> competitor-pricing`.
 - **Cost:** free.
 
+## RERA developer leads (MahaRERA)
+
+- **What it is:** a contact sheet of Maharashtra developers whose projects are in trouble right now, for the RERA milestone desk outreach.
+- **Lists:** [scripts/collect/rera-lists.mjs](../scripts/collect/rera-lists.mjs) `node rera-lists.mjs` reads MahaRERA's three public tables in headless Chromium: projects in abeyance because the completion date lapsed (~4,200), suspended for missed quarterly reports (~1,600), and recent QPR defaulters (~200). Each row has promoter, project, registration number and district. Writes `analyses/rera-leads/raw/lists.json` and `promoters.json` (grouped by promoter, most stuck projects first).
+- **Contacts:** [scripts/collect/rera-leads.mjs](../scripts/collect/rera-leads.mjs) `node rera-leads.mjs [--target 200] [--max 1500] [--districts Pune,Thane,…]` searches Google Maps for "<promoter> <district>" in the signed-in Brave profile, falling back to the stuck project's own name (its listing usually carries the sales office phone). A match needs the promoter's distinctive words and a real estate/construction category (a residential category counts only for the project search). Emails come from the website (shared `lib/contacts.mjs`). The `match` column says `exact`, `project` or `partial`; check partial ones before contacting. Checkpoints in `raw/lookups.json`; output `raw/leads.csv` (gitignored).
+- **Limits:** MahaRERA's project detail pages sit behind a captcha, so promoter emails and phones are not read from MahaRERA. Most small developers list only a phone on Maps: expect email for roughly 1 in 6 leads.
+- **Cost:** free; ~15 seconds per promoter.
+
 ## Willingness-to-pay scan (across ideas, not one group)
 
 - **What it is:** public evidence that people already pay for one task on its own, which is the test a wedge product must pass. It feeds the "Pays alone" column and 25% of the score on the Ideas tab.
