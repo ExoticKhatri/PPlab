@@ -45,7 +45,17 @@ export function effectiveDeadline(completion) {
 // One results page: each project block starts with "# P5…".
 async function readPage(page, date, n) {
   const url = `https://maharera.maharashtra.gov.in/projects-search-result?project_name=&project_location=&project_completion_date=${date}&project_state=27&project_district=&page=${n}&op=Search`;
-  await page.goto(url, { waitUntil: "domcontentloaded", timeout: 90_000 });
+  // Retry network drops (sleep, Wi-Fi changes) with growing waits before giving up.
+  for (let attempt = 1; ; attempt++) {
+    try {
+      await page.goto(url, { waitUntil: "domcontentloaded", timeout: 90_000 });
+      break;
+    } catch (error) {
+      if (attempt >= 6) throw error;
+      log(P, `  ${date} page ${n}: ${error.message.split("\n")[0]}; retry ${attempt} in ${attempt * 30}s`);
+      await page.waitForTimeout(attempt * 30_000);
+    }
+  }
   await page.waitForTimeout(1500);
   return page.evaluate(() => {
     const text = document.body.innerText;
