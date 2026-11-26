@@ -2,14 +2,14 @@
 
 Where the search for our business stands, what we have learned, and what comes next. Written 26 Nov 2026. The detailed method lives in [product-degrees.md](product-degrees.md) (the selection guide and change log); this file is the map.
 
-```
+```text
 Step 1  Goal and rules ............................ done
 Step 2  Strategy: degree-2 wedge → degree-1 product  done
 Step 3  Pick the industry and the wedge ........... IN PROGRESS (stuck on validation)
-Step 4  Validate without a product ................ next
-Step 5  Build the MVP for the validated wedge
-Step 6  First 10 paying customers, then expand to degree 1
+Step 4+ Not known yet: written as we discover them
 ```
+
+Also shown in pplab's Roadmap tab (`app/_components/roadmap/roadmap-data.ts`); update both together.
 
 ---
 

@@ -8,8 +8,9 @@ import GroupFinder from "../group-finder/GroupFinder";
 import IdeaGuide from "../idea-guide/IdeaGuide";
 import IdeaList from "../idea-list/IdeaList";
 import NetworkMindmap from "../network-mindmap/NetworkMindmap";
+import Roadmap from "../roadmap/Roadmap";
 
-type TabId = "industries" | "groups" | "guide" | "ideas";
+type TabId = "industries" | "groups" | "guide" | "ideas" | "roadmap";
 
 const iconProps = { width: 20, height: 20, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: 1.8, strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": true } as const;
 
@@ -59,6 +60,17 @@ const TABS: { id: TabId; label: string; icon: ReactNode }[] = [
       </svg>
     ),
   },
+  {
+    id: "roadmap",
+    label: "Roadmap",
+    icon: (
+      <svg {...iconProps}>
+        <circle cx="6" cy="19" r="2" />
+        <circle cx="18" cy="5" r="2" />
+        <path d="M8 19h6a3 3 0 0 0 0-6h-4a3 3 0 0 1 0-6h6" />
+      </svg>
+    ),
+  },
 ];
 
 export default function HomeTabs() {
@@ -78,6 +90,7 @@ export default function HomeTabs() {
       {active === "groups" && <GroupFinder />}
       {active === "guide" && <IdeaGuide />}
       {active === "ideas" && <IdeaList />}
+      {active === "roadmap" && <Roadmap />}
 
       <nav
         aria-label="Workspace tabs"
